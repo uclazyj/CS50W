@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <title>Advanced Search</title>
+        <link href="mycss.css" rel="stylesheet">
+        <style>
+            .header {
+                display: flex;
+                justify-content: space-between;
+            }
+
+            .google-logo {
+                width:80px;
+                margin-top:10px;
+                margin-left:10px;
+            }
+
+            .align-left-container {
+                display: flex;
+                flex-direction: column;
+                align-items: right;
+                margin-top: 35px;
+                margin-left: 35px;
+            }
+
+            .advanced-search-title {
+                left: 50px;
+                top: 100px;
+                color: #d93025;
+                font: 20px Arial, sans-serif;
+                margin-bottom: 70px;
+            }
+
+            .find-pages-with {
+                color: #333333; 
+                font: 16px Arial, sans-serif;
+                margin-bottom: 12px;
+            }
+
+            .label {
+                color: #222222;
+                font: 13px Arial, sans-serif;
+                margin-right: 0;
+            }
+
+            .advanced-search-button {
+                background-color: #4D90FE;
+                color:white;
+                padding: 0 12px;
+                font-size:11px;
+                font-weight: bold;
+                border-radius: 2px;
+                border: none;
+                height: 30px;
+                margin-top: 25px;
+                margin-left: 452px;
+            }
+
+            .textbox {
+                height: 25px;
+                font-size: 13px;
+                padding: 1px 8px;
+                border-radius: 1px;
+                border: 1px solid #d9d9d9;
+                border-top: 1px solid #c0c0c0;
+            }
+
+            .search-boxes {
+                display: grid;
+                grid-template-columns: 170px 400px;
+                gap: 20px 0;
+                align-items: center;
+            }
+        </style>
+    </head>
+    <body>
+        <div class="header">
+            <div class="google-logo">
+                <img class = "google-logo" src="googlelogo_color.png">
+            </div>
+            <a class="top-right-button" href="index.html">Google Search</a>
+        </div>
+       
+        <div class="align-left-container">
+            <div class="advanced-search-title">
+                Advanced Search
+            </div>
+            <div class="find-pages-with">
+                Find pages with...
+            </div>
+            <form action="https://google.com/search">
+                <div class = "search-boxes">
+                    <label class = "label" for="userInput">all these words:</label>
+                    <input class = "textbox" type="text" name="as_q">
+                    <label class = "label" for="userInput">this exact word or phrase:</label>
+                    <input class = "textbox" type="text" name="as_epq">
+                    <label class = "label" for="userInput">any of these words:</label>
+                    <input class = "textbox" type="text" name="as_oq">
+                    <label class = "label" for="userInput">none of these words:</label>
+                    <input class = "textbox" type="text" name="as_eq">
+                </div>
+                <button class = "advanced-search-button" type="submit">Advanced Search</button>
+            </form>
+        </div>
+
+
+        
+        
+        
+        
+          
+    </body>
+</html>

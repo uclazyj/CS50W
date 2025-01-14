@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <title>Google image search</title>
+        <link href="mycss.css" rel="stylesheet">
+        <style>
+            .image-text {
+                position: absolute; 
+                right: 5px;
+                bottom: 4px;
+                color:#4285f4;
+                font: 16px / 16px Arial, sans-serif;
+            }
+        </style>
+    </head>
+    <body>
+        <div class="top-right-div">
+            <a class="top-right-button" href="index.html">Google Search</a>
+        </div>
+        
+        <div class="center-part">
+            <div class="google-logo-div">
+                <div>
+                    <img class = "google-logo" src="googlelogo_color.png">
+                </div>
+                <div class="image-text"> Images</div>
+            </div>
+            <form action="https://google.com/search">
+                <input class="search_box" autofocus type="text" name="q">
+                <input type="hidden" name="udm" value="2">
+                <!-- <div class="google-search-button-container">
+                    <button class = "google-search-button" type="submit" name="udm" value="2">Go</button>
+                </div> -->
+            </form>
+        </div>
+    </body>
+</html>
