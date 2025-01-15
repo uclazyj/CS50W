@@ -6,7 +6,6 @@ from markdown import markdown
 
 
 def index(request):
-    print("foooo!")
     return render(request, "encyclopedia/index.html", {
         "entries": util.list_entries()
     })
