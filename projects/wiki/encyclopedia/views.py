@@ -11,12 +11,11 @@ from random import randint
 def index(request):
     query = request.GET.get("q","")
     if query != "":
-        all_entries = util.list_entries()
-        all_entries_lowercase = [entry.lower() for entry in all_entries]
         # Exact match (case-insensitive)
-        if query.lower() in all_entries_lowercase:
+        if util.get_entry(query):
             return redirect("title", title=query)
         # Match to a substring of an entry / entries
+        all_entries = util.list_entries()
         matched_entries = [entry for entry in all_entries if query.lower() in entry.lower()]
         return render(request, "encyclopedia/search_results_page.html", {
             "matched_entries": matched_entries
