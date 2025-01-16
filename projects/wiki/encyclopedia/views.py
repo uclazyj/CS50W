@@ -25,17 +25,7 @@ def index(request):
         "entries": util.list_entries()
     })
 
-def title(request, title):
-    if title == "_random":
-        all_entries = util.list_entries()
-        if len(all_entries) == 0:
-            return render(request, "encyclopedia/index.html", {
-            "entries": all_entries
-        })
-        idx = randint(0, len(all_entries) - 1)
-        entry = all_entries[idx]
-        return redirect("title", title=entry)
-        
+def title(request, title):        
     entry = util.get_entry(title)
     if not entry:
         return render(request, "encyclopedia/error.html")
@@ -43,3 +33,13 @@ def title(request, title):
         "title": title,
         "body": markdown(entry)
     })
+
+def random(request):
+    all_entries = util.list_entries()
+    if len(all_entries) == 0:
+        return render(request, "encyclopedia/index.html", {
+        "entries": all_entries
+    })
+    idx = randint(0, len(all_entries) - 1)
+    entry = all_entries[idx]
+    return redirect("title", title=entry)
