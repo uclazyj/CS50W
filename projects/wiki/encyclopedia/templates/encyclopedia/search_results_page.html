@@ -1,0 +1,22 @@
+{% extends "encyclopedia/layout.html" %}
+
+{% block title %}
+    Search results
+{% endblock %}
+
+{% block body %}
+    <h1>Search results</h1>
+
+    <ul>
+        {% if matched_entries|length == 0 %}
+            No matched result.
+        {% else %}
+            {% for matched_entry in matched_entries %}
+                <li>
+                    <a href = "{{ matched_entry }}"> {{ matched_entry }} </a> 
+                </li>
+            {% endfor %}
+        {% endif %}
+    </ul>
+
+{% endblock %}
