@@ -5,6 +5,7 @@ from django.urls import reverse
 from . import util
 
 from markdown import markdown
+from random import randint
 
 
 def index(request):
@@ -25,6 +26,16 @@ def index(request):
     })
 
 def title(request, title):
+    if title == "_random":
+        all_entries = util.list_entries()
+        if len(all_entries) == 0:
+            return render(request, "encyclopedia/index.html", {
+            "entries": all_entries
+        })
+        idx = randint(0, len(all_entries) - 1)
+        entry = all_entries[idx]
+        return redirect("title", title=entry)
+        
     entry = util.get_entry(title)
     if not entry:
         return render(request, "encyclopedia/error.html")
