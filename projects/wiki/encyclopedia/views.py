@@ -27,7 +27,9 @@ def index(request):
 def title(request, title):        
     entry = util.get_entry(title)
     if not entry:
-        return render(request, "encyclopedia/error.html")
+        return render(request, "encyclopedia/error.html", {
+            "error_message" : "404: Page not found!"
+        })
     return render(request, "encyclopedia/entry.html", {
         "title": title,
         "body": markdown(entry)
@@ -42,3 +44,23 @@ def random(request):
     idx = randint(0, len(all_entries) - 1)
     entry = all_entries[idx]
     return redirect("title", title=entry)
+
+def create(request):
+    if request.method == "POST":
+        title = request.POST.get("title","")
+        content = request.POST.get("content","")
+        if title == "":
+            return render(request, "encyclopedia/error.html", {
+            "error_message" : "Title cannot be empty!"
+        })
+        if content == "":
+            return render(request, "encyclopedia/error.html", {
+            "error_message" : "Content cannot be empty!"
+        })
+        if util.get_entry(title):
+            return render(request, "encyclopedia/error.html", {
+            "error_message" : f"The title: {title} already exists!"
+        })
+        util.save_entry(title, content)
+        return redirect("title", title=title)
+    return render(request, "encyclopedia/create_entry_page.html")

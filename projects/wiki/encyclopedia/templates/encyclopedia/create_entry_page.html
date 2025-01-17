@@ -1,0 +1,23 @@
+{% extends "encyclopedia/layout.html" %}
+
+{% block title %}
+    New entry
+{% endblock %}
+
+{% block body %}
+
+    <form action="{% url 'create' %}" method="post">
+        {% csrf_token %}
+        <label for="page_title">Please enter the title for the page:</label>
+        <input type="text" id="page_title" name="title" autofocus placeholder="Title of the page">
+        <div>
+            Please enter content of the page (in Markdown): 
+        </div>
+        <!-- Question: Why can't I change the size of this text box? -->
+        <textarea name="content" placeholder="Your content goes here..."></textarea>
+        <div>
+            <button type="submit">Create new page</button>
+        </div>
+    </form>
+
+{% endblock %}
