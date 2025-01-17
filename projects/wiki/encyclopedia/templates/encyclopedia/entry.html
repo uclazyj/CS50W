@@ -5,7 +5,9 @@
 {% endblock %}
 
 {% block body %}
-
+    <div style="display: flex; justify-content: right;">
+        <a style = "margin-right: 20px;" href="{% url 'edit' title %}">Edit this page</a>
+    </div>
     {{ body | safe}}
 
 {% endblock %}

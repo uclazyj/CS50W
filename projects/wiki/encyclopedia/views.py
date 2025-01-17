@@ -39,8 +39,8 @@ def random(request):
     all_entries = util.list_entries()
     if len(all_entries) == 0:
         return render(request, "encyclopedia/index.html", {
-        "entries": all_entries
-    })
+            "entries": all_entries
+        })
     idx = randint(0, len(all_entries) - 1)
     entry = all_entries[idx]
     return redirect("title", title=entry)
@@ -51,16 +51,32 @@ def create(request):
         content = request.POST.get("content","")
         if title == "":
             return render(request, "encyclopedia/error.html", {
-            "error_message" : "Title cannot be empty!"
-        })
+                "error_message" : "Title cannot be empty!"
+            })
         if content == "":
             return render(request, "encyclopedia/error.html", {
-            "error_message" : "Content cannot be empty!"
-        })
+                "error_message" : "Content cannot be empty!"
+            })
         if util.get_entry(title):
             return render(request, "encyclopedia/error.html", {
-            "error_message" : f"The title: {title} already exists!"
-        })
+                "error_message" : f"The title: {title} already exists!"
+            })
         util.save_entry(title, content)
         return redirect("title", title=title)
     return render(request, "encyclopedia/create_entry_page.html")
+
+def edit(request, title):
+    if request.method == "POST":
+        new_content = request.POST.get("new_content","")
+        if new_content == "":
+            return render(request, "encyclopedia/error.html", {
+                "error_message" : "Content cannot be empty!"
+            })
+        util.save_entry(title, new_content)
+        return redirect("title", title=title)
+    
+    entry = util.get_entry(title)
+    return render(request, "encyclopedia/edit_entry_page.html", {
+        "title": title,
+        "old_content": entry
+    })
