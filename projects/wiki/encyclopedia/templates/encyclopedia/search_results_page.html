@@ -8,15 +8,13 @@
     <h1>Search results</h1>
 
     <ul>
-        {% if matched_entries|length == 0 %}
+        {% for matched_entry in matched_entries %}
+            <li>
+                <a href = "wiki/{{ matched_entry }}"> {{ matched_entry }} </a> 
+            </li>
+        {% empty %}
             No matched result.
-        {% else %}
-            {% for matched_entry in matched_entries %}
-                <li>
-                    <a href = "wiki/{{ matched_entry }}"> {{ matched_entry }} </a> 
-                </li>
-            {% endfor %}
-        {% endif %}
+        {% endfor %}
     </ul>
 
 {% endblock %}
