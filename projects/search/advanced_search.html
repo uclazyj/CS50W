@@ -11,26 +11,19 @@
 
             .google-logo {
                 width:80px;
-                margin-top:10px;
-                margin-left:10px;
+                margin: 10px 10px;
             }
 
-            .align-left-container {
-                display: flex;
-                flex-direction: column;
-                align-items: right;
-                margin-top: 35px;
-                margin-left: 35px;
-            }
-
-            .advanced-search-title {
-                left: 50px;
-                top: 100px;
+            .appbar {
                 color: #d93025;
                 font: 20px Arial, sans-serif;
-                margin-bottom: 70px;
+                margin: 25px 35px;
             }
 
+            .separator-line {
+                border-bottom: 1px solid #ebebeb;
+            }
+            
             .find-pages-with {
                 color: #333333; 
                 font: 16px Arial, sans-serif;
@@ -67,9 +60,29 @@
 
             .search-boxes {
                 display: grid;
-                grid-template-columns: 170px 400px;
-                gap: 20px 0;
+                grid-template-columns: 170px 400px 1fr;
+                gap: 15px 0;
                 align-items: center;
+                margin-left: 35px;
+                margin-top: 45px;
+            }
+
+            .clarification-title {
+                font-family: Arial, sans-serif; 
+                font-weight: 700; 
+                font-size: 13px; color: rgb(119,119,119); 
+                margin-left: 8px;
+            }
+
+            .clarification {
+                margin-left: 20px;
+                font-family: Arial, sans-serif;
+                color: rgb(85, 85, 85);
+                font-size: 11px;
+            }
+
+            .search-boxes div span {
+                font-family: monospace;
             }
         </style>
     </head>
@@ -81,33 +94,34 @@
             <a class="top-right-button" href="index.html">Google Search</a>
         </div>
        
-        <div class="align-left-container">
-            <div class="advanced-search-title">
-                Advanced Search
-            </div>
-            <div class="find-pages-with">
-                Find pages with...
-            </div>
-            <form action="https://google.com/search">
-                <div class = "search-boxes">
-                    <label class = "label" for="userInput">all these words:</label>
-                    <input class = "textbox" type="text" name="as_q">
-                    <label class = "label" for="userInput">this exact word or phrase:</label>
-                    <input class = "textbox" type="text" name="as_epq">
-                    <label class = "label" for="userInput">any of these words:</label>
-                    <input class = "textbox" type="text" name="as_oq">
-                    <label class = "label" for="userInput">none of these words:</label>
-                    <input class = "textbox" type="text" name="as_eq">
-                </div>
-                <button class = "advanced-search-button" type="submit">Advanced Search</button>
-            </form>
+        <div class="appbar">
+            Advanced Search
         </div>
-
-
+        <div class="separator-line"></div>
         
-        
-        
-        
-          
+        <form action="https://google.com/search">
+            <div class = "search-boxes">
+                <div class="find-pages-with">
+                    Find pages with...
+                </div>
+                <div></div>
+                <div class = "clarification-title">
+                    To do this in the search box
+                </div>
+                <label class = "label" for="userInput">all these words:</label>
+                <input class = "textbox" type="text" name="as_q">
+                <div class="clarification">Type the important words: &ensp;<span>tricolor rat terrier</span></div>
+                <label class = "label" for="userInput">this exact word or phrase:</label>
+                <input class = "textbox" type="text" name="as_epq">
+                <div class="clarification">Put exact words in quotes: &ensp;<span>"rat terrier"</span></div>
+                <label class = "label" for="userInput">any of these words:</label>
+                <input class = "textbox" type="text" name="as_oq">
+                <div class="clarification">Type OR between all the words you want: &ensp;<span>miniature OR standard</span></div>
+                <label class = "label" for="userInput">none of these words:</label>
+                <input class = "textbox" type="text" name="as_eq">
+                <div class="clarification">Put a minus sign just before words you don't want: &ensp;<span>-rodent, -"Jack Russell"</span></div>
+            </div>
+            <button class = "advanced-search-button" type="submit">Advanced Search</button>
+        </form>
     </body>
 </html>
