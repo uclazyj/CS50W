@@ -1,3 +1,39 @@
 body {
     padding: 10px;
 }
+
+.listings_grid {
+    display: grid;
+    grid-template-columns: 400px 1fr;
+    margin-left: 50px;
+    /* border: 1px solid black; */
+}
+
+.image-item {
+    display: flex;
+    justify-content: center; /* Horizontally center the image */
+    align-items: center;    /* Vertically center the image */
+    margin-top: 5px;
+    margin-bottom: 5px;
+    border-top: 1px solid #ebebeb;
+    border-left: 1px solid #ebebeb;
+    border-bottom: 1px solid #ebebeb;
+    height: 200px;
+}
+
+.text-item {
+    margin-top: 5px;
+    margin-bottom: 5px;
+    padding-top: 10px;
+    padding-left: 30px;
+    border-top: 1px solid #ebebeb;
+    border-bottom: 1px solid #ebebeb;
+    border-right: 1px solid #ebebeb;
+
+}
+
+.image {
+    max-width: 100%;
+    max-height: 100%;
+}
+
