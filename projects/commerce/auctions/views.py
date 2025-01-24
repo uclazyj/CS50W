@@ -1,8 +1,8 @@
 from django.contrib.auth import authenticate, login, logout
 from django.db import IntegrityError
-from django.http import HttpResponse, HttpResponseRedirect
+from django.http import HttpResponse, HttpResponseRedirect, HttpResponseBadRequest
 from django import forms
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.urls import reverse
 
 from .models import User, Listing
@@ -71,6 +71,15 @@ def register(request):
         return HttpResponseRedirect(reverse("index"))
     else:
         return render(request, "auctions/register.html")
+
+def listings(request, listing_id):
+    try:
+        listing = Listing.objects.get(pk=listing_id)
+    except Listing.DoesNotExist:
+        return HttpResponseBadRequest("Bad Request: listing does not exist")
+    return render(request, "auctions/listing.html", {
+        "listing" : listing
+    })
 
 def create_listing(request):
     return render(request, "auctions/create_listing.html")

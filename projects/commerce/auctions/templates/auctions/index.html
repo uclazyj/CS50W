@@ -9,7 +9,9 @@
                 <img class="image" src="{{ listing.image_url }}" alt="Image of {{ listing.title }}">
             </div>
             <div class="text-item">
-                <h4>{{ listing.title }}</h4>
+                <h4>
+                    <a href="{% url 'listings' listing.id %}">{{ listing.title }}</a>
+                </h4>
                 <h6>
                     <b>
                         Price: 
