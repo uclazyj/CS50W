@@ -8,12 +8,7 @@
     <div class="listing-description">{{ listing.description }}</div>
     <h4 class="listing-price">${{ listing.current_price }}</h4>
     <div class="bid-info">
-        <div>
-            Listing created at {{ listing.created_at}} (EST).
-        </div>
-        <div>
-            {{ listing.num_bids }} bid(s) so far. Your bid is the current bid.
-        </div>
+        {{ listing.num_bids }} bid(s) so far. Your bid is the current bid.
     </div>
     <form action="{% url 'listings' listing.id %}" method="post">
         {% csrf_token %}
@@ -22,7 +17,7 @@
     </form>
     <h4 style="margin-top: 20px;">Details</h4>
     <ul>
-        <li>Listed by: {{ listing.owner.username }}</li>
+        <li>Listed by <b>{{ listing.owner.username }}</b> at {{ listing.created_at}} (EST).</li>
         <li>Category: 
             {% if listing.category == "" %}
                 No Category Listed
