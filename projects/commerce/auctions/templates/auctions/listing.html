@@ -8,7 +8,12 @@
     <div class="listing-description">{{ listing.description }}</div>
     <h4 class="listing-price">${{ listing.current_price }}</h4>
     <div class="bid-info">
-        {{ listing.num_bids }} bid(s) so far. Your bid is the current bid.
+        <div>
+            Listing created at {{ listing.created_at}} (EST).
+        </div>
+        <div>
+            {{ listing.num_bids }} bid(s) so far. Your bid is the current bid.
+        </div>
     </div>
     <form action="{% url 'listings' listing.id %}" method="post">
         {% csrf_token %}

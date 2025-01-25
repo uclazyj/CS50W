@@ -12,8 +12,8 @@ class ListingForm(forms.Form):
     description = forms.CharField(max_length=64)
     starting_bid = forms.DecimalField(max_digits=10, decimal_places=2)
     # optional fields
-    image_url = forms.URLField()
-    category = forms.CharField(max_length=64)
+    image_url = forms.URLField(required=False)
+    category = forms.CharField(max_length=64, required=False)
 
 class BidForm(forms.Form):
     bid_price = forms.DecimalField(max_digits=10, 
