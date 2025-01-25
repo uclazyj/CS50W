@@ -82,4 +82,24 @@ def listings(request, listing_id):
     })
 
 def create_listing(request):
-    return render(request, "auctions/create_listing.html")
+    if request.method == "POST":
+        form = ListingForm(request.POST)
+        if form.is_valid():
+            title = form.cleaned_data["title"]
+            description = form.cleaned_data["description"]
+            starting_bid = form.cleaned_data["starting_bid"]
+            # optional fields
+            image_url = form.cleaned_data["image_url"]
+            category = form.cleaned_data["category"]
+            listing = Listing(owner = request.user, title=title, description=description, \
+                              starting_bid=starting_bid, current_price=starting_bid,\
+                                num_bids=0, image_url=image_url, category=category)
+            listing.save()
+            return redirect("index")
+        else:
+            return render(request, "auctions/create_listing.html", {
+                "form": form
+            })
+    return render(request, "auctions/create_listing.html", {
+        "form": ListingForm()
+    })
