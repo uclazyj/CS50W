@@ -15,6 +15,13 @@ class ListingForm(forms.Form):
     image_url = forms.URLField()
     category = forms.CharField(max_length=64)
 
+class BidForm(forms.Form):
+    bid_price = forms.DecimalField(max_digits=10, 
+                               decimal_places=2,
+                               label="",
+                               widget=forms.TextInput(attrs={'placeholder': 'Bid'})
+                               )
+
 def index(request):
     return render(request, "auctions/index.html", {
         "listings": Listing.objects.all()
@@ -77,8 +84,22 @@ def listings(request, listing_id):
         listing = Listing.objects.get(pk=listing_id)
     except Listing.DoesNotExist:
         return HttpResponseBadRequest("Bad Request: listing does not exist")
+    if request.method == "POST":
+        form = BidForm(request.POST)
+        if form.is_valid():
+            bid_price = form.cleaned_data["bid_price"]
+            if bid_price > listing.current_price:
+                listing.current_price = bid_price
+                listing.num_bids += 1
+                listing.save()
+            else:
+                return render(request, "auctions/listing.html", {
+                    "listing" : listing,
+                    "form" : form
+                })
     return render(request, "auctions/listing.html", {
-        "listing" : listing
+        "listing" : listing,
+        "form" : BidForm()
     })
 
 def create_listing(request):

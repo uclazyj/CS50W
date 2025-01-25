@@ -37,3 +37,19 @@ body {
     max-height: 100%;
 }
 
+.listing-description {
+    font-size: 20px;
+}
+
+.listing-price {
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+
+.bid-info {
+    font-size: 15px;
+}
+
+.place-bid-button {
+    margin-top: 15px;
+}
