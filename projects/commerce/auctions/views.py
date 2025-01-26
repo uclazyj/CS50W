@@ -1,11 +1,13 @@
 from django.contrib.auth import authenticate, login, logout
+from django.contrib.auth.decorators import login_required
 from django.db import IntegrityError
 from django.http import HttpResponse, HttpResponseRedirect, HttpResponseBadRequest
 from django import forms
 from django.shortcuts import render, redirect
 from django.urls import reverse
 
-from .models import User, Listing
+
+from .models import User, Listing, Bid
 
 class ListingForm(forms.Form):
     title = forms.CharField(max_length=64)
@@ -79,6 +81,8 @@ def register(request):
     else:
         return render(request, "auctions/register.html")
 
+
+@login_required
 def listings(request, listing_id):
     try:
         listing = Listing.objects.get(pk=listing_id)
@@ -89,19 +93,26 @@ def listings(request, listing_id):
         if form.is_valid():
             bid_price = form.cleaned_data["bid_price"]
             if bid_price > listing.current_price:
+                # Update the listing
                 listing.current_price = bid_price
                 listing.num_bids += 1
                 listing.save()
-            else:
-                return render(request, "auctions/listing.html", {
-                    "listing" : listing,
-                    "form" : form
-                })
+                # Add a bid to the listing
+                bid = Bid(listing=listing, bidder=request.user, bid_price=bid_price)
+                bid.save()
+            # Explictly redirect to follow Post/Redirect/Get pattern
+            return redirect("listings", listing_id=listing.id)
+
+    all_bids = Bid.objects.filter(listing=listing)
+    last_bid = all_bids.order_by('-bid_price').first()
     return render(request, "auctions/listing.html", {
         "listing" : listing,
-        "form" : BidForm()
+        "form" : BidForm(),
+        "last_bid": last_bid
     })
 
+
+@login_required
 def create_listing(request):
     if request.method == "POST":
         form = ListingForm(request.POST)

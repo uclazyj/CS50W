@@ -28,3 +28,6 @@ class Bid(models.Model):
     bid_price = models.DecimalField(max_digits=10, decimal_places=2)
     created_at = models.DateTimeField(auto_now_add=True)
 
+    def __str__(self):
+        return f"{self.listing} was bidded by {self.bidder} at price ${self.bid_price}"
+
