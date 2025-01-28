@@ -14,15 +14,22 @@
                 </h4>
                 <h6>
                     <b>
-                        Price: 
-                        {% if listing.num_bids > 0 %}
-                            {{ listing.current_price }}
-                        {% else %} 
-                            {{ listing.starting_bid }}
-                        {% endif %}
+                        Price: {{ listing.current_price }}
                     </b>
                 </h6>
                 <div>{{ listing.description }}</div>
+                <div class="created_time">Created {{ listing.created_at }}</div>
+                {% if listing not in watched_listings %}
+                    <form action="{% url 'watchlist' %}" method="POST">
+                        {% csrf_token %}
+                        <input type="hidden" name="listing_id" value="{{ listing.id }}">
+                        <button class="add-to-watchlist-button btn btn-success" type="submit">
+                            Add to watchlist
+                        </button>
+                    </form>
+                {% else %}
+                    <button class="add-to-watchlist-button btn btn-secondary" disabled>Added to watchlist</button>
+                {% endif %}
             </div>
         {% endfor %}
 

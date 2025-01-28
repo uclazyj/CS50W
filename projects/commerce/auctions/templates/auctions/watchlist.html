@@ -1,0 +1,26 @@
+{% extends "auctions/layout.html" %}
+
+{% block body %}
+    <h2>Watchlist</h2>
+
+    <div class="listings_grid">
+        {% for watched_listing in watched_listings %}
+            <div class="image-item">
+                <img class="image" src="{{ watched_listing.image_url }}" alt="Image of {{ watched_listing.title }}">
+            </div>
+            <div class="text-item">
+                <h4>
+                    <a href="{% url 'listings' watched_listing.id %}">{{ watched_listing.title }}</a>
+                </h4>
+                <h6>
+                    <b>
+                        Price: {{ watched_listing.current_price }}
+                    </b>
+                </h6>
+                <div>{{ watched_listing.description }}</div>
+                <div class="created_time">Created {{ watched_listing.created_at }}</div>
+            </div>
+        {% endfor %}
+    </div>
+
+{% endblock %}

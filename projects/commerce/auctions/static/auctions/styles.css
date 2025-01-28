@@ -53,3 +53,13 @@ body {
 .place-bid-button {
     margin-top: 15px;
 }
+
+.created_time {
+    margin-top: 20px;
+    font-size: 12px;
+    color: grey;
+}
+
+.add-to-watchlist-button {
+    margin-top: 15px;
+}

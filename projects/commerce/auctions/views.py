@@ -7,7 +7,7 @@ from django.shortcuts import render, redirect
 from django.urls import reverse
 
 
-from .models import User, Listing, Bid
+from .models import User, Listing, Bid, Watch
 
 class ListingForm(forms.Form):
     title = forms.CharField(max_length=64)
@@ -24,10 +24,22 @@ class BidForm(forms.Form):
                                widget=forms.TextInput(attrs={'placeholder': 'Bid'})
                                )
 
+@login_required
 def index(request):
+    watched_items = Watch.objects.filter(user=request.user)
+    watched_listings = [watched_item.listing for watched_item in watched_items]
     return render(request, "auctions/index.html", {
-        "listings": Listing.objects.all()
+        "listings": Listing.objects.all(),
+        "watched_listings": watched_listings
     })
+
+# def index(request):
+    # watched_listings = Watch.objects.filter(user=request.user).values('listing'),
+    # unwatched_listings = Listing.objects.exclude(id__in=watched_listings)
+    # return render(request, "auctions/index.html", {
+    #     "watched_listings": watched_listings,
+    #     "unwatched_listings": unwatched_listings
+    # })
 
 
 def login_view(request):
@@ -49,7 +61,7 @@ def login_view(request):
     else:
         return render(request, "auctions/login.html")
 
-
+@login_required
 def logout_view(request):
     logout(request)
     return HttpResponseRedirect(reverse("index"))
@@ -134,4 +146,19 @@ def create_listing(request):
             })
     return render(request, "auctions/create_listing.html", {
         "form": ListingForm()
+    })
+
+@login_required
+def watchlist(request):
+    if request.method == "POST":
+        listing_id = request.POST["listing_id"]
+        listing = Listing.objects.get(pk=listing_id)
+        watch, created = Watch.objects.get_or_create(user=request.user, listing=listing)
+        if created:
+            watch.save()
+        return redirect("index")
+    watched_items = Watch.objects.filter(user=request.user)
+    watched_listings = [watched_item.listing for watched_item in watched_items]
+    return render(request, "auctions/watchlist.html", {
+        "watched_listings": watched_listings
     })

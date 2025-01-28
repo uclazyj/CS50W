@@ -31,3 +31,6 @@ class Bid(models.Model):
     def __str__(self):
         return f"{self.listing} was bidded by {self.bidder} at price ${self.bid_price}"
 
+class Watch(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    listing = models.ForeignKey(Listing, on_delete=models.CASCADE)
