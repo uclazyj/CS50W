@@ -153,10 +153,16 @@ def watchlist(request):
     if request.method == "POST":
         listing_id = request.POST["listing_id"]
         listing = Listing.objects.get(pk=listing_id)
-        watch, created = Watch.objects.get_or_create(user=request.user, listing=listing)
-        if created:
-            watch.save()
-        return redirect("index")
+        if request.POST["operation"] == "add":
+            watch, created = Watch.objects.get_or_create(user=request.user, listing=listing)
+            if created:
+                watch.save()
+            return redirect("index")
+        else:
+            watch = Watch.objects.get(user=request.user, listing=listing)
+            watch.delete()
+            return redirect("watchlist")
+        
     watched_items = Watch.objects.filter(user=request.user)
     watched_listings = [watched_item.listing for watched_item in watched_items]
     return render(request, "auctions/watchlist.html", {

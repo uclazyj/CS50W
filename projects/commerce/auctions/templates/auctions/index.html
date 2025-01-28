@@ -23,6 +23,7 @@
                     <form action="{% url 'watchlist' %}" method="POST">
                         {% csrf_token %}
                         <input type="hidden" name="listing_id" value="{{ listing.id }}">
+                        <input type="hidden" name="operation" value="add">
                         <button class="add-to-watchlist-button btn btn-success" type="submit">
                             Add to watchlist
                         </button>

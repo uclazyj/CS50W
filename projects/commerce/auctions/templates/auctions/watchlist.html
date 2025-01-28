@@ -19,6 +19,14 @@
                 </h6>
                 <div>{{ watched_listing.description }}</div>
                 <div class="created_time">Created {{ watched_listing.created_at }}</div>
+                <form action="{% url 'watchlist' %}" method="POST">
+                    {% csrf_token %}
+                    <input type="hidden" name="listing_id" value="{{ watched_listing.id }}">
+                    <input type="hidden" name="operation" value="delete">
+                    <button class="add-to-watchlist-button btn btn-danger" type="submit">
+                        Remove from watchlist
+                    </button>
+                </form>
             </div>
         {% endfor %}
     </div>
