@@ -8,8 +8,8 @@
     <div class="listing-description">{{ listing.description }}</div>
     <h4 class="listing-price">
         ${{ listing.current_price }} 
-        ({% if last_bid is not none %}
-            by {{ last_bid.bidder.username }}
+        ({% if listing.last_bidder is not none %}
+            by {{ listing.last_bidder.username }}
         {% else %}
             No bidder yet
         {% endif %})
@@ -19,19 +19,17 @@
             Your listing has
         {% endif %}
         {{ listing.num_bids }} bid(s) so far. 
-        {% if last_bid is not none and last_bid.bidder == user %}
+        {% if listing.last_bidder == user %}
             Your bid is the current bid.
         {% endif %}
     </div>
 
-    {% if user != listing.owner %}
-        {% if last_bid is none or last_bid.bidder != user %}
-            <form action="{% url 'listings' listing.id %}" method="post">
-                {% csrf_token %}
-                {{ form }}
-                <input class="btn btn-success place-bid-button" type="submit" value="Place Bid">
-            </form>
-        {% endif %}
+    {% if user != listing.owner and user != listing.last_bidder %}
+        <form action="{% url 'listings' listing.id %}" method="post">
+            {% csrf_token %}
+            {{ form }}
+            <input class="btn btn-success place-bid-button" type="submit" value="Place Bid">
+        </form>
     {% endif %}
     <h4 style="margin-top: 20px;">Details</h4>
     <ul>

@@ -11,8 +11,10 @@ class Listing(models.Model):
     title = models.CharField(max_length=64)
     description = models.CharField(max_length=64)
     starting_bid = models.DecimalField(max_digits=10, decimal_places=2)
+    last_bidder = models.ForeignKey(User, on_delete=models.CASCADE, null=True)
     current_price = models.DecimalField(max_digits=10, decimal_places=2, default=0)
     num_bids = models.IntegerField(default=0)
+    active = models.BooleanField(default=True)
     # optional fields
     image_url = models.URLField(blank=True, default="")
     category = models.CharField(max_length=64, blank=True, default="")

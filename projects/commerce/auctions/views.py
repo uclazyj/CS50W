@@ -106,6 +106,7 @@ def listings(request, listing_id):
             bid_price = form.cleaned_data["bid_price"]
             if bid_price > listing.current_price:
                 # Update the listing
+                listing.last_bidder = request.user
                 listing.current_price = bid_price
                 listing.num_bids += 1
                 listing.save()
@@ -115,12 +116,9 @@ def listings(request, listing_id):
             # Explictly redirect to follow Post/Redirect/Get pattern
             return redirect("listings", listing_id=listing.id)
 
-    all_bids = Bid.objects.filter(listing=listing)
-    last_bid = all_bids.order_by('-bid_price').first()
     return render(request, "auctions/listing.html", {
         "listing" : listing,
-        "form" : BidForm(),
-        "last_bid": last_bid
+        "form" : BidForm()
     })
 
 
