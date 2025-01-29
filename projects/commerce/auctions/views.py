@@ -27,19 +27,11 @@ class BidForm(forms.Form):
 @login_required
 def index(request):
     watched_items = Watch.objects.filter(user=request.user)
-    watched_listings = [watched_item.listing for watched_item in watched_items]
+    watched_listings = [watched_item.listing for watched_item in watched_items if watched_item.listing.active]
     return render(request, "auctions/index.html", {
-        "listings": Listing.objects.all(),
+        "listings": Listing.objects.filter(active=True),
         "watched_listings": watched_listings
     })
-
-# def index(request):
-    # watched_listings = Watch.objects.filter(user=request.user).values('listing'),
-    # unwatched_listings = Listing.objects.exclude(id__in=watched_listings)
-    # return render(request, "auctions/index.html", {
-    #     "watched_listings": watched_listings,
-    #     "unwatched_listings": unwatched_listings
-    # })
 
 
 def login_view(request):
@@ -166,3 +158,22 @@ def watchlist(request):
     return render(request, "auctions/watchlist.html", {
         "watched_listings": watched_listings
     })
+
+
+@login_required
+def close(request, listing_id):
+    try:
+        listing = Listing.objects.get(pk=listing_id)
+    except Listing.DoesNotExist:
+        return HttpResponseBadRequest("Bad Request: listing does not exist")
+    if request.method == "POST":
+        listing.active = False
+        listing.save()
+        return redirect("listings", listing_id=listing.id)
+
+
+@login_required
+def my_listings(request):
+    return render(request, "auctions/my_listings.html", {
+        "listings": Listing.objects.filter(owner=request.user).order_by("-active")
+    }) 

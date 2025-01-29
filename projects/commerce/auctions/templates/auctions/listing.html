@@ -1,7 +1,21 @@
 {% extends "auctions/layout.html" %}
 
 {% block body %}
-    <h2>Listing: {{ listing.title }}</h2>
+    <h2>
+        Listing: {{ listing.title }}
+        {% if not listing.active %}
+        <span style="color: red">(Closed)</span>
+        {% endif %}
+    </h2>
+    {% if listing.active and user == listing.owner %}
+        <form action="{% url 'close' listing.id %}" method="POST">
+            {% csrf_token %}
+            <button class="btn btn-danger" type="submit">
+                Close listing
+            </button>
+        </form>
+    {% endif %}
+
     <div class="image-item">
         <img class="image" src="{{ listing.image_url }}" alt="Image of {{ listing.title }}">
     </div>
@@ -24,7 +38,7 @@
         {% endif %}
     </div>
 
-    {% if user != listing.owner and user != listing.last_bidder %}
+    {% if user != listing.owner and user != listing.last_bidder and listing.active %}
         <form action="{% url 'listings' listing.id %}" method="post">
             {% csrf_token %}
             {{ form }}
