@@ -24,13 +24,17 @@ class BidForm(forms.Form):
                                widget=forms.TextInput(attrs={'placeholder': 'Bid'})
                                )
 
-@login_required
+
 def index(request):
-    watched_items = Watch.objects.filter(user=request.user)
-    watched_listings = [watched_item.listing for watched_item in watched_items if watched_item.listing.active]
+    if request.user.is_authenticated:
+        watched_items = Watch.objects.filter(user=request.user)
+        watched_listings = [watched_item.listing for watched_item in watched_items if watched_item.listing.active]
+        return render(request, "auctions/index.html", {
+            "listings": Listing.objects.filter(active=True),
+            "watched_listings": watched_listings
+        })
     return render(request, "auctions/index.html", {
-        "listings": Listing.objects.filter(active=True),
-        "watched_listings": watched_listings
+        "listings": Listing.objects.filter(active=True)
     })
 
 
@@ -86,7 +90,6 @@ def register(request):
         return render(request, "auctions/register.html")
 
 
-@login_required
 def listings(request, listing_id):
     try:
         listing = Listing.objects.get(pk=listing_id)

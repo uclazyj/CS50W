@@ -19,17 +19,19 @@
                 </h6>
                 <div>{{ listing.description }}</div>
                 <div class="created_time">Created {{ listing.created_at }}</div>
-                {% if listing not in watched_listings %}
-                    <form action="{% url 'watchlist' %}" method="POST">
-                        {% csrf_token %}
-                        <input type="hidden" name="listing_id" value="{{ listing.id }}">
-                        <input type="hidden" name="operation" value="add">
-                        <button class="add-to-watchlist-button btn btn-success" type="submit">
-                            Add to watchlist
-                        </button>
-                    </form>
-                {% else %}
-                    <button class="add-to-watchlist-button btn btn-secondary" disabled>Added to watchlist</button>
+                {% if user.is_authenticated %}
+                    {% if listing not in watched_listings %}
+                        <form action="{% url 'watchlist' %}" method="POST">
+                            {% csrf_token %}
+                            <input type="hidden" name="listing_id" value="{{ listing.id }}">
+                            <input type="hidden" name="operation" value="add">
+                            <button class="add-to-watchlist-button btn btn-success" type="submit">
+                                Add to watchlist
+                            </button>
+                        </form>
+                    {% else %}
+                        <button class="add-to-watchlist-button btn btn-secondary" disabled>Added to watchlist</button>
+                    {% endif %}
                 {% endif %}
             </div>
         {% endfor %}

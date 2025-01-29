@@ -1,8 +1,10 @@
 {% extends "auctions/layout.html" %}
 
 {% block body %}
-    {% if not listing.active and user == listing.last_bidder %}
-        <h1 style="color: green">Congratulations, you have won the bid!</h1>
+    {% if user.is_authenticated %}
+        {% if not listing.active and user == listing.last_bidder %}
+            <h1 style="color: green">Congratulations, you have won the bid!</h1>
+        {% endif %}
     {% endif %}
     <h2>
         Listing: {{ listing.title }}
@@ -10,13 +12,15 @@
             <span style="color: red">(Closed)</span>
         {% endif %}
     </h2>
-    {% if listing.active and user == listing.owner %}
-        <form action="{% url 'close' listing.id %}" method="POST">
-            {% csrf_token %}
-            <button class="btn btn-danger" type="submit">
-                Close listing
-            </button>
-        </form>
+    {% if user.is_authenticated %}
+        {% if listing.active and user == listing.owner %}
+            <form action="{% url 'close' listing.id %}" method="POST">
+                {% csrf_token %}
+                <button class="btn btn-danger" type="submit">
+                    Close listing
+                </button>
+            </form>
+        {% endif %}
     {% endif %}
 
     <div class="image-item">
@@ -32,29 +36,31 @@
         {% endif %})
     </h4>
     <div class="bid-info">
-        {% if user == listing.owner %}
-            Your listing has {{ listing.num_bids }} bid(s) so far. 
-            {% if not listing.active and listing.last_bidder != none %}
-                <b>{{ listing.last_bidder }}</b> won the bid at the price of ${{listing.current_price}}.
-            {% endif %}
-        {% else %}
-            {{ listing.num_bids }} bid(s) so far. 
+    
+        {{ listing.num_bids }} bid(s) so far. 
+        {% if not listing.active and listing.last_bidder != none %}
+            <b>{{ listing.last_bidder }}</b> won the bid at the price of ${{listing.current_price}}.
         {% endif %}
-        {% if listing.last_bidder == user %}
-            {% if listing.active %}
-                Your bid is the current bid.
-            {% else %}
-                You have won the bid!
+
+        {% if user.is_authenticated %}
+            {% if listing.last_bidder == user %}
+                {% if listing.active %}
+                    Your bid is the current bid.
+                {% else %}
+                    You have won the bid!
+                {% endif %}
             {% endif %}
         {% endif %}
     </div>
 
-    {% if user != listing.owner and user != listing.last_bidder and listing.active %}
-        <form action="{% url 'listings' listing.id %}" method="post">
-            {% csrf_token %}
-            {{ form }}
-            <input class="btn btn-success place-bid-button" type="submit" value="Place Bid">
-        </form>
+    {% if user.is_authenticated %}
+        {% if user != listing.owner and user != listing.last_bidder and listing.active %}
+            <form action="{% url 'listings' listing.id %}" method="post">
+                {% csrf_token %}
+                {{ form }}
+                <input class="btn btn-success place-bid-button" type="submit" value="Place Bid">
+            </form>
+        {% endif %}
     {% endif %}
     <h4 style="margin-top: 20px;">Details</h4>
     <ul>
