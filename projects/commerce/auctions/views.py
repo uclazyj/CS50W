@@ -176,4 +176,11 @@ def close(request, listing_id):
 def my_listings(request):
     return render(request, "auctions/my_listings.html", {
         "listings": Listing.objects.filter(owner=request.user).order_by("-active")
+    })
+
+
+@login_required
+def listings_won(request):
+    return render(request, "auctions/listings_won.html", {
+        "listings": Listing.objects.filter(active=False, last_bidder=request.user)
     }) 

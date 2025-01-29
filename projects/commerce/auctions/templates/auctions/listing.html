@@ -1,10 +1,13 @@
 {% extends "auctions/layout.html" %}
 
 {% block body %}
+    {% if not listing.active and user == listing.last_bidder %}
+        <h1 style="color: green">Congratulations, you have won the bid!</h1>
+    {% endif %}
     <h2>
         Listing: {{ listing.title }}
         {% if not listing.active %}
-        <span style="color: red">(Closed)</span>
+            <span style="color: red">(Closed)</span>
         {% endif %}
     </h2>
     {% if listing.active and user == listing.owner %}
@@ -23,18 +26,26 @@
     <h4 class="listing-price">
         ${{ listing.current_price }} 
         ({% if listing.last_bidder is not none %}
-            by {{ listing.last_bidder.username }}
+            last bid by {{ listing.last_bidder.username }}
         {% else %}
             No bidder yet
         {% endif %})
     </h4>
     <div class="bid-info">
         {% if user == listing.owner %}
-            Your listing has
+            Your listing has {{ listing.num_bids }} bid(s) so far. 
+            {% if not listing.active and listing.last_bidder != none %}
+                <b>{{ listing.last_bidder }}</b> won the bid at the price of ${{listing.current_price}}.
+            {% endif %}
+        {% else %}
+            {{ listing.num_bids }} bid(s) so far. 
         {% endif %}
-        {{ listing.num_bids }} bid(s) so far. 
         {% if listing.last_bidder == user %}
-            Your bid is the current bid.
+            {% if listing.active %}
+                Your bid is the current bid.
+            {% else %}
+                You have won the bid!
+            {% endif %}
         {% endif %}
     </div>
 
