@@ -187,3 +187,23 @@ def listings_won(request):
     return render(request, "auctions/listings_won.html", {
         "listings": Listing.objects.filter(active=False, last_bidder=request.user)
     }) 
+
+
+def categories(request):
+    categories = Listing.objects.filter(active=True).values_list('category', flat=True).distinct()
+    return render(request, "auctions/categories.html", {
+        "categories": categories
+    }) 
+
+
+def category(request, category_name):
+    if request.user.is_authenticated:
+        watched_items = Watch.objects.filter(user=request.user)
+        watched_listings = [watched_item.listing for watched_item in watched_items if (watched_item.listing.active and watched_item.listing.category == category_name)]
+        return render(request, "auctions/index.html", {
+            "listings": Listing.objects.filter(active=True, category=category_name),
+            "watched_listings": watched_listings
+        })
+    return render(request, "auctions/index.html", {
+        "listings": Listing.objects.filter(active=True, category=category_name)
+    })
