@@ -26,13 +26,6 @@ class BidForm(forms.Form):
     
 
 def index(request):
-    if request.user.is_authenticated:
-        watched_items = Watch.objects.filter(user=request.user)
-        watched_listings = [watched_item.listing for watched_item in watched_items if watched_item.listing.active]
-        return render(request, "auctions/index.html", {
-            "listings": Listing.objects.filter(active=True),
-            "watched_listings": watched_listings
-        })
     return render(request, "auctions/index.html", {
         "listings": Listing.objects.filter(active=True)
     })
@@ -112,10 +105,13 @@ def listings(request, listing_id):
             return redirect("listings", listing_id=listing.id)
         
     comments = Comment.objects.filter(listing=listing)
+    watched_items = Watch.objects.filter(user=request.user)
+    watched_listings = [watched_item.listing for watched_item in watched_items if watched_item.listing.active]
     return render(request, "auctions/listing.html", {
         "listing" : listing,
         "form" : BidForm(),
-        "comments": comments
+        "comments": comments,
+        "in_watchlist": listing in watched_listings
     })
 
 

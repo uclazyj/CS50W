@@ -23,6 +23,22 @@
         {% endif %}
     {% endif %}
 
+
+    {% if user.is_authenticated %}
+        {% if not in_watchlist %}
+            <form action="{% url 'watchlist' %}" method="POST">
+                {% csrf_token %}
+                <input type="hidden" name="listing_id" value="{{ listing.id }}">
+                <input type="hidden" name="operation" value="add">
+                <button class="add-to-watchlist-button btn btn-success" type="submit">
+                    Add to watchlist
+                </button>
+            </form>
+        {% else %}
+            <button class="add-to-watchlist-button btn btn-secondary" disabled>Added to watchlist</button>
+        {% endif %}
+    {% endif %}
+
     <div class="image-item">
         <img class="image" src="{{ listing.image_url }}" alt="Image of {{ listing.title }}">
     </div>
