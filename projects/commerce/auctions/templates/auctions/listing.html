@@ -73,4 +73,23 @@
             {% endif %}
         </li>
     </ul>
+
+    <h4 style="margin-top: 20px;">Comments</h4>
+    <ul>
+        {% for comment in comments %}
+        <li>
+            {{ comment.comment }}
+        </li>
+        {% endfor %}
+    </ul>
+    {% if user.is_authenticated %}
+        <form action="{% url 'add_comment' %}" method="post">
+            {% csrf_token %}
+            <input type="text" name="comment" placeholder="Your comment here">
+            <input type="hidden" name="listing_id" value="{{ listing.id }}">
+            <div>
+                <input class="btn btn-success place-bid-button" type="submit" value="Add comment">
+            </div>
+        </form>
+    {% endif %}
 {% endblock %}

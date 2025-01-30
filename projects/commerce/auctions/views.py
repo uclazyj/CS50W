@@ -7,7 +7,7 @@ from django.shortcuts import render, redirect
 from django.urls import reverse
 
 
-from .models import User, Listing, Bid, Watch
+from .models import User, Listing, Bid, Watch, Comment
 
 class ListingForm(forms.Form):
     title = forms.CharField(max_length=64)
@@ -23,7 +23,7 @@ class BidForm(forms.Form):
                                label="",
                                widget=forms.TextInput(attrs={'placeholder': 'Bid'})
                                )
-
+    
 
 def index(request):
     if request.user.is_authenticated:
@@ -110,10 +110,12 @@ def listings(request, listing_id):
                 bid.save()
             # Explictly redirect to follow Post/Redirect/Get pattern
             return redirect("listings", listing_id=listing.id)
-
+        
+    comments = Comment.objects.filter(listing=listing)
     return render(request, "auctions/listing.html", {
         "listing" : listing,
-        "form" : BidForm()
+        "form" : BidForm(),
+        "comments": comments
     })
 
 
@@ -207,3 +209,14 @@ def category(request, category_name):
     return render(request, "auctions/index.html", {
         "listings": Listing.objects.filter(active=True, category=category_name)
     })
+
+
+def add_comment(request):
+    if request.method == "POST":
+        comment_content = request.POST.get("comment","")
+        if comment_content != "":
+            listing_id = request.POST["listing_id"]
+            listing = Listing.objects.get(pk=listing_id)
+            comment = Comment(listing=listing, user=request.user, comment = comment_content)
+            comment.save()
+        return redirect("listings", listing_id=listing_id)
