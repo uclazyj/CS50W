@@ -96,6 +96,8 @@
         <li>
             {{ comment.comment }}
         </li>
+        {% empty %}
+            (This listing does not have any comment yet.)
         {% endfor %}
     </ul>
     {% if user.is_authenticated %}
