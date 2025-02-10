@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <title>Animate</title>
+        <style>
+            @keyframes grow {
+                from {
+                    font-size: 20px;
+                }
+                to {
+                    font-size: 100px;
+                }
+            }
+
+            @keyframes move {
+                from {
+                    left: 0%;
+                }
+                to {
+                    left: 50%;
+                }
+            }
+
+            h1 {
+                animation-name: grow;
+                animation-duration: 2s;
+                animation-fill-mode: forwards;
+            }
+
+            h1 {
+                position: relative;
+                animation-name: move;
+                animation-duration: 2s;
+                animation-fill-mode: forwards;
+            }
+        </style>
+    </head>
+    <body>
+        <h1>Welcome!</h1>
+        <h1>Foo</h1>
+    </body>
+</html>
