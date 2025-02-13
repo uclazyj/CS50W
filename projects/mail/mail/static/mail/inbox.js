@@ -6,6 +6,12 @@ document.addEventListener('DOMContentLoaded', function() {
   document.querySelector('#archived').addEventListener('click', () => load_mailbox('archive'));
   document.querySelector('#compose').addEventListener('click', compose_email);
 
+  // Add submit button listener here, once
+  document.querySelector('.btn-primary').addEventListener('click', (event)=>{
+    event.preventDefault();
+    post_email();
+  })
+
   // By default, load the inbox
   load_mailbox('inbox');
 });
@@ -28,10 +34,11 @@ function post_email() {
   .then(result => {
       // // Print result
       console.log(result);
-      resp = result;
+      load_mailbox('sent');
+  })
+  .catch(error => {
+    console.log('Error:', error);
   });
-
-  load_mailbox('sent');
 }
 
 function compose_email() {
@@ -44,11 +51,6 @@ function compose_email() {
   document.querySelector('#compose-recipients').value = '';
   document.querySelector('#compose-subject').value = '';
   document.querySelector('#compose-body').value = '';
-
-  document.querySelector('.btn-primary').addEventListener('click', (event)=>{
-    event.preventDefault();
-    post_email();
-  })
 }
 
 function createEmailRow(sender, subject, timestamp) {
