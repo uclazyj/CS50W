@@ -1,0 +1,58 @@
+<div class="inbox-container">
+    <div class="email-row">
+        <div class="left-group">
+            <span class="email-address">user1@example.com</span>
+            <span class="email-subject">Welcome to our service</span>
+        </div>
+        <span class="timestamp">10:30 AM</span>
+    </div>
+
+    <div class="email-row">
+        <div class="left-group">
+            <span class="email-address">newsletter@company.com</span>
+            <span class="email-subject">Your weekly newsletter</span>
+        </div>
+        <span class="timestamp">9:45 AM</span>
+    </div>
+
+    <div class="email-row">
+        <div class="left-group">
+            <span class="email-address">support@service.com</span>
+            <span class="email-subject">Your ticket has been resolved</span>
+        </div>
+        <span class="timestamp">Yesterday</span>
+    </div>
+</div>
+
+<style>
+    .inbox-container {
+        width: 95%;
+        margin: 0 auto;
+    }
+
+    .email-row {
+        display: flex;
+        justify-content: space-between;
+        padding: 10px;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+    }
+
+    .left-group {
+        display: flex;
+        gap: 20px;  /* Space between email and subject */
+    }
+
+    .email-address {
+        min-width: 180px;  /* Fixed width for email column */
+        font-weight: bold;
+    }
+
+    .email-subject {
+        color: #333;
+    }
+
+    .timestamp {
+        color: #666;
+    }
+</style>

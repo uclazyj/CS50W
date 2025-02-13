@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Hello</title>
+    </head>
+    
+
+    <body>
+        <div id="container">
+
+        </div>
+    </body>
+
+    <script>
+        const container = document.querySelector('#container');
+        const outer_div = document.createElement('div');
+        outer_div.style.backgroundColor = "red";
+        const inner_div1 = document.createElement('div');
+        inner_div1.innerHTML = 1;
+        const inner_div2 = document.createElement('div');
+        inner_div2.innerHTML = 2;
+        container.append(outer_div);
+        outer_div.append(inner_div1);
+        outer_div.append(inner_div2);
+
+    </script>
+</html>

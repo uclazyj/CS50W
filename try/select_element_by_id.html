@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Hello</title>
+    </head>
+    <script>
+        function changeHeading() {
+            const start = Date.now();
+            while (Date.now() - start < 2000) {
+                // Do nothing (busy wait)
+            }
+            let heading = document.querySelector("#heading");
+            // This works the same
+            // let heading = document.getElementById("heading");
+            heading.innerHTML = 'Bye!';
+            heading.style.color = "red";
+            document.body.style.backgroundColor = "green";
+        }
+
+        document.addEventListener('DOMContentLoaded', function() {
+            document.querySelector('.submit').addEventListener('click', changeHeading);
+        });
+    </script>
+
+    <body>
+        <h1 id="heading">Hello!</h1>
+        <input type="submit" class="submit">
+        <!-- <button class="submit">Change heading</button> -->
+        
+    </body>
+
+</html>
