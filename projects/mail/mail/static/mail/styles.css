@@ -1,3 +1,34 @@
 textarea {
     min-height: 400px;
 }
+
+.inbox-container {
+    width: 95%;
+    margin: 0 auto;
+}
+
+.email-row {
+    display: flex;
+    justify-content: space-between;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+
+.left-group {
+    display: flex;
+    gap: 20px;  /* Space between email and subject */
+}
+
+.email-address {
+    min-width: 180px;  /* Fixed width for email column */
+    font-weight: bold;
+}
+
+.email-subject {
+    color: #333;
+}
+
+.timestamp {
+    color: #666;
+}
