@@ -45,6 +45,7 @@ function compose_email() {
 
   // Show compose view and hide other views
   document.querySelector('#emails-view').style.display = 'none';
+  document.querySelector('#email-view').style.display = 'none';
   document.querySelector('#compose-view').style.display = 'block';
 
   // Clear out composition fields
@@ -53,25 +54,26 @@ function compose_email() {
   document.querySelector('#compose-body').value = '';
 }
 
-function createEmailRow(sender, subject, timestamp) {
+function createEmailRow(email) {
   // Create the main elements
   const emailRow = document.createElement('div');
   emailRow.className = 'email-row';
-
+  emailRow.style.cursor = 'pointer';
+  emailRow.style.backgroundColor = email.read ? 'lightgray' : 'white';
   const leftGroup = document.createElement('div');
   leftGroup.className = 'left-group';
 
   const emailSpan = document.createElement('span');
   emailSpan.className = 'email-address';
-  emailSpan.textContent = sender;
+  emailSpan.textContent = email.sender;
 
   const subjectSpan = document.createElement('span');
   subjectSpan.className = 'email-subject';
-  subjectSpan.textContent = subject;
+  subjectSpan.textContent = email.subject;
 
   const timestampSpan = document.createElement('span');
   timestampSpan.className = 'timestamp';
-  timestampSpan.textContent = timestamp;
+  timestampSpan.textContent = email.timestamp;
 
   // Assemble the elements
   leftGroup.appendChild(emailSpan);
@@ -86,6 +88,7 @@ function load_mailbox(mailbox) {
   
   // Show the mailbox and hide other views
   document.querySelector('#emails-view').style.display = 'block';
+  document.querySelector('#email-view').style.display = 'none';
   document.querySelector('#compose-view').style.display = 'none';
 
   // Show the mailbox name
@@ -95,8 +98,71 @@ function load_mailbox(mailbox) {
   .then(response => response.json())
   .then(emails => {
       emails.forEach(email => {
-        const email_row = createEmailRow(email.sender, email.subject, email.timestamp);
+        const email_row = createEmailRow(email);
         document.querySelector('#emails-view').appendChild(email_row);
+        email_row.addEventListener('click', () => {
+
+          fetch('/emails/' + email.id, {
+            method: 'PUT',
+            body: JSON.stringify({
+                read: true
+            })
+          })
+          .then(() => {
+            load_email(email.id);
+          });
+
+        });
       });
   });
+}
+
+function load_email(email_id) {
+    // Show the mailbox and hide other views
+    document.querySelector('#emails-view').style.display = 'none';
+    document.querySelector('#email-view').style.display = 'block';
+    document.querySelector('#compose-view').style.display = 'none';
+
+    fetch('/emails/' + email_id)
+    .then(response => response.json())
+    .then(email => {
+      console.log(email);
+      document.querySelector('#email-view').replaceChildren(create_email_div(email));
+    });
+}
+
+function create_email_div(email) {
+  const email_div = document.createElement('div');
+
+  email_div.appendChild(create_info_div('From: ', email.sender));
+  email_div.appendChild(create_info_div('To: ', email.recipients.join(', ')));
+  email_div.appendChild(create_info_div('Subject: ', email.subject));
+  email_div.appendChild(create_info_div('Timestamp: ', email.timestamp));
+
+  const reply_button = document.createElement('button');
+  reply_button.textContent = 'Reply';
+  reply_button.className = 'btn btn-sm btn-outline-primary';
+
+  email_div.appendChild(reply_button);
+  const hr = document.createElement('hr');
+  email_div.appendChild(hr);
+  const body_div = document.createElement('div');
+  body_div.textContent = email.body;
+  email_div.appendChild(body_div);
+  return email_div;
+}
+
+function create_info_div(bold_text, text) {
+  const info_div = document.createElement('div');
+
+  const bold_span = document.createElement('span');
+  bold_span.textContent = bold_text;
+  bold_span.style.fontWeight = 'bold';
+
+  const text_span = document.createElement('span');
+  text_span.textContent = text;
+
+  info_div.appendChild(bold_span);
+  info_div.appendChild(text_span);
+  return info_div;
 }
