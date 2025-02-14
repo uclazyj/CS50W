@@ -141,9 +141,29 @@ function create_email_div(email) {
 
   const reply_button = document.createElement('button');
   reply_button.textContent = 'Reply';
-  reply_button.className = 'btn btn-sm btn-outline-primary';
-
+  reply_button.className = 'btn btn-sm btn-primary button-spacing';
   email_div.appendChild(reply_button);
+
+  const archive_button = document.createElement('button');
+  archive_button.textContent = email.archived ? 'Unarchive' : 'Archive';
+  archive_button.className = 'btn btn-sm btn-warning button-spacing';
+  email_div.appendChild(archive_button);
+
+  archive_button.addEventListener('click', () => {
+
+    fetch('/emails/' + email.id, {
+      method: 'PUT',
+      body: JSON.stringify({
+        archived: !email.archived
+      })
+    })
+    .then(() => {
+      load_mailbox('inbox');
+    });
+
+  });
+  
+
   const hr = document.createElement('hr');
   email_div.appendChild(hr);
   const body_div = document.createElement('div');

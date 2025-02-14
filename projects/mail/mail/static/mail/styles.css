@@ -32,3 +32,8 @@ textarea {
 .timestamp {
     color: #666;
 }
+
+.button-spacing {
+    margin-top: 10px;
+    margin-right: 10px;
+}
