@@ -26,3 +26,11 @@ h2 {
 .post-timestamp, .post-like-count {
     color: rgba(0, 0, 0, .5);
 }
+
+.profile-info {
+    margin-left: 10px;
+}
+
+.profile-info-text {
+    margin-right: 10px;
+}

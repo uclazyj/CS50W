@@ -1,0 +1,28 @@
+{% extends "network/layout.html" %}
+
+{% block body %}
+    <h2>{{ user.username }}</h2>
+    <div class="profile-info">
+        <div>
+            <b>{{ user.followees.count }}</b> <span class="profile-info-text">Following</span>
+            {% if user.followers.count == 1 %}
+                <b>1</b> 
+                <span class="profile-info-text">Follower</span>
+            {% else %}
+                <b>{{ user.followers.count }}</b> <span class="profile-info-text">Followers</span>
+            {% endif %}
+        </div>
+    </div>
+
+    {% for post in posts %}
+        <div class="post-container">
+            <div>{{ post.content }}</div>
+            <div class="post-timestamp">{{ post.created_at }}</div>
+            <div>❤️ 
+                <span class="post-like-count">{{ post.likes.count }}</span>
+            </div>
+            <div>Edit</div>
+        </div>
+    {% endfor %}
+    
+{% endblock %}

@@ -1,6 +1,6 @@
 from django.contrib.auth import authenticate, login, logout
 from django.db import IntegrityError
-from django.http import HttpResponse
+from django.http import HttpResponse, HttpResponseBadRequest
 from django.shortcuts import render, redirect
 from django import forms
 from .models import User, Post
@@ -77,3 +77,13 @@ def register(request):
         return redirect("index")
     else:
         return render(request, "network/register.html")
+
+def profile_page(request, user_id):
+    try: 
+        user = User.objects.get(id=user_id)
+    except User.DoesNotExist:
+        return HttpResponseBadRequest("User does not exist")
+    return render(request, "network/profile_page.html", {
+        "user": user,
+        "posts": Post.objects.filter(author=user).order_by("-created_at")
+    })
