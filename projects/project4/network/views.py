@@ -1,10 +1,9 @@
 from django.contrib.auth import authenticate, login, logout
 from django.db import IntegrityError
-from django.http import HttpResponse, HttpResponseRedirect
-from django.shortcuts import render
-from django.urls import reverse
+from django.http import HttpResponse
+from django.shortcuts import render, redirect
 from django import forms
-from .models import User
+from .models import User, Post
 
 class PostForm(forms.Form):
     post = forms.CharField(label="", required=True, 
@@ -15,8 +14,16 @@ class PostForm(forms.Form):
                          }))
 
 def index(request):
+    if request.method == "POST":
+        form = PostForm(request.POST)
+        if form.is_valid():
+            post = form.cleaned_data["post"]
+            Post.objects.create(author=request.user,content=post)
+            return redirect("index")
+
     return render(request, "network/index.html", {
-        "form": PostForm()
+        "form": PostForm(),
+        "posts": Post.objects.all().order_by("-created_at")
     })
 
 
@@ -31,7 +38,7 @@ def login_view(request):
         # Check if authentication successful
         if user is not None:
             login(request, user)
-            return HttpResponseRedirect(reverse("index"))
+            return redirect("index")
         else:
             return render(request, "network/login.html", {
                 "message": "Invalid username and/or password."
@@ -42,7 +49,7 @@ def login_view(request):
 
 def logout_view(request):
     logout(request)
-    return HttpResponseRedirect(reverse("index"))
+    return redirect("index")
 
 
 def register(request):
@@ -67,6 +74,6 @@ def register(request):
                 "message": "Username already taken."
             })
         login(request, user)
-        return HttpResponseRedirect(reverse("index"))
+        return redirect("index")
     else:
         return render(request, "network/register.html")
