@@ -13,18 +13,6 @@
         </div>
     {% endif %}
     {% for post in posts %}
-        <div class="post-container">
-            <div class="post-author">
-                <a href="{% url 'profile_page' post.author.id %}">
-                    {{ post.author }}
-                </a>
-            </div>
-            <div>{{ post.content }}</div>
-            <div class="post-timestamp">{{ post.created_at }}</div>
-            <div>❤️ 
-                <span class="post-like-count">{{ post.likes.count }}</span>
-            </div>
-            <div>Edit</div>
-        </div>
+        {% include "network/post.html" %}
     {% endfor %}
 {% endblock %}
