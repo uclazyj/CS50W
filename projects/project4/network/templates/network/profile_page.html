@@ -1,15 +1,20 @@
 {% extends "network/layout.html" %}
 
 {% block body %}
-    <h2>{{ user.username }}</h2>
+    <h2>{{ profile_user.username }}</h2>
+    {% if button != "" %}
+        <div>
+            <button>{{ button }}</button>
+        </div>
+    {% endif %}
     <div class="profile-info">
         <div>
-            <b>{{ user.followees.count }}</b> <span class="profile-info-text">Following</span>
-            {% if user.followers.count == 1 %}
+            <b>{{ profile_user.followees.count }}</b> <span class="profile-info-text">Following</span>
+            {% if profile_user.followers.count == 1 %}
                 <b>1</b> 
                 <span class="profile-info-text">Follower</span>
             {% else %}
-                <b>{{ user.followers.count }}</b> <span class="profile-info-text">Followers</span>
+                <b>{{ profile_user.followers.count }}</b> <span class="profile-info-text">Followers</span>
             {% endif %}
         </div>
     </div>

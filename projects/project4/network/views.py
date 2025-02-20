@@ -80,10 +80,17 @@ def register(request):
 
 def profile_page(request, user_id):
     try: 
-        user = User.objects.get(id=user_id)
+        profile_user = User.objects.get(id=user_id)
     except User.DoesNotExist:
         return HttpResponseBadRequest("User does not exist")
+    button = ""
+    if request.user.is_authenticated and request.user != profile_user:
+        if profile_user.followers.filter(id=request.user.id).exists():
+            button = "Unfollow"
+        else:
+            button = "Follow"
     return render(request, "network/profile_page.html", {
-        "user": user,
-        "posts": Post.objects.filter(author=user).order_by("-created_at")
+        "profile_user": profile_user,
+        "posts": Post.objects.filter(author=profile_user).order_by("-created_at"),
+        "button": button
     })
