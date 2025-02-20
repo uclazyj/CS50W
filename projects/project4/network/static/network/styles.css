@@ -1,0 +1,28 @@
+h2 {
+    margin-left: 10px;
+    margin-top: 10px;
+}
+
+.new-post {
+    font-weight: bold;
+}
+
+.post-button {
+    margin-bottom: 15px;
+}
+
+.post-container {
+    border: 1px solid #ebebeb;
+    border-radius: 5px;
+    margin:10px;
+    padding: 10px 15px;
+}
+
+.post-author {
+    font-weight: bold;
+    margin-bottom: 10px;
+}
+
+.post-timestamp, .post-like-count {
+    color: rgba(0, 0, 0, .5);
+}

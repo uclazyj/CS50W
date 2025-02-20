@@ -3,12 +3,21 @@ from django.db import IntegrityError
 from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import render
 from django.urls import reverse
-
+from django import forms
 from .models import User
 
+class PostForm(forms.Form):
+    post = forms.CharField(label="", required=True, 
+                         widget=forms.TextInput(attrs={
+                             'autofocus': True,
+                             'class': 'form-control',
+                             'style': 'width: 95%; padding: 10px; margin-top: 10px; margin-bottom: 10px;'
+                         }))
 
 def index(request):
-    return render(request, "network/index.html")
+    return render(request, "network/index.html", {
+        "form": PostForm()
+    })
 
 
 def login_view(request):

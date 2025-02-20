@@ -1,5 +1,22 @@
 {% extends "network/layout.html" %}
 
 {% block body %}
-    TODO
+    <h2>All Posts</h2>
+    {% if user.is_authenticated %}
+        <div class="new-post post-container">
+            New Post
+            <form method="post">
+                {% csrf_token %}
+                {{ form }}
+                <button class="btn btn-primary post-button" type="submit">Post</button>
+            </form>
+        </div>
+    {% endif %}
+    <div class="post-container">
+        <div class="post-author">Post Author</div>
+        <div>Edit</div>
+        <div>Content</div>
+        <div class="post-timestamp">Timestamp</div>
+        <div>❤️ <span class="post-like-count">likes</span></div>
+    </div>
 {% endblock %}
