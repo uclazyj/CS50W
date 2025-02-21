@@ -1,0 +1,8 @@
+{% extends "network/layout.html" %}
+
+{% block body %}
+    <h2>Followers' Posts</h2>
+    {% for post in posts %}
+        {% include "network/post.html" %}
+    {% endfor %}
+{% endblock %}

@@ -108,10 +108,19 @@ def follow_or_unfollow(request):
                 followee.followers.add(follower)
         else:
             if follower.followees.filter(id=followee_id).exists():
-                print(follower.followees.filter(id=followee_id).count())
                 follower.followees.remove(followee)
             if followee.followers.filter(id=follower_id).exists():
-                print(followee.followers.filter(id=follower_id).count())
                 followee.followers.remove(follower)
 
         return redirect("profile_page", user_id=followee_id)
+    
+def following(request):
+    if request.user.is_authenticated:
+        followees = request.user.followees.all()
+        followees_posts = Post.objects.filter(author__in=followees)
+
+        return render(request, "network/followees_posts.html", {
+            "form": PostForm(),
+            "posts": followees_posts
+        })
+    return render(request, "network/login.html")
