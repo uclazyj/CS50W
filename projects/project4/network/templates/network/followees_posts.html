@@ -3,6 +3,9 @@
 {% block body %}
     <h2>Followers' Posts</h2>
     {% for post in posts %}
-        {% include "network/post.html" %}
+        <div class="post-container">
+            {% include "network/post_author_link.html" %}
+            {% include "network/post.html" %}
+        </div>
     {% endfor %}
 {% endblock %}

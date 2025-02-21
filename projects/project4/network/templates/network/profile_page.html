@@ -31,7 +31,12 @@
     </div>
 
     {% for post in posts %}
-        {% include "network/post.html" %}
+        <div class="post-container">
+            {% include "network/post.html" %}
+            {% if user == post.author %}
+                {% include "network/post_edit_button.html" %}
+            {% endif %}
+        </div>
     {% endfor %}
     
 {% endblock %}
