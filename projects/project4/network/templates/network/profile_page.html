@@ -4,7 +4,18 @@
     <h2>{{ profile_user.username }}</h2>
     {% if button != "" %}
         <div>
-            <button>{{ button }}</button>
+            <form action="{% url 'follow_or_unfollow' %}" method="POST">
+                {% csrf_token %}
+                <input type="hidden" name="followee_id" value="{{ profile_user.id }}">
+                {% if button == "Follow" %}
+                    <input type="hidden" name="operation" value="follow">
+                {% else %}
+                    <input type="hidden" name="operation" value="unfollow">
+                {% endif %}
+                <button type="submit">
+                    {{ button }}
+                </button>
+            </form>
         </div>
     {% endif %}
     <div class="profile-info">

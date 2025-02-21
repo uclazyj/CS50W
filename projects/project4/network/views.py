@@ -94,3 +94,24 @@ def profile_page(request, user_id):
         "posts": Post.objects.filter(author=profile_user).order_by("-created_at"),
         "button": button
     })
+
+def follow_or_unfollow(request):
+    if request.method == "POST" and request.user.is_authenticated:
+        followee_id = request.POST["followee_id"]
+        followee = User.objects.get(id=followee_id)
+        follower_id = request.user.id
+        follower = User.objects.get(id=follower_id)
+        if request.POST["operation"] == "follow":
+            if not follower.followees.filter(id=followee_id).exists():
+                follower.followees.add(followee)
+            if not followee.followers.filter(id=follower_id).exists():
+                followee.followers.add(follower)
+        else:
+            if follower.followees.filter(id=followee_id).exists():
+                print(follower.followees.filter(id=followee_id).count())
+                follower.followees.remove(followee)
+            if followee.followers.filter(id=follower_id).exists():
+                print(followee.followers.filter(id=follower_id).count())
+                followee.followers.remove(follower)
+
+        return redirect("profile_page", user_id=followee_id)
