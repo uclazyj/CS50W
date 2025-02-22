@@ -7,7 +7,7 @@ document.addEventListener('DOMContentLoaded', function() {
   document.querySelector('#compose').addEventListener('click', compose_email);
 
   // Add submit button listener here, once
-  document.querySelector('.btn-primary').addEventListener('click', (event)=>{
+  document.querySelector('#compose-form').addEventListener('submit', (event)=>{
     event.preventDefault();
     post_email();
   })
