@@ -1,8 +1,12 @@
+import json
 from django.contrib.auth import authenticate, login, logout
+from django.contrib.auth.decorators import login_required
 from django.db import IntegrityError
-from django.http import HttpResponse, HttpResponseBadRequest
+from django.http import HttpResponse, HttpResponseBadRequest, JsonResponse
 from django.shortcuts import render, redirect
 from django import forms
+from django.views.decorators.csrf import csrf_exempt
+
 from .models import User, Post
 
 class PostForm(forms.Form):
@@ -95,6 +99,7 @@ def profile_page(request, user_id):
         "button": button
     })
 
+@login_required
 def follow_or_unfollow(request):
     if request.method == "POST" and request.user.is_authenticated:
         followee_id = request.POST["followee_id"]
@@ -113,14 +118,34 @@ def follow_or_unfollow(request):
                 followee.followers.remove(follower)
 
         return redirect("profile_page", user_id=followee_id)
-    
-def following(request):
-    if request.user.is_authenticated:
-        followees = request.user.followees.all()
-        followees_posts = Post.objects.filter(author__in=followees)
 
-        return render(request, "network/followees_posts.html", {
-            "form": PostForm(),
-            "posts": followees_posts
-        })
-    return render(request, "network/login.html")
+@login_required
+def following(request):
+    # if request.user.is_authenticated:
+    followees = request.user.followees.all()
+    followees_posts = Post.objects.filter(author__in=followees)
+
+    return render(request, "network/followees_posts.html", {
+        "form": PostForm(),
+        "posts": followees_posts
+    })
+
+@csrf_exempt
+@login_required
+def edit(request, post_id):
+    if request.method != "PUT":
+        return JsonResponse({
+            "error": "PUT request required."
+        }, status=400)
+    try:
+        post = Post.objects.get(pk=post_id)
+    except Post.DoesNotExist:
+        return JsonResponse({"error": "Post not found."}, status=404)
+    
+    if request.user != post.author:
+        return JsonResponse({"error": "Forbidden"}, status=403)
+    
+    data = json.loads(request.body)
+    post.content = data["content"]
+    post.save()
+    return HttpResponse(status=204)

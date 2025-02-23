@@ -32,6 +32,10 @@ textarea {
     margin-bottom: 10px;
 }
 
+.post-content {
+    white-space: pre-wrap;
+}
+
 .post-timestamp, .post-like-count {
     color: rgba(0, 0, 0, .5);
 }

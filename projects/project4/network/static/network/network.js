@@ -25,14 +25,29 @@ document.addEventListener('DOMContentLoaded', function() {
             timestamp_div = post.querySelector('.post-timestamp');
             post.insertBefore(save_button, timestamp_div);
 
+            const post_id = button.dataset.postId;
+            
             save_button.addEventListener('click', (e)=>{
                 // e.preventDefault();
                 textarea_new = post.querySelector('textarea');
-                console.log(textarea_new.value);
                 post_content.innerHTML = textarea_new.value.replace(/\n/g, '<br>');
                 textarea_new.replaceWith(post_content);
-                save_button.remove();
                 button.style.display = 'block';
+                save_button.remove();
+
+                fetch('/edit/' + post_id, {
+                    method: 'PUT',
+                    body: JSON.stringify({
+                        content: textarea_new.value
+                    })
+                })
+                .then(result => {
+                    console.log(result);
+                })
+                .catch(error => {
+                    console.log('Error:', error);
+                });
+
             });
         });
     });
