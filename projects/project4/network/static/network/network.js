@@ -41,7 +41,9 @@ document.addEventListener('DOMContentLoaded', function() {
             });
         });
     });
+});
 
+document.addEventListener('DOMContentLoaded', function() {
     document.querySelectorAll('.js-heart').forEach((button)=> {
         button.addEventListener('click', () => {
             let likes_count_span = button.parentElement.querySelector('.post-like-count');

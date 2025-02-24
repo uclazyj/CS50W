@@ -16,8 +16,11 @@
         <div class="post-container">
             {% include "network/post_author_link.html" %}
             {% include "network/post.html" %}
-            {% if user == post.author %}
-                {% include "network/post_edit_button.html" %}
+            {% if user.is_authenticated %}
+                {% include "network/post_like_button.html" %}
+                {% if user == post.author %}
+                    {% include "network/post_edit_button.html" %}
+                {% endif %}
             {% endif %}
         </div>
     {% endfor %}

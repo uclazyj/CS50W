@@ -121,7 +121,6 @@ def follow_or_unfollow(request):
 
 @login_required
 def following(request):
-    # if request.user.is_authenticated:
     followees = request.user.followees.all()
     followees_posts = Post.objects.filter(author__in=followees)
 
