@@ -23,7 +23,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 post_content.innerHTML = textarea_new.value;
                 textarea_new.replaceWith(post_content);
                 // Update the post content in the backend
-                fetch('/edit/' + post_id, {
+                fetch('/' + post_id + '/edit', {
                     method: 'PUT',
                     body: JSON.stringify({
                         content: textarea_new.value
