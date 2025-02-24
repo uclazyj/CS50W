@@ -57,11 +57,6 @@ textarea {
     margin-bottom: 10px;
 }
 
-.js-white-heart {
+.js-heart {
     cursor: pointer;
-}
-
-.js-red-heart {
-    cursor: pointer;
-    display: none;
 }

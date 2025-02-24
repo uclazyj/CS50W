@@ -1,9 +1,9 @@
 document.addEventListener('DOMContentLoaded', function() {
 
-    document.querySelectorAll('.js-edit_button').forEach((button)=> {
-        button.addEventListener('click', ()=>{
+    document.querySelectorAll('.js-edit-button').forEach((button)=> {
+        button.addEventListener('click', () => {
             const post = button.parentElement;
-            
+
             // Replaces the post content with a textarea that prefills with the old content
             const post_content = post.querySelector('.js-post-content');
             const textarea = create_text_area(post_content.innerHTML);
@@ -39,6 +39,22 @@ document.addEventListener('DOMContentLoaded', function() {
                 button.style.display = 'block';
                 save_button.remove();
             });
+        });
+    });
+
+    document.querySelectorAll('.js-heart').forEach((button)=> {
+        button.addEventListener('click', () => {
+            let likes_count_span = button.parentElement.querySelector('.post-like-count');
+            let likes_count = Number(likes_count_span.innerHTML);
+            if (button.innerHTML.trim() === "🤍"){
+                button.innerHTML = "❤️";
+                likes_count++;
+            }
+            else {
+                button.innerHTML = "🤍";
+                likes_count--;
+            }
+            likes_count_span.innerHTML = likes_count;
         });
     });
 });
