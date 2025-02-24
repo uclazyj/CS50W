@@ -24,10 +24,14 @@ def index(request):
             post = form.cleaned_data["post"]
             Post.objects.create(author=request.user,content=post)
             return redirect("index")
+        
+    posts = Post.objects.all().order_by("-created_at")
+    for post in posts:
+        post.is_liked = post.likes.filter(id=request.user.id).exists()
 
     return render(request, "network/index.html", {
         "form": PostForm(),
-        "posts": Post.objects.all().order_by("-created_at")
+        "posts": posts
     })
 
 
@@ -93,9 +97,14 @@ def profile_page(request, user_id):
             button = "Unfollow"
         else:
             button = "Follow"
+
+    posts = Post.objects.filter(author=profile_user).order_by("-created_at")
+    for post in posts:
+        post.is_liked = post.likes.filter(id=request.user.id).exists()
+
     return render(request, "network/profile_page.html", {
         "profile_user": profile_user,
-        "posts": Post.objects.filter(author=profile_user).order_by("-created_at"),
+        "posts": posts,
         "button": button
     })
 
@@ -123,6 +132,8 @@ def follow_or_unfollow(request):
 def following(request):
     followees = request.user.followees.all()
     followees_posts = Post.objects.filter(author__in=followees)
+    for followees_post in followees_posts:
+        followees_post.is_liked = followees_post.likes.filter(id=request.user.id).exists()
 
     return render(request, "network/followees_posts.html", {
         "form": PostForm(),
@@ -146,5 +157,24 @@ def edit(request, post_id):
     
     data = json.loads(request.body)
     post.content = data["content"]
+    post.save()
+    return HttpResponse(status=204)
+
+@csrf_exempt
+@login_required
+def like_or_unlike(request, post_id):
+    if request.method != "PUT":
+        return JsonResponse({
+            "error": "PUT request required."
+        }, status=400)
+    try:
+        post = Post.objects.get(pk=post_id)
+    except Post.DoesNotExist:
+        return JsonResponse({"error": "Post not found."}, status=404)
+    # if not follower.followees.filter(id=followee_id).exists():
+    if not post.likes.filter(id=request.user.id).exists():
+        post.likes.add(request.user)
+    else:
+        post.likes.remove(request.user)
     post.save()
     return HttpResponse(status=204)

@@ -57,6 +57,18 @@ document.addEventListener('DOMContentLoaded', function() {
                 likes_count--;
             }
             likes_count_span.innerHTML = likes_count;
+
+            // Update the likes in backend
+            const post_id = button.dataset.postId;
+            fetch('/' + post_id + '/like', {
+                method: 'PUT',
+            })
+            .then(result => {
+                console.log(result);
+            })
+            .catch(error => {
+                console.log('Error:', error);
+            });
         });
     });
 });
