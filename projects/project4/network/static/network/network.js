@@ -30,7 +30,7 @@ document.addEventListener('DOMContentLoaded', function() {
             save_button.addEventListener('click', (e)=>{
                 // e.preventDefault();
                 textarea_new = post.querySelector('textarea');
-                post_content.innerHTML = textarea_new.value.replace(/\n/g, '<br>');
+                post_content.innerHTML = textarea_new.value;
                 textarea_new.replaceWith(post_content);
                 button.style.display = 'block';
                 save_button.remove();
@@ -52,4 +52,3 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     });
 });
-
