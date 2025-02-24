@@ -101,7 +101,7 @@ def profile_page(request, user_id):
 
 @login_required
 def follow_or_unfollow(request):
-    if request.method == "POST" and request.user.is_authenticated:
+    if request.method == "POST":
         followee_id = request.POST["followee_id"]
         followee = User.objects.get(id=followee_id)
         follower_id = request.user.id
