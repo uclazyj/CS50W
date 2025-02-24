@@ -131,7 +131,7 @@ def follow_or_unfollow(request):
 @login_required
 def following(request):
     followees = request.user.followees.all()
-    followees_posts = Post.objects.filter(author__in=followees)
+    followees_posts = Post.objects.filter(author__in=followees).order_by("-created_at")
     for followees_post in followees_posts:
         followees_post.is_liked = followees_post.likes.filter(id=request.user.id).exists()
 
