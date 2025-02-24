@@ -56,3 +56,12 @@ textarea {
     margin-left: 10px;
     margin-bottom: 10px;
 }
+
+.js-white-heart {
+    cursor: pointer;
+}
+
+.js-red-heart {
+    cursor: pointer;
+    display: none;
+}
