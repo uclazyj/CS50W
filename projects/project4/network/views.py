@@ -1,6 +1,7 @@
 import json
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
+from django.core.paginator import Paginator
 from django.db import IntegrityError
 from django.http import HttpResponse, HttpResponseBadRequest, JsonResponse
 from django.shortcuts import render, redirect
@@ -28,6 +29,10 @@ def index(request):
     posts = Post.objects.all().order_by("-created_at")
     for post in posts:
         post.is_liked = post.likes.filter(id=request.user.id).exists()
+    
+    paginator = Paginator(posts, 10)
+    page_number = request.GET.get("page", 1)
+    posts = paginator.get_page(page_number)
 
     return render(request, "network/index.html", {
         "form": PostForm(),
@@ -102,6 +107,10 @@ def profile_page(request, user_id):
     for post in posts:
         post.is_liked = post.likes.filter(id=request.user.id).exists()
 
+    # paginator = Paginator(posts, 10)
+    # page_number = request.GET.get("page", 1)
+    # posts = paginator.get_page(page_number)
+
     return render(request, "network/profile_page.html", {
         "profile_user": profile_user,
         "posts": posts,
@@ -134,6 +143,10 @@ def following(request):
     followees_posts = Post.objects.filter(author__in=followees).order_by("-created_at")
     for followees_post in followees_posts:
         followees_post.is_liked = followees_post.likes.filter(id=request.user.id).exists()
+
+    paginator = Paginator(followees_posts, 10)
+    page_number = request.GET.get("page", 1)
+    followees_posts = paginator.get_page(page_number)
 
     return render(request, "network/followees_posts.html", {
         "form": PostForm(),

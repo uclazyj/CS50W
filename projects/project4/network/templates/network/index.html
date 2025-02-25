@@ -24,4 +24,7 @@
             {% endif %}
         </div>
     {% endfor %}
+    
+    {% include "network/pagination.html" with url_name="index" %}
+
 {% endblock %}

@@ -9,4 +9,7 @@
             {% include "network/post_like_button.html" %}
         </div>
     {% endfor %}
+
+    {% include "network/pagination.html" with url_name="following" %}
+
 {% endblock %}
