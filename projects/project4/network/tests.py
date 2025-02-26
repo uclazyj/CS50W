@@ -57,3 +57,20 @@ class NetworkTestCase(TestCase):
         u1.followers.add(u2)
         u2.followees.remove(u1)
         self.assertEqual(u1.followers.count(), 0)
+
+    def test_add_posts(self):
+        u1 = User.objects.get(username="u1")
+        p1 = Post.objects.create(author=u1, content="foo")
+        p2 = Post.objects.create(author=u1, content="bar")
+        self.assertEqual(Post.objects.filter(author=u1).count(), 2)
+
+    def test_like_posts(self):
+        u1 = User.objects.get(username="u1")
+        u2 = User.objects.get(username="u2")
+        u3 = User.objects.get(username="u3")
+
+        # u1 creates a post p1, u2 and u3 like it.
+        p1 = Post.objects.create(author=u1, content="foo")
+        p1.likes.add(u2)
+        p1.likes.add(u3)
+        self.assertEqual(Post.objects.get(author=u1).likes.count(), 2)
