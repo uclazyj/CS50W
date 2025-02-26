@@ -107,9 +107,9 @@ def profile_page(request, user_id):
     for post in posts:
         post.is_liked = post.likes.filter(id=request.user.id).exists()
 
-    # paginator = Paginator(posts, 10)
-    # page_number = request.GET.get("page", 1)
-    # posts = paginator.get_page(page_number)
+    paginator = Paginator(posts, 10)
+    page_number = request.GET.get("page", 1)
+    posts = paginator.get_page(page_number)
 
     return render(request, "network/profile_page.html", {
         "profile_user": profile_user,

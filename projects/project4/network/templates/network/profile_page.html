@@ -41,5 +41,9 @@
             {% endif %}
         </div>
     {% endfor %}
-    
+
+    {% with profile_user.id|stringformat:"s" as puid %}
+        {% include "network/pagination.html" with url_last_segment=puid %}
+    {% endwith %}
+
 {% endblock %}
