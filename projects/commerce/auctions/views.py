@@ -214,7 +214,7 @@ def category(request, category_name):
         "listings": Listing.objects.filter(active=True, category=category_name)
     })
 
-
+@login_required
 def add_comment(request):
     if request.method == "POST":
         comment_content = request.POST.get("comment","")
