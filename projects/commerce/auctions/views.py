@@ -156,7 +156,7 @@ def watchlist(request):
             watch, created = Watch.objects.get_or_create(user=request.user, listing=listing)
             if created:
                 watch.save()
-            return redirect("index")
+            return redirect("listings", listing_id=listing_id)
         else:
             watch = Watch.objects.get(user=request.user, listing=listing)
             watch.delete()
