@@ -108,7 +108,7 @@ def listings(request, listing_id):
 
     if request.user.is_authenticated:
         watched_items = Watch.objects.filter(user=request.user)
-        watched_listings = [watched_item.listing for watched_item in watched_items if watched_item.listing.active]
+        watched_listings = [watched_item.listing for watched_item in watched_items]
         return render(request, "auctions/listing.html", {
             "listing" : listing,
             "form" : BidForm(),
