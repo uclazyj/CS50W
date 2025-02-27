@@ -165,6 +165,7 @@ function create_email_div(email) {
   email_div.appendChild(hr);
   const body_div = document.createElement('div');
   body_div.textContent = email.body;
+  body_div.style.whiteSpace = 'pre-wrap';
   email_div.appendChild(body_div);
   return email_div;
 }
