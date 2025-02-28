@@ -108,14 +108,14 @@ function load_mailbox(mailbox) {
             })
           })
           .then(() => {
-            load_email(email.id);
+            load_email(email.id, mailbox);
           });
         });
       });
   });
 }
 
-function load_email(email_id) {
+function load_email(email_id, mailbox) {
     // Show the mailbox and hide other views
     document.querySelector('#emails-view').style.display = 'none';
     document.querySelector('#email-view').style.display = 'block';
@@ -125,11 +125,11 @@ function load_email(email_id) {
     .then(response => response.json())
     .then(email => {
       console.log(email);
-      document.querySelector('#email-view').replaceChildren(create_email_div(email));
+      document.querySelector('#email-view').replaceChildren(create_email_div(email, mailbox));
     });
 }
 
-function create_email_div(email) {
+function create_email_div(email, mailbox) {
   const email_div = document.createElement('div');
 
   email_div.appendChild(create_info_div('From: ', email.sender));
@@ -137,29 +137,32 @@ function create_email_div(email) {
   email_div.appendChild(create_info_div('Subject: ', email.subject));
   email_div.appendChild(create_info_div('Timestamp: ', email.timestamp));
 
-  const reply_button = document.createElement('button');
-  reply_button.textContent = 'Reply';
-  reply_button.className = 'btn btn-sm btn-primary button-spacing';
-  email_div.appendChild(reply_button);
-  reply_button.addEventListener('click', () => {
-    reply_email(email);
-  });
-
-  const archive_button = document.createElement('button');
-  archive_button.textContent = email.archived ? 'Unarchive' : 'Archive';
-  archive_button.className = 'btn btn-sm btn-warning button-spacing';
-  email_div.appendChild(archive_button);
-  archive_button.addEventListener('click', () => {
-    fetch('/emails/' + email.id, {
-      method: 'PUT',
-      body: JSON.stringify({
-        archived: !email.archived
-      })
-    })
-    .then(() => {
-      load_mailbox('inbox');
+  // Reply button and archive button should only appear when the current logged-in user is the recipient of the email (for emails in Inbox / Archive, but not Sent.)
+  if (mailbox != 'sent') {
+    const reply_button = document.createElement('button');
+    reply_button.textContent = 'Reply';
+    reply_button.className = 'btn btn-sm btn-primary button-spacing';
+    email_div.appendChild(reply_button);
+    reply_button.addEventListener('click', () => {
+      reply_email(email);
     });
-  });
+
+    const archive_button = document.createElement('button');
+    archive_button.textContent = email.archived ? 'Unarchive' : 'Archive';
+    archive_button.className = 'btn btn-sm btn-warning button-spacing';
+    email_div.appendChild(archive_button);
+    archive_button.addEventListener('click', () => {
+      fetch('/emails/' + email.id, {
+        method: 'PUT',
+        body: JSON.stringify({
+          archived: !email.archived
+        })
+      })
+      .then(() => {
+        load_mailbox('inbox');
+      });
+    });
+  }
   
   const hr = document.createElement('hr');
   email_div.appendChild(hr);
