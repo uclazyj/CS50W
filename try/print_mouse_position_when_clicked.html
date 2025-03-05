@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Test</title>
+    </head>
+    
+    <body>
+        <h1>Click anywhere</h1>
+        The current mouse position will be printed in the console.
+    </body>
+
+    <script>
+        document.addEventListener('click', function(event) {
+            console.log('The current mouse position: X: ' + event.clientX + ', Y: ' + event.clientY);
+        });
+    </script>
+</html>
