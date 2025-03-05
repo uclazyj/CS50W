@@ -6,12 +6,23 @@
     
     <body>
         <h1>Click anywhere</h1>
-        The current mouse position will be printed in the console.
+        <h3>The current mouse position will be printed in the console.</h3>
+        <h3>Some dummy content to make the document scrollable in y direction</h3>
+        <div id="container"></div>
     </body>
 
     <script>
+        const container = document.getElementById("container");
+        for (let i = 0; i < 100; i++) {
+            const div = document.createElement("div");
+            div.textContent = "foo";
+            container.appendChild(div);
+        }
+
         document.addEventListener('click', function(event) {
-            console.log('The current mouse position: X: ' + event.clientX + ', Y: ' + event.clientY);
+            console.log("event.clientX: " + event.clientX + ", event.clientY: " + event.clientY);
+            console.log("event.pageX: " + event.pageX + ", event.pageY: " + event.pageY);
+            console.log("event.screenX: " + event.screenX + ", event.screenY: " + event.screenY);
         });
     </script>
 </html>
