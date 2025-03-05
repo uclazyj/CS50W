@@ -64,3 +64,6 @@ def register(request):
         return redirect("index")
     else:
         return render(request, "soccer/register.html")
+    
+def team_split(request):
+    return render(request, "soccer/team_split.html")

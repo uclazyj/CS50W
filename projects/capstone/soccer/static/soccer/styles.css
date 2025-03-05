@@ -3,8 +3,8 @@ body {
 }
 
 .draggable {
-    width: 100px;
-    height: 100px;
+    padding: 10px;
+    border-radius: 20px;
     background-color: lightblue;
     position: absolute;
     cursor: move;
