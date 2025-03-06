@@ -11,15 +11,16 @@ document.addEventListener('DOMContentLoaded', (event) => {
         }
 
         draggable.addEventListener('mousedown', function(e) {
-            // shiftX is the mouse's x coordinate in the viewport minus the draggable's x coordinate in the viewport.
-            let shiftX = e.clientX - draggable.
-            getBoundingClientRect().left;
-            let shiftY = e.clientY - draggable.getBoundingClientRect().top;
+            const mouse_initial_x = e.clientX;
+            const mouse_initial_y = e.clientY;
+            const draggable_initial_x = draggable.getBoundingClientRect().left;
+            const draggable_initial_y = draggable.getBoundingClientRect().top;
 
             function onMouseMove(event) {
-                // The final position of the draggable is determined by the coordinates in the document (not the viewport), making dragging in a long document across several viewports possible.
-                draggable.style.left = event.pageX - shiftX + 'px';
-                draggable.style.top = event.pageY - shiftY + 'px';
+                const mouse_current_x = event.pageX;
+                const mouse_current_y = event.pageY;
+                draggable.style.left = draggable_initial_x + mouse_current_x - mouse_initial_x + 'px';
+                draggable.style.top = draggable_initial_y + mouse_current_y - mouse_initial_y + 'px';
             }
 
             document.addEventListener('mousemove', onMouseMove);
