@@ -25,16 +25,17 @@ document.addEventListener('DOMContentLoaded', (event) => {
 
             document.addEventListener('mousemove', onMouseMove);
 
-            draggable.addEventListener('mouseup', function() {
+            function onMouseUp() {
                 document.removeEventListener('mousemove', onMouseMove);
-
                 // Save the new position to localStorage
                 localStorage.setItem('draggablePosition_' + id, JSON.stringify({
                     left: draggable.style.left,
                     top: draggable.style.top
                 }));
-            });
+            }
             
+            draggable.addEventListener('mouseup', onMouseUp);
+
         });
 
     });
