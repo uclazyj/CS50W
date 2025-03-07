@@ -27,6 +27,7 @@ document.addEventListener('DOMContentLoaded', (event) => {
 
             function onMouseUp() {
                 document.removeEventListener('mousemove', onMouseMove);
+                draggable.removeEventListener('mouseup', onMouseUp);
                 // Save the new position to localStorage
                 localStorage.setItem('draggablePosition_' + id, JSON.stringify({
                     left: draggable.style.left,
