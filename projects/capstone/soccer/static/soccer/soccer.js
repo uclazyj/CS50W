@@ -18,9 +18,10 @@ document.addEventListener('DOMContentLoaded', (event) => {
             function onMouseMove(event) {
                 const mouse_current_x = event.pageX;
                 const mouse_current_y = event.pageY;
-                draggable_final_left = draggable_initial.left + mouse_current_x - mouse_initial_x;
-                draggable_final_top = draggable_initial.top + mouse_current_y - mouse_initial_y;
+                let draggable_final_left = draggable_initial.left + mouse_current_x - mouse_initial_x;
+                let draggable_final_top = draggable_initial.top + mouse_current_y - mouse_initial_y;
 
+                // Boundary checks
                 draggable_final_left = Math.max(draggable_final_left, 0);
                 draggable_final_left = Math.min(draggable_final_left, window.innerWidth - draggable.offsetWidth);
 
