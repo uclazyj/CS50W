@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Test</title>
+        <style>
+            div {
+                height: 50px;
+                width: 100px;
+                background-color: lightblue;
+                border-width: 2px;
+                border-style: solid;
+                border-color: black;
+                position: absolute;
+                top: 60px;
+                left:30px;
+            }
+        </style>
+    </head>
+    
+    <body>
+        <div>foo</div>
+    </body>
+
+    <script>
+        const div = document.querySelector('div');
+        console.log('div offsetHeight: ' + div.offsetHeight);
+        console.log('div offsetWidth: ' + div.offsetWidth);
+        console.log('div clientHeight: ' + div.clientHeight);
+        console.log('div clientWidth: ' + div.clientWidth);
+        console.log('div scrollHeight: ' + div.scrollHeight);
+        console.log('div scrollWidth: ' + div.scrollWidth);
+        console.log('div offsetTop: ' + div.offsetTop);
+        console.log('div offsetLeft: ' + div.offsetLeft);
+        console.log('div scrollTop: ' + div.scrollTop);
+        console.log('div scrollLeft: ' + div.scrollLeft);
+        console.log('window.outerHeight: ' + window.outerHeight);
+        console.log('window.outerWidth: ' + window.outerWidth);
+        console.log('window.innerHeight: ' + window.innerHeight);
+        console.log('window.innerWidth: ' + window.innerWidth);
+    </script>
+</html>
