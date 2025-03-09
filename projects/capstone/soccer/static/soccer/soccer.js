@@ -5,12 +5,26 @@ const list = document.getElementById('list');
 
 add_player_button.onclick = () => {
     const player = document.createElement('div');
+    
+    const name = document.createElement('div');
+    player.appendChild(name);
+    name.innerHTML = name_input.value;
+    name.classList.add('name');
+    
+    const close = document.createElement('div');
+    player.appendChild(close);
+    close.classList.add('close');
+    close.innerHTML = '❌';
+    close.onclick = () => {
+        localStorage.removeItem('draggablePosition_' + player.id);
+        player.remove();
+    }
+
     player.classList.add('draggable');
-    player.innerHTML = name_input.value;
     player.id = player_id;
+    player_id++;
     list.appendChild(player);
     initializeDraggable(player);
-    player_id++;
     name_input.value = '';
 };
 

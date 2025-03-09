@@ -8,7 +8,7 @@ body {
     padding: 10px;
     border-radius: 20px;
     background-color: lightblue;
-    cursor: move;
+    cursor: pointer;
 }
 
 .form-container {
@@ -20,4 +20,17 @@ body {
 .name-input {
     width: 150px;
     margin-right: 5px;
+}
+
+.name {
+    display: inline-block;
+}
+
+.close {
+    font-size: 8px;
+    margin-left: 10px;
+    display: inline-block;
+    cursor: pointer;
+    position: relative;
+    bottom: 12px;
 }
