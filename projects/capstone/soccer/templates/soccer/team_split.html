@@ -2,8 +2,16 @@
 
 {% block body %}
     <h1>Split players into different teams</h1>
-    <div id="1" class="draggable">Player 1</div>
-    <div id="2" class="draggable">Player 2</div>
-    <div id="3" class="draggable">Player 3</div>
+
+    <form>
+        <div class="form-container">
+            <input id="name_input" class="name-input" type="text" autofocus placeholder="name">
+            <button id="add_button" type="button" class="btn btn-success btn-sm">Add player</button>
+        </div>
+    </form>
+
+    <div id="list">  
+    </div>
+    
     <hr>
 {% endblock %}

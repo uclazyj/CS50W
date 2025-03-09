@@ -1,6 +1,27 @@
-document.querySelectorAll('.draggable').forEach(draggable => {
+let player_id = 1;
+const add_player_button = document.getElementById('add_button');
+const name_input = document.getElementById('name_input');
+const list = document.getElementById('list');
 
-    const id=draggable.id;
+add_player_button.onclick = () => {
+    const player = document.createElement('div');
+    player.classList.add('draggable');
+    player.innerHTML = name_input.value;
+    player.id = player_id;
+    list.appendChild(player);
+    initializeDraggable(player);
+    player_id++;
+    name_input.value = '';
+};
+
+// Initialize existing draggable elements
+document.querySelectorAll('.draggable').forEach(draggable => {
+    initializeDraggable(draggable);
+});
+
+function initializeDraggable(draggable) {
+    const id = draggable.id;
+
     // Retrieve the saved position from localStorage
     const savedPosition = JSON.parse(localStorage.getItem('draggablePosition_' + id));
     if (savedPosition) {
@@ -41,9 +62,12 @@ document.querySelectorAll('.draggable').forEach(draggable => {
                 top: draggable.style.top
             }));
         }
-        
+
         document.addEventListener('mouseup', onMouseUp);
 
+        // draggable.ondragstart = function() {
+        //     return false;
+        // };
     });
+}
 
-});

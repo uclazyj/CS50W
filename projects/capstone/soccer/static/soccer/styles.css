@@ -9,3 +9,14 @@ body {
     position: absolute;
     cursor: move;
 }
+
+.form-container {
+    display: flex;
+    align-items: center;
+    margin-top: 20px;
+}
+
+.name-input {
+    width: 150px;
+    margin-right: 5px;
+}
