@@ -3,16 +3,25 @@
 {% block body %}
     <h1>Split players into different teams</h1>
 
-    <form>
+    <form method="post">
+        {% csrf_token %}
         <div class="form-container">
-            <input id="name_input" class="name-input" type="text" autofocus placeholder="name">
-            <button id="add_button" type="button" class="btn btn-success btn-sm">Add player</button>
+            <input id="name_input" name="name" class="name-input" type="text" autofocus placeholder="name">
+            <button id="add_button" type="submit" class="btn btn-success btn-sm">Add player</button>
         </div>
     </form>
 
     <hr id="upper_boundary">
 
-    <div id="list">  
+    <div id="list">
+        {% for player in players %}  
+            <div class="draggable" data-id="{{ player.id }}">
+                <div class="name">
+                    {{ player.name }}
+                </div>
+                <button class="close">❌</button>
+            </div>
+        {% endfor %}
     </div>
 
     <hr id="lower_boundary">

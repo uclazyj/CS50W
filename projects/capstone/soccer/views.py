@@ -4,7 +4,7 @@ from django.db import IntegrityError
 from django.shortcuts import render, redirect
 
 
-from .models import User
+from .models import User, PlayerIcon
 
 # Create your views here.
 def index(request):
@@ -66,4 +66,14 @@ def register(request):
         return render(request, "soccer/register.html")
     
 def team_split(request):
-    return render(request, "soccer/team_split.html")
+    print("Team Split view function is called!")
+    if request.method == "POST":
+        print("POST request")
+        name = request.POST.get("name","noname")
+        print(name)
+        if not PlayerIcon.objects.filter(name=name).exists():
+            print("new player created!") 
+            player = PlayerIcon(name=name)
+            player.save()
+
+    return render(request, "soccer/team_split.html", {"players": PlayerIcon.objects.all()})
