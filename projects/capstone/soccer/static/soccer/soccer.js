@@ -13,7 +13,7 @@ add_player_button.onclick = () => {
     name.innerHTML = name_input.value;
     name.classList.add('name');
     
-    const close = document.createElement('div');
+    const close = document.createElement('button');
     player.appendChild(close);
     close.classList.add('close');
     close.innerHTML = '❌';

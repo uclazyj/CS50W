@@ -42,6 +42,8 @@ body {
     cursor: pointer;
     position: relative;
     bottom: 12px;
+    border: none;
+    background-color: transparent;
 }
 
 #list {
