@@ -6,7 +6,7 @@ class User(AbstractUser):
     pass
 
 class PlayerIcon(models.Model):
-    name = models.CharField(max_length=20)
+    name = models.CharField(max_length=20, unique=True)
     x = models.IntegerField(null=True)
     y = models.IntegerField(null=True)
     team_id = models.IntegerField(null=True)
