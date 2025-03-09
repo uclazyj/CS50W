@@ -1,3 +1,4 @@
+import json
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 from django.db import IntegrityError
@@ -5,6 +6,7 @@ from django.shortcuts import render, redirect
 
 
 from .models import User, PlayerIcon
+from django.views.decorators.csrf import csrf_exempt
 
 # Create your views here.
 def index(request):
@@ -64,16 +66,20 @@ def register(request):
         return redirect("index")
     else:
         return render(request, "soccer/register.html")
-    
+
+@csrf_exempt
 def team_split(request):
-    print("Team Split view function is called!")
     if request.method == "POST":
-        print("POST request")
-        name = request.POST.get("name","noname")
-        print(name)
+        name = request.POST["name"]
         if not PlayerIcon.objects.filter(name=name).exists():
             print("new player created!") 
             player = PlayerIcon(name=name)
             player.save()
+    elif request.method == "DELETE":
+        print("Delete request received!")
+        data = json.loads(request.body)
+        player_id = int(data["player_id"])
+        player = PlayerIcon.objects.get(id=player_id)
+        player.delete()
 
     return render(request, "soccer/team_split.html", {"players": PlayerIcon.objects.all()})

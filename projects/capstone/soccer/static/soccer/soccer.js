@@ -41,6 +41,18 @@ function initializeDraggable(draggable) {
     const closeBtn = draggable.querySelector('.close');
     closeBtn.onclick = () => {
         draggable.remove();
+        fetch('/team_split', {
+            method: 'DELETE',
+            body: JSON.stringify({
+                player_id: id
+            })
+        })
+        .then(result => {
+            console.log(result);
+        })
+        .catch(error => {
+            console.log('Error:', error);
+        });
     }
 
     // // Retrieve the saved position from localStorage
