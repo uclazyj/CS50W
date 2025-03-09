@@ -4,3 +4,12 @@ from django.db import models
 # Create your models here.
 class User(AbstractUser):
     pass
+
+class PlayerIcon(models.Model):
+    name = models.CharField(max_length=20)
+    x = models.IntegerField(null=True)
+    y = models.IntegerField(null=True)
+    team_id = models.IntegerField(null=True)
+
+    def __str__(self):
+        return f"{self.name} is located at x: {self.x}, y: {self.y}. Team id: {self.team_id}"
