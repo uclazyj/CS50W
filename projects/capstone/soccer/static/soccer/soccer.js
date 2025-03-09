@@ -3,6 +3,8 @@ const add_player_button = document.getElementById('add_button');
 const name_input = document.getElementById('name_input');
 const list = document.getElementById('list');
 
+const upper_boundary_position = document.getElementById('upper_boundary').getBoundingClientRect().top;
+
 add_player_button.onclick = () => {
     const player = document.createElement('div');
     
@@ -59,7 +61,8 @@ function initializeDraggable(draggable) {
             draggable_final_left = Math.max(draggable_final_left, 0);
             draggable_final_left = Math.min(draggable_final_left, window.innerWidth - draggable.offsetWidth);
 
-            draggable_final_top = Math.max(draggable_final_top, 0);
+            
+            draggable_final_top = Math.max(draggable_final_top, upper_boundary_position);
             draggable_final_top = Math.min(draggable_final_top, window.innerHeight - draggable.offsetHeight);
 
             draggable.style.left = draggable_final_left + 'px';

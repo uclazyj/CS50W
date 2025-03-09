@@ -2,9 +2,18 @@ body {
     margin-left: 10px;
 }
 
+#upper_boundary {
+    margin-bottom: 0px;
+}
+
+#lower_boundary {
+    margin-top: 0px;
+}
+
 .draggable {
     display: inline-block;
-    margin: 5px;
+    margin-bottom: 10px;
+    margin-right: 10px;
     padding: 10px;
     border-radius: 20px;
     background-color: lightblue;
@@ -33,4 +42,11 @@ body {
     cursor: pointer;
     position: relative;
     bottom: 12px;
+}
+
+#list {
+    display: flex;
+    flex-wrap: wrap; /* Allow wrapping to the next line if needed */
+    margin-top: 10px; /* Initial space between the two hr tags */
+    min-height: 54px; /* Ensure some space for the first few players */
 }
