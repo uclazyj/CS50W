@@ -3,10 +3,11 @@ body {
 }
 
 .draggable {
+    display: inline-block;
+    margin: 5px;
     padding: 10px;
     border-radius: 20px;
     background-color: lightblue;
-    position: absolute;
     cursor: move;
 }
 

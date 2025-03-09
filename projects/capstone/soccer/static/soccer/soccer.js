@@ -30,6 +30,7 @@ function initializeDraggable(draggable) {
     }
 
     draggable.addEventListener('mousedown', function(e) {
+        draggable.style.position = 'absolute';
         const mouse_initial_x = e.clientX;
         const mouse_initial_y = e.clientY;
         const draggable_initial = draggable.getBoundingClientRect();
