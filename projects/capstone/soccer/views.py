@@ -2,6 +2,7 @@ import json
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 from django.db import IntegrityError
+from django.http import JsonResponse
 from django.shortcuts import render, redirect
 
 
@@ -69,17 +70,41 @@ def register(request):
 
 @csrf_exempt
 def team_split(request):
+    # Create a new player icon
     if request.method == "POST":
         name = request.POST["name"]
         if not PlayerIcon.objects.filter(name=name).exists():
             print("new player created!") 
             player = PlayerIcon(name=name)
             player.save()
+        return redirect("team_split")
+    # Delete a player icon
     elif request.method == "DELETE":
-        print("Delete request received!")
         data = json.loads(request.body)
         player_id = int(data["player_id"])
-        player = PlayerIcon.objects.get(id=player_id)
-        player.delete()
+        try:
+            player = PlayerIcon.objects.get(id=player_id)
+            player.delete()
+            print("player deleted successfully!") 
+        except PlayerIcon.DoesNotExist:
+            print("Fail to delete the player!") 
+            return JsonResponse({"error": "PlayerIcon not found."}, status=404)
+            
+        return redirect("team_split")
+    # Update the position of a player icon
+    elif request.method == "PUT":
+        data = json.loads(request.body)
+        player_id = int(data["player_id"])
+        try:
+            player = PlayerIcon.objects.get(id=player_id)
+            player.x = int(data["x"])
+            player.y = int(data["y"])
+            player.save()
+            print("player position updated successfully!") 
+        except PlayerIcon.DoesNotExist:
+            print("Fail to update player position!") 
+            return JsonResponse({"error": "PlayerIcon not found."}, status=404)
+        return redirect("team_split")
 
-    return render(request, "soccer/team_split.html", {"players": PlayerIcon.objects.all()})
+    players = PlayerIcon.objects.all()
+    return render(request, "soccer/team_split.html", {"players": players})

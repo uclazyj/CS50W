@@ -55,12 +55,12 @@ function initializeDraggable(draggable) {
         });
     }
 
-    // // Retrieve the saved position from localStorage
-    // const savedPosition = JSON.parse(localStorage.getItem('draggablePosition_' + id));
-    // if (savedPosition) {
-    //     draggable.style.left = savedPosition.left;
-    //     draggable.style.top = savedPosition.top;
-    // }
+    // Retrieve the saved position from backend
+    if (draggable.dataset.x != "None" && draggable.dataset.y != "None") {
+        draggable.style.left = draggable.dataset.x + 'px';
+        draggable.style.top = draggable.dataset.y + 'px';
+        draggable.style.position = 'absolute';
+    }
 
     draggable.addEventListener('mousedown', function(e) {
         
@@ -68,7 +68,6 @@ function initializeDraggable(draggable) {
         const mouse_initial_y = e.clientY;
         const draggable_initial = draggable.getBoundingClientRect();
         
-
         function onMouseMove(event) {
             draggable.style.position = 'absolute';
             const mouse_current_x = event.pageX;
@@ -93,11 +92,25 @@ function initializeDraggable(draggable) {
         function onMouseUp() {
             document.removeEventListener('mousemove', onMouseMove);
             document.removeEventListener('mouseup', onMouseUp);
-            // // Save the new position to localStorage
-            // localStorage.setItem('draggablePosition_' + id, JSON.stringify({
-            //     left: draggable.style.left,
-            //     top: draggable.style.top
-            // }));
+
+            draggable_updated_position = draggable.getBoundingClientRect();
+
+            // Save the new position to backend
+            fetch('/team_split', {
+                method: 'PUT',
+                body: JSON.stringify({
+                    player_id: id,
+                    x: draggable_updated_position.left,
+                    y: draggable_updated_position.top
+                })
+            })
+            .then(result => {
+                console.log(result);
+            })
+            .catch(error => {
+                console.log('Error:', error);
+            });
+
         }
 
         document.addEventListener('mouseup', onMouseUp);
