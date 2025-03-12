@@ -3,6 +3,7 @@ const add_player_button = document.getElementById('add_button');
 const list = document.getElementById('list');
 
 const upper_boundary_position = document.getElementById('upper_boundary').getBoundingClientRect().top;
+const lower_boundary_position = document.getElementById('lower_boundary').getBoundingClientRect().top;
 
 // Initialize existing draggable elements
 document.querySelectorAll('.draggable').forEach(draggable => {
@@ -44,9 +45,12 @@ function initializeDraggable(draggable) {
 
     // Retrieve the saved position from backend
     if (draggable.dataset.x != "None" && draggable.dataset.y != "None") {
-        draggable.style.left = draggable.dataset.x + 'px';
-        draggable.style.top = draggable.dataset.y + 'px';
-        draggable.style.position = 'absolute';
+        const y = parseInt(draggable.dataset.y);
+        if (y > lower_boundary_position){
+            draggable.style.left = draggable.dataset.x + 'px';
+            draggable.style.top = draggable.dataset.y + 'px';
+            draggable.style.position = 'absolute';
+        }
     }
 
     draggable.addEventListener('mousedown', function(e) {
@@ -80,6 +84,10 @@ function initializeDraggable(draggable) {
             document.removeEventListener('mouseup', onMouseUp);
 
             draggable_updated_position = draggable.getBoundingClientRect();
+
+            if (draggable_updated_position.bottom <= lower_boundary_position) {
+                draggable.style.position = 'static';
+            }
 
             // Save the new position to backend
             fetch('/team_split', {

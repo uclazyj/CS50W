@@ -111,7 +111,7 @@ def team_split(request):
         except PlayerIcon.DoesNotExist:
             return JsonResponse({"error": "PlayerIcon not found."}, status=404)
 
-    players = PlayerIcon.objects.all()
+    players = PlayerIcon.objects.all().order_by('name')
     return render(request, "soccer/team_split.html", {
         "form": NameForm(),
         "players": players
