@@ -4,11 +4,27 @@ const list = document.getElementById('list');
 
 const upper_boundary_position = document.getElementById('upper_boundary').getBoundingClientRect().top;
 const lower_boundary_position = document.getElementById('lower_boundary').getBoundingClientRect().top;
+const team_boundary_position = document.getElementById('team1').getBoundingClientRect().right;
 
 // Initialize existing draggable elements
 document.querySelectorAll('.draggable').forEach(draggable => {
     initializeDraggable(draggable);
+    updateDraggableColor(draggable);
 });
+
+function updateDraggableColor(draggable) {
+    const rect = draggable.getBoundingClientRect();
+    if (rect.bottom <= lower_boundary_position) {
+        draggable.style.backgroundColor = 'lightgreen';
+    }
+    else if (rect.top >= lower_boundary_position && rect.right <= team_boundary_position) {
+        draggable.style.backgroundColor = 'lightpink';
+    }
+    else if (rect.top >= lower_boundary_position && team_boundary_position <= rect.left) {
+        draggable.style.backgroundColor = 'lightblue';
+    }
+}
+
 
 function initializeDraggable(draggable) {
     const id = draggable.dataset.id;
@@ -75,6 +91,8 @@ function initializeDraggable(draggable) {
 
             draggable.style.left = draggable_final_left + 'px';
             draggable.style.top = draggable_final_top + 'px';
+
+            updateDraggableColor(draggable);
         }
 
         document.addEventListener('mousemove', onMouseMove);

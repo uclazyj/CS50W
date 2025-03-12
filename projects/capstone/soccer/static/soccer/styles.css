@@ -64,9 +64,10 @@ h1 {
 }
 
 #team1 {
-    background-color: rgb(248, 206, 212);
+    background-color: rgba(255,182,193, 0.2);
 }
 
 #team2 {
-    background-color: rgb(204, 233, 243);
+    background-color: rgba(173, 216, 230, 0.2);
+    
 }
