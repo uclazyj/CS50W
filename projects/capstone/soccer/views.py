@@ -4,10 +4,18 @@ from django.contrib.auth.decorators import login_required
 from django.db import IntegrityError
 from django.http import JsonResponse
 from django.shortcuts import render, redirect
+from django import forms
 
 
 from .models import User, PlayerIcon
 from django.views.decorators.csrf import csrf_exempt
+
+class NameForm(forms.Form):
+    name = forms.CharField(label="", required=True, max_length=20, widget=forms.TextInput(attrs={
+        'autofocus': True,
+        'placeholder': 'name',
+        'style': 'width: 150px; margin-right: 5px;'
+        }))
 
 # Create your views here.
 def index(request):
@@ -73,6 +81,8 @@ def team_split(request):
     # Create a new player icon
     if request.method == "POST":
         name = request.POST["name"]
+        if name == "":
+            return JsonResponse({"error": "Name cannot be blank."}, status=400)
         if not PlayerIcon.objects.filter(name=name).exists():
             player = PlayerIcon(name=name)
             player.save()
@@ -102,4 +112,7 @@ def team_split(request):
             return JsonResponse({"error": "PlayerIcon not found."}, status=404)
 
     players = PlayerIcon.objects.all()
-    return render(request, "soccer/team_split.html", {"players": players})
+    return render(request, "soccer/team_split.html", {
+        "form": NameForm(),
+        "players": players
+    })

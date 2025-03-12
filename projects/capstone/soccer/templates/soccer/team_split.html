@@ -6,7 +6,7 @@
     <form method="post">
         {% csrf_token %}
         <div class="form-container">
-            <input id="name_input" name="name" class="name-input" type="text" autofocus placeholder="name">
+            {{ form }}
             <button id="add_button" type="submit" class="btn btn-success btn-sm">Add player</button>
         </div>
     </form>
@@ -15,7 +15,7 @@
 
     <div id="list">
         {% for player in players %}  
-            <div class="draggable" data-id="{{ player.id }}" data-name = "{{ player.name }}" data-x = "{{ player.x }}" data-y = "{{ player.y }}">
+            <div class="draggable" data-id="{{ player.id }}" data-x = "{{ player.x }}" data-y = "{{ player.y }}">
                 <div class="name">
                     {{ player.name }}
                 </div>

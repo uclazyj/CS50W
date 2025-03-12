@@ -26,11 +26,6 @@ body {
     margin-top: 20px;
 }
 
-.name-input {
-    width: 150px;
-    margin-right: 5px;
-}
-
 .name {
     display: inline-block;
 }

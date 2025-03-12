@@ -1,34 +1,8 @@
 let player_id = 1;
 const add_player_button = document.getElementById('add_button');
-const name_input = document.getElementById('name_input');
 const list = document.getElementById('list');
 
 const upper_boundary_position = document.getElementById('upper_boundary').getBoundingClientRect().top;
-
-// add_player_button.onclick = () => {
-//     const player = document.createElement('div');
-    
-//     const name = document.createElement('div');
-//     player.appendChild(name);
-//     name.innerHTML = name_input.value;
-//     name.classList.add('name');
-    
-//     const close = document.createElement('button');
-//     player.appendChild(close);
-//     close.classList.add('close');
-//     close.innerHTML = '❌';
-//     close.onclick = () => {
-//         localStorage.removeItem('draggablePosition_' + player.id);
-//         player.remove();
-//     }
-
-//     player.classList.add('draggable');
-//     player.id = player_id;
-//     player_id++;
-//     list.appendChild(player);
-//     initializeDraggable(player);
-//     name_input.value = '';
-// };
 
 // Initialize existing draggable elements
 document.querySelectorAll('.draggable').forEach(draggable => {
