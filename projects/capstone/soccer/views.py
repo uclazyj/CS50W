@@ -98,7 +98,7 @@ def team_split(request):
         except PlayerIcon.DoesNotExist:
             return JsonResponse({"error": "PlayerIcon not found."}, status=404)
             
-    # Update the position of a player icon
+    # Update the position of a player icon and the team info.
     elif request.method == "PUT":
         data = json.loads(request.body)
         player_id = int(data["player_id"])
@@ -106,6 +106,14 @@ def team_split(request):
             player = PlayerIcon.objects.get(id=player_id)
             player.x = int(data["x"])
             player.y = int(data["y"])
+            team_id = int(data["team_id"])
+            
+            # 0 means the player does not belong to any team
+            if team_id == 0:
+                player.team_id = None
+            # -1 means no update in team_id
+            elif team_id != -1:
+                player.team_id = team_id
             player.save()
             return JsonResponse({"message": "Player position updated successfully."}, status=200)
         except PlayerIcon.DoesNotExist:

@@ -9,20 +9,27 @@ const team_boundary_position = document.getElementById('team1').getBoundingClien
 // Initialize existing draggable elements
 document.querySelectorAll('.draggable').forEach(draggable => {
     initializeDraggable(draggable);
-    updateDraggableColor(draggable);
 });
 
-function updateDraggableColor(draggable) {
+function updateTeam(draggable) {
     const rect = draggable.getBoundingClientRect();
+    // No team assigned
     if (rect.bottom <= lower_boundary_position) {
         draggable.style.backgroundColor = 'lightgreen';
+        return 0;
     }
+    // Assigned to team 1
     else if (rect.top >= lower_boundary_position && rect.right <= team_boundary_position) {
         draggable.style.backgroundColor = 'lightpink';
+        return 1;
     }
+    // Assigned to team 2
     else if (rect.top >= lower_boundary_position && team_boundary_position <= rect.left) {
         draggable.style.backgroundColor = 'lightblue';
+        return 2;
     }
+    // No change in team
+    return -1;
 }
 
 
@@ -59,13 +66,17 @@ function initializeDraggable(draggable) {
         });
     });
 
-    // Retrieve the saved position from backend
-    if (draggable.dataset.x != "None" && draggable.dataset.y != "None") {
-        const y = parseInt(draggable.dataset.y);
-        if (y > lower_boundary_position){
-            draggable.style.left = draggable.dataset.x + 'px';
-            draggable.style.top = draggable.dataset.y + 'px';
-            draggable.style.position = 'absolute';
+    // Retrieve the saved position and team info from backend
+    const team_id = parseInt(draggable.dataset.teamId);
+    if (team_id > 0) {
+        draggable.style.left = draggable.dataset.x + 'px';
+        draggable.style.top = draggable.dataset.y + 'px';
+        draggable.style.position = 'absolute';
+        if (team_id == 1) {
+            draggable.style.backgroundColor = 'lightpink';
+        }
+        else {
+            draggable.style.backgroundColor = 'lightblue';
         }
     }
 
@@ -92,7 +103,7 @@ function initializeDraggable(draggable) {
             draggable.style.left = draggable_final_left + 'px';
             draggable.style.top = draggable_final_top + 'px';
 
-            updateDraggableColor(draggable);
+            updateTeam(draggable);
         }
 
         document.addEventListener('mousemove', onMouseMove);
@@ -103,7 +114,8 @@ function initializeDraggable(draggable) {
 
             draggable_updated_position = draggable.getBoundingClientRect();
 
-            if (draggable_updated_position.bottom <= lower_boundary_position) {
+            const team_id = updateTeam(draggable);
+            if (team_id === 0) {
                 draggable.style.position = 'static';
             }
 
@@ -113,7 +125,8 @@ function initializeDraggable(draggable) {
                 body: JSON.stringify({
                     player_id: id,
                     x: draggable_updated_position.left,
-                    y: draggable_updated_position.top
+                    y: draggable_updated_position.top,
+                    team_id: team_id
                 })
             })
             .then(result => {
