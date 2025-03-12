@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Test</title>
+        <style>
+            #foo {
+                position: absolute;
+                left: 100px;
+                top: 150px;
+                background-color: lightpink;
+                margin: 20px;
+                padding: 5px;
+            }
+
+        </style>
+    </head>
+    
+    <body>
+        <div id="foo">
+            foo
+        </div>
+    </body>
+
+    <script>
+        const div = document.getElementById('foo');
+        console.log("div.getBoundingClientRect().left: " + div.getBoundingClientRect().left);
+        console.log("div.style.left: " + div.style.left);
+    </script>
+</html>
