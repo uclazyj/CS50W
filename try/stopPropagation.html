@@ -30,6 +30,12 @@
             event1.stopPropagation();
             console.log('button 1 clicked!');
         });
+        // To prevent the parent1's mouseup event from triggering,
+        // We add a mouseup event listener to the child, and stop the propagation
+        btn1.addEventListener('mouseup', function(e) {
+            e.stopPropagation();
+            console.log('button 1 mouseup!');
+        });
 
         parent2.addEventListener('click', function() {
             console.log('Parent 2 clicked!');
