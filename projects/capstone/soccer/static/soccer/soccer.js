@@ -39,7 +39,20 @@ function initializeDraggable(draggable) {
     const id = draggable.dataset.id;
     
     const closeBtn = draggable.querySelector('.close');
-    closeBtn.onclick = () => {
+    // Prevent the parent element's event listeners from being triggered when clicking the close button
+    closeBtn.addEventListener('mousedown', (mousedown_event) => {
+        mousedown_event.stopPropagation();
+    });
+    closeBtn.addEventListener('mousemove', (mousemove_event) => {
+        mousemove_event.stopPropagation();
+    });
+    closeBtn.addEventListener('mouseup', (mouseup_event) => {
+        mouseup_event.stopPropagation();
+    });
+
+    closeBtn.addEventListener('click', (event) => {
+        // Prevent the 'mouseup' event from being triggered
+        event.stopPropagation();
         draggable.remove();
         fetch('/team_split', {
             method: 'DELETE',
@@ -53,7 +66,7 @@ function initializeDraggable(draggable) {
         .catch(error => {
             console.log('Error:', error);
         });
-    }
+    });
 
     // Retrieve the saved position from backend
     if (draggable.dataset.x != "None" && draggable.dataset.y != "None") {
@@ -63,7 +76,6 @@ function initializeDraggable(draggable) {
     }
 
     draggable.addEventListener('mousedown', function(e) {
-        
         const mouse_initial_x = e.clientX;
         const mouse_initial_y = e.clientY;
         const draggable_initial = draggable.getBoundingClientRect();

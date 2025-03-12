@@ -74,7 +74,6 @@ def team_split(request):
     if request.method == "POST":
         name = request.POST["name"]
         if not PlayerIcon.objects.filter(name=name).exists():
-            print("new player created!") 
             player = PlayerIcon(name=name)
             player.save()
         return redirect("team_split")
@@ -85,12 +84,10 @@ def team_split(request):
         try:
             player = PlayerIcon.objects.get(id=player_id)
             player.delete()
-            print("player deleted successfully!") 
+            return JsonResponse({"message": "Player deleted successfully."}, status=200)
         except PlayerIcon.DoesNotExist:
-            print("Fail to delete the player!") 
             return JsonResponse({"error": "PlayerIcon not found."}, status=404)
             
-        return redirect("team_split")
     # Update the position of a player icon
     elif request.method == "PUT":
         data = json.loads(request.body)
@@ -100,11 +97,9 @@ def team_split(request):
             player.x = int(data["x"])
             player.y = int(data["y"])
             player.save()
-            print("player position updated successfully!") 
+            return JsonResponse({"message": "Player position updated successfully."}, status=200)
         except PlayerIcon.DoesNotExist:
-            print("Fail to update player position!") 
             return JsonResponse({"error": "PlayerIcon not found."}, status=404)
-        return redirect("team_split")
 
     players = PlayerIcon.objects.all()
     return render(request, "soccer/team_split.html", {"players": players})
