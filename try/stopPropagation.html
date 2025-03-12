@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Test</title>
+        <style>
+            
+        </style>
+    </head>
+    
+    <body>
+        <div id="parent1">
+            <button id="child1">Child 1</button>
+        </div>
+
+        <div id="parent2">
+            <button id="child2">Child 2</button>
+        </div>
+    </body>
+
+    <script>
+        parent1 = document.getElementById('parent1');
+        parent2 = document.getElementById('parent2');
+        btn1 = document.getElementById('child1');
+        btn2 = document.getElementById('child2');
+
+        parent1.addEventListener('mouseup', function() {
+            console.log('Parent 1 mouseup');
+        });
+        btn1.addEventListener('click', function(event1) {
+            event1.stopPropagation();
+            console.log('button 1 clicked!');
+        });
+
+        parent2.addEventListener('click', function() {
+            console.log('Parent 2 clicked!');
+        });
+        btn2.addEventListener('click', function(event2) {
+            event2.stopPropagation();
+            console.log('button 2 clicked!');
+        });
+
+    </script>
+</html>
