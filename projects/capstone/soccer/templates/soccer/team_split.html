@@ -1,7 +1,7 @@
 {% extends "soccer/layout.html" %}
 
 {% block body %}
-    <h1>Split players into different teams</h1>
+    <h1>Split players into teams</h1>
 
     <form method="post">
         {% csrf_token %}
@@ -25,4 +25,9 @@
     </div>
 
     <hr id="lower_boundary">
+
+    <div class="teams-container">
+        <div class="team" id="team1"></div>
+        <div class= "team" id="team2"></div>
+    </div>
 {% endblock %}

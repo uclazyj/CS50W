@@ -14,7 +14,7 @@ class NameForm(forms.Form):
     name = forms.CharField(label="", required=True, max_length=20, widget=forms.TextInput(attrs={
         'autofocus': True,
         'placeholder': 'name',
-        'style': 'width: 150px; margin-right: 5px;'
+        'style': 'width: 150px; margin-left: 10px; margin-right: 5px;'
         }))
 
 # Create your views here.
