@@ -52,7 +52,7 @@ function initializeDraggable(draggable) {
         // Prevent the 'mouseup' event from being triggered
         event.stopPropagation();
         draggable.remove();
-        fetch('/team_split', {
+        fetch('/player/delete', {
             method: 'DELETE',
             body: JSON.stringify({
                 player_id: id
@@ -122,7 +122,7 @@ function initializeDraggable(draggable) {
             }
 
             // Save the new position to backend
-            fetch('/team_split', {
+            fetch('/player/update', {
                 method: 'PUT',
                 body: JSON.stringify({
                     player_id: id,

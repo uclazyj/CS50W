@@ -78,7 +78,6 @@ def register(request):
 
 @csrf_exempt
 def team_split(request):
-    # Create a new player icon
     if request.method == "POST":
         name = request.POST["name"]
         if name == "":
@@ -87,40 +86,47 @@ def team_split(request):
             player = PlayerIcon(name=name)
             player.save()
         return redirect("team_split")
-    # Delete a player icon
-    elif request.method == "DELETE":
-        data = json.loads(request.body)
-        player_id = int(data["player_id"])
-        try:
-            player = PlayerIcon.objects.get(id=player_id)
-            player.delete()
-            return JsonResponse({"message": "Player deleted successfully."}, status=200)
-        except PlayerIcon.DoesNotExist:
-            return JsonResponse({"error": "PlayerIcon not found."}, status=404)
-            
-    # Update the position of a player icon and the team info.
-    elif request.method == "PUT":
-        data = json.loads(request.body)
-        player_id = int(data["player_id"])
-        try:
-            player = PlayerIcon.objects.get(id=player_id)
-            player.x = int(data["x"])
-            player.y = int(data["y"])
-            team_id = int(data["team_id"])
-            
-            # 0 means the player does not belong to any team
-            if team_id == 0:
-                player.team_id = None
-            # -1 means no update in team_id
-            elif team_id != -1:
-                player.team_id = team_id
-            player.save()
-            return JsonResponse({"message": "Player position updated successfully."}, status=200)
-        except PlayerIcon.DoesNotExist:
-            return JsonResponse({"error": "PlayerIcon not found."}, status=404)
 
     players = PlayerIcon.objects.all().order_by('name')
     return render(request, "soccer/team_split.html", {
         "form": NameForm(),
         "players": players
     })
+
+@csrf_exempt
+def update_player(request):
+    if request.method != "PUT":
+        return JsonResponse({"error": "PUT request required."}, status=400)
+    
+    data = json.loads(request.body)
+    player_id = int(data["player_id"])
+    try:
+        player = PlayerIcon.objects.get(id=player_id)
+        player.x = int(data["x"])
+        player.y = int(data["y"])
+        team_id = int(data["team_id"])
+        
+        # 0 means the player does not belong to any team
+        if team_id == 0:
+            player.team_id = None
+        # -1 means no update in team_id
+        elif team_id != -1:
+            player.team_id = team_id
+        player.save()
+        return JsonResponse({"message": "Player position updated successfully."}, status=200)
+    except PlayerIcon.DoesNotExist:
+        return JsonResponse({"error": "PlayerIcon not found."}, status=404)
+
+@csrf_exempt
+def delete_player(request):
+    if request.method != "DELETE":
+        return JsonResponse({"error": "DELETE request required."}, status=400)
+    
+    data = json.loads(request.body)
+    player_id = int(data["player_id"])
+    try:
+        player = PlayerIcon.objects.get(id=player_id)
+        player.delete()
+        return JsonResponse({"message": "Player deleted successfully."}, status=200)
+    except PlayerIcon.DoesNotExist:
+        return JsonResponse({"error": "PlayerIcon not found."}, status=404)
