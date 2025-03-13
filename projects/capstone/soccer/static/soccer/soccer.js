@@ -3,8 +3,6 @@ const add_player_button = document.getElementById('add_button');
 const list = document.getElementById('list');
 
 const upper_boundary_position = document.getElementById('upper_boundary').getBoundingClientRect().top;
-const lower_boundary_position = document.getElementById('lower_boundary').getBoundingClientRect().top;
-const team_boundary_position = document.getElementById('team1').getBoundingClientRect().right;
 
 // Initialize existing draggable elements
 document.querySelectorAll('.draggable').forEach(draggable => {
@@ -13,6 +11,8 @@ document.querySelectorAll('.draggable').forEach(draggable => {
 
 function updateTeam(draggable) {
     const rect = draggable.getBoundingClientRect();
+    const lower_boundary_position = document.getElementById('lower_boundary').getBoundingClientRect().top;
+    const team_boundary_position = document.getElementById('team1').getBoundingClientRect().right;
     // No team assigned
     if (rect.bottom <= lower_boundary_position) {
         draggable.style.backgroundColor = 'lightgreen';
