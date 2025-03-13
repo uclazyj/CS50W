@@ -2,7 +2,7 @@ let player_id = 1;
 const add_player_button = document.getElementById('add_button');
 const list = document.getElementById('list');
 
-const upper_boundary_position = document.getElementById('upper_boundary').getBoundingClientRect().top;
+
 
 // Initialize existing draggable elements
 document.querySelectorAll('.draggable').forEach(draggable => {
@@ -96,9 +96,11 @@ function initializeDraggable(draggable) {
             draggable_final_left = Math.max(draggable_final_left, 0);
             draggable_final_left = Math.min(draggable_final_left, window.innerWidth - draggable.offsetWidth);
 
-            
+            const upper_boundary_position = document.getElementById('upper_boundary').getBoundingClientRect().top + window.scrollY;
             draggable_final_top = Math.max(draggable_final_top, upper_boundary_position);
-            draggable_final_top = Math.min(draggable_final_top, window.innerHeight - draggable.offsetHeight);
+
+            const lower_boundary_position = window.innerHeight + window.scrollY - draggable.offsetHeight
+            draggable_final_top = Math.min(draggable_final_top, lower_boundary_position);
 
             draggable.style.left = draggable_final_left + 'px';
             draggable.style.top = draggable_final_top + 'px';
