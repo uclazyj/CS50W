@@ -137,7 +137,7 @@ def get_players(request):
         'name': player.name,
         'x': player.x,
         'y': player.y,
-        'teamid': player.team_id
+        'team_id': player.team_id
     } for player in players]
 
     for player_data in players_data:

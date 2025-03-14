@@ -177,7 +177,7 @@ function pollForUpdates() {
                     draggable = document.createElement('div');
                     draggable.className = 'draggable';
                     draggable.dataset.id = playerData.id;
-                    draggable.dataset.teamId = playerData.teamid;
+                    draggable.dataset.teamId = playerData['team_id'];
 
                     const nameDiv = document.createElement('div');
                     nameDiv.className = 'name';
@@ -195,7 +195,7 @@ function pollForUpdates() {
 
                 // Update player if not being dragged
                 if (!draggable.isDragging) {
-                    const team_id = parseInt(playerData.teamid);
+                    const team_id = parseInt(playerData['team_id']);
                     if (team_id === 0) {
                         draggable.style.position = 'static';
                         draggable.style.backgroundColor = 'lightgreen';
