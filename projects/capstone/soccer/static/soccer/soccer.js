@@ -109,7 +109,6 @@ function initializeDraggable(draggable) {
 
             draggable.style.left = draggable_final_left + 'px';
             draggable.style.top = draggable_final_top + 'px';
-            console.log("draggable.style.top: " + draggable.style.top);
 
             updateTeam(draggable);
         }

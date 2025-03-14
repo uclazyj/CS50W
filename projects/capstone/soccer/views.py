@@ -26,13 +26,8 @@ def login_view(request):
 
         # Attempt to sign user in
         username = request.POST["username"]
-        print(username)
         password = request.POST["password"]
-        print(password)
         user = authenticate(request, username=username, password=password)
-
-        if user == None:
-            print("User is None")
 
         # Check if authentication successful
         if user is not None:
@@ -140,6 +135,4 @@ def get_players(request):
         'team_id': player.team_id
     } for player in players]
 
-    for player_data in players_data:
-        print(player_data)
     return JsonResponse({'players': players_data})
