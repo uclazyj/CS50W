@@ -128,4 +128,18 @@ def delete_player(request):
         return JsonResponse({"message": "Player deleted successfully."}, status=200)
     except PlayerIcon.DoesNotExist:
         return JsonResponse({"error": "PlayerIcon not found."}, status=404)
-        
+
+@csrf_exempt
+def get_players(request):
+    players = PlayerIcon.objects.all().order_by('name')
+    players_data = [{
+        'id': player.id,
+        'name': player.name,
+        'x': player.x,
+        'y': player.y,
+        'teamid': player.team_id
+    } for player in players]
+
+    for player_data in players_data:
+        print(player_data)
+    return JsonResponse({'players': players_data})

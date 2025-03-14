@@ -2,12 +2,13 @@ let player_id = 1;
 const add_player_button = document.getElementById('add_button');
 const list = document.getElementById('list');
 
-
-
 // Initialize existing draggable elements
 document.querySelectorAll('.draggable').forEach(draggable => {
     initializeDraggable(draggable);
 });
+
+// Start polling when page loads
+setInterval(pollForUpdates, 1000);  // Check every second
 
 function updateTeam(draggable) {
     const rect = draggable.getBoundingClientRect();
@@ -15,16 +16,19 @@ function updateTeam(draggable) {
     const team_boundary_position = document.getElementById('team1').getBoundingClientRect().right;
     // No team assigned
     if (rect.bottom <= lower_boundary_position) {
+        draggable.style.position = 'static';
         draggable.style.backgroundColor = 'lightgreen';
         return 0;
     }
     // Assigned to team 1
     else if (rect.top >= lower_boundary_position && rect.right <= team_boundary_position) {
+        draggable.style.position = 'absolute';
         draggable.style.backgroundColor = 'lightpink';
         return 1;
     }
     // Assigned to team 2
     else if (rect.top >= lower_boundary_position && team_boundary_position <= rect.left) {
+        draggable.style.position = 'absolute';
         draggable.style.backgroundColor = 'lightblue';
         return 2;
     }
@@ -86,6 +90,7 @@ function initializeDraggable(draggable) {
         const draggable_initial = draggable.getBoundingClientRect();
         
         function onMouseMove(event) {
+            draggable.isDragging = true;
             draggable.style.position = 'absolute';
             const mouse_current_x = event.pageX;
             const mouse_current_y = event.pageY;
@@ -104,6 +109,7 @@ function initializeDraggable(draggable) {
 
             draggable.style.left = draggable_final_left + 'px';
             draggable.style.top = draggable_final_top + 'px';
+            console.log("draggable.style.top: " + draggable.style.top);
 
             updateTeam(draggable);
         }
@@ -111,6 +117,7 @@ function initializeDraggable(draggable) {
         document.addEventListener('mousemove', onMouseMove);
 
         function onMouseUp() {
+            draggable.isDragging = false;
             document.removeEventListener('mousemove', onMouseMove);
             document.removeEventListener('mouseup', onMouseUp);
 
@@ -118,9 +125,6 @@ function initializeDraggable(draggable) {
             const y = draggable.getBoundingClientRect().top + window.scrollY;
 
             const team_id = updateTeam(draggable);
-            if (team_id === 0) {
-                draggable.style.position = 'static';
-            }
 
             // Save the new position to backend
             fetch('/player/update', {
@@ -149,3 +153,63 @@ function initializeDraggable(draggable) {
     });
 }
 
+function pollForUpdates() {
+    fetch('/players')
+        .then(response => response.json())
+        .then(data => {
+            // First, get all current draggable elements
+            const currentDraggables = document.querySelectorAll('.draggable');
+            
+            // Remove elements that no longer exist in the backend
+            currentDraggables.forEach(draggable => {
+                const exists = data.players.some(player => player.id === parseInt(draggable.dataset.id));
+                if (!exists) {
+                    draggable.remove();
+                }
+            });
+
+            // Add new players and update existing ones
+            data.players.forEach(playerData => {
+                let draggable = document.querySelector(`[data-id="${playerData.id}"]`);
+                
+                // Create new player if it doesn't exist
+                if (!draggable) {
+                    draggable = document.createElement('div');
+                    draggable.className = 'draggable';
+                    draggable.dataset.id = playerData.id;
+                    draggable.dataset.teamId = playerData.teamid;
+
+                    const nameDiv = document.createElement('div');
+                    nameDiv.className = 'name';
+                    nameDiv.innerText = playerData.name;
+                    draggable.appendChild(nameDiv);
+
+                    const closeBtn = document.createElement('div');
+                    closeBtn.className = 'close';
+                    closeBtn.textContent = '❌';
+                    draggable.appendChild(closeBtn);
+
+                    list.appendChild(draggable);
+                    initializeDraggable(draggable);
+                }
+
+                // Update player if not being dragged
+                if (!draggable.isDragging) {
+                    const team_id = parseInt(playerData.teamid);
+                    if (team_id === 0) {
+                        draggable.style.position = 'static';
+                        draggable.style.backgroundColor = 'lightgreen';
+                    } else {
+                        draggable.style.left = playerData.x + 'px';
+                        draggable.style.top = playerData.y + 'px';
+                        draggable.style.position = 'absolute';
+                        if (team_id === 1) {
+                            draggable.style.backgroundColor = 'lightpink';
+                        } else if (team_id === 2) {
+                            draggable.style.backgroundColor = 'lightblue';
+                        }
+                    }
+                }
+            });
+        });
+}
