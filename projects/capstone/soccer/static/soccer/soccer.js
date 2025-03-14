@@ -114,7 +114,8 @@ function initializeDraggable(draggable) {
             document.removeEventListener('mousemove', onMouseMove);
             document.removeEventListener('mouseup', onMouseUp);
 
-            draggable_updated_position = draggable.getBoundingClientRect();
+            const x = draggable.getBoundingClientRect().left + window.scrollX;
+            const y = draggable.getBoundingClientRect().top + window.scrollY;
 
             const team_id = updateTeam(draggable);
             if (team_id === 0) {
@@ -126,8 +127,8 @@ function initializeDraggable(draggable) {
                 method: 'PUT',
                 body: JSON.stringify({
                     player_id: id,
-                    x: draggable_updated_position.left,
-                    y: draggable_updated_position.top,
+                    x: x,
+                    y: y,
                     team_id: team_id
                 })
             })
