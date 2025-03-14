@@ -47,7 +47,7 @@ h1 {
 #list {
     display: flex;
     flex-wrap: wrap; /* Allow wrapping to the next line if needed */
-    min-height: 54px; /* Ensure some space for the first few players */
+    min-height: 64px; /* Ensure some space for the first few players */
     padding: 10px;
 }
 
