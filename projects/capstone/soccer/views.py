@@ -107,10 +107,8 @@ def update_player(request):
         team_id = int(data["team_id"])
         
         # 0 means the player does not belong to any team
-        if team_id == 0:
-            player.team_id = None
         # -1 means no update in team_id
-        elif team_id != -1:
+        if team_id != -1:
             player.team_id = team_id
         player.save()
         return JsonResponse({"message": "Player position updated successfully."}, status=200)
@@ -130,3 +128,4 @@ def delete_player(request):
         return JsonResponse({"message": "Player deleted successfully."}, status=200)
     except PlayerIcon.DoesNotExist:
         return JsonResponse({"error": "PlayerIcon not found."}, status=404)
+        
