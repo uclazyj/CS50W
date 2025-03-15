@@ -2,7 +2,28 @@ body {
     margin: 0;
 }
 
+hr {
+    margin: 0;
+}
+
+.navigation-bar {
+    display: flex;
+    justify-content: space-between;
+}
+
+.nav-left, .nav-right {
+    display: flex;
+}
+
+
+
+.login-container {
+    margin-top: 50px;
+    max-width: 300px;
+}
+
 h1 {
+    margin-top: 16px;
     margin-left: 10px;
 }
 
@@ -69,4 +90,8 @@ h1 {
 #team2 {
     background-color: rgba(173, 216, 230, 0.2);
     
+}
+
+.form-group {
+    margin-bottom: 1rem;
 }
