@@ -22,9 +22,10 @@ hr {
     max-width: 300px;
 }
 
-h1 {
+h1, h4{
     margin-top: 16px;
     margin-left: 10px;
+    margin-bottom: 16px;
 }
 
 #upper_boundary {
@@ -94,4 +95,8 @@ h1 {
 
 .form-group {
     margin-bottom: 1rem;
+}
+
+.signup-screenshot {
+    width: 300px;
 }

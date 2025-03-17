@@ -7,7 +7,7 @@ from django.shortcuts import render, redirect
 from django import forms
 
 
-from .models import User, PlayerIcon
+from .models import User, PlayerIcon, Image
 from django.views.decorators.csrf import csrf_exempt
 
 class NameForm(forms.Form):
@@ -19,7 +19,8 @@ class NameForm(forms.Form):
 
 # Create your views here.
 def index(request):
-    return render(request, "soccer/index.html")
+    image = Image.objects.filter(name="gateway").first()
+    return render(request, "soccer/index.html", {"image": image})
 
 def login_view(request):
     if request.method == "POST":

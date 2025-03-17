@@ -1,6 +1,11 @@
 {% extends "soccer/layout.html" %}
 
 {% block body %}
-    <h1>Welcome to our Secaucus soccer team</h1>
-    
+    <div class="container">
+        <h1>Welcome to our soccer team</h1>
+        <h4>Next event</h4>
+        {% if image %}
+            <img class="signup-screenshot" src="{{ image.image.url }}" alt="sign up sheet">
+        {% endif %}
+    </div>
 {% endblock %}

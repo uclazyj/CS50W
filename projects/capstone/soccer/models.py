@@ -13,3 +13,9 @@ class PlayerIcon(models.Model):
 
     def __str__(self):
         return f"{self.name} is located at x: {self.x}, y: {self.y}. Team id: {self.team_id}"
+
+class Image(models.Model):
+    name = models.CharField(max_length=30)
+    image = models.ImageField(upload_to='images/')
+    def __str__(self):
+        return f"{self.name}"
