@@ -21,6 +21,9 @@ class NameForm(forms.Form):
         }))
 
 class ImageUploadForm(forms.ModelForm):
+
+    image = forms.ImageField(label="Choose screenshot")
+
     class Meta:
         model = Image
         fields = ['image']

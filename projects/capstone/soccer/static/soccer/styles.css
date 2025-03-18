@@ -6,6 +6,15 @@ hr {
     margin: 0;
 }
 
+.login-username-container {
+    display: flex;
+    justify-content: right;
+}
+
+.login-username {
+    margin-right: 10px;
+}
+
 .navigation-bar {
     display: flex;
     justify-content: space-between;
@@ -39,6 +48,7 @@ h1, h4{
 .draggable {
     display: inline-block;
     margin-right: 10px;
+    margin-bottom: 10px;
     padding: 10px;
     border-radius: 20px;
     background-color: lightgreen;
@@ -50,6 +60,14 @@ h1, h4{
     justify-content: space-between;
     align-items: center;
     margin-top: 20px;
+}
+
+#id_image {
+    width: 230px;
+}
+
+#upload_button {
+    margin-right: 10px;
 }
 
 .form-container form {
@@ -76,7 +94,9 @@ h1, h4{
     display: flex;
     flex-wrap: wrap; /* Allow wrapping to the next line if needed */
     min-height: 64px; /* Ensure some space for the first few players */
-    padding: 10px;
+    padding-top: 10px;
+    padding-left: 10px;
+    padding-right: 10px;
 }
 
 .teams-container {

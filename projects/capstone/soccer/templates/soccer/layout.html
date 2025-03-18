@@ -8,9 +8,11 @@
         <link rel="stylesheet" href="{% static 'soccer/styles.css' %}">
     </head>
     <body>
-        <div>
+        <div class="login-username-container">
             {% if user.is_authenticated %}
-                Hello, <strong>{{ user.username }}</strong>.
+            <div class="login-username">
+                Hello, <strong>{{ user.username }}</strong>
+            </div>
             {% endif %}
         </div>
         <ul class="nav navigation-bar">
