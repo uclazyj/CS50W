@@ -1,15 +1,17 @@
 import json
 import os
+
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 from django.db import IntegrityError
 from django.http import JsonResponse
 from django.shortcuts import render, redirect
 from django import forms
-
+from django.views.decorators.csrf import csrf_exempt
 
 from .models import User, PlayerIcon, Image
-from django.views.decorators.csrf import csrf_exempt
+from .utils import extract_names_from_image
+
 
 class NameForm(forms.Form):
     name = forms.CharField(label="", required=True, max_length=20, widget=forms.TextInput(attrs={
@@ -89,7 +91,7 @@ def team_split(request):
             player.save()
         return redirect("team_split")
 
-    players = PlayerIcon.objects.all().order_by('name')
+    players = PlayerIcon.objects.all()
     return render(request, "soccer/team_split.html", {
         "form": NameForm(),
         "image_upload_form": ImageUploadForm(),
@@ -155,4 +157,13 @@ def upload_image(request):
                     os.remove(image.image.path)
                 image.delete()
             form.save()
-            return redirect('index')
+
+            # Extract names from the image
+            image_path = Image.objects.all()[0].image.path
+            extracted_names = extract_names_from_image(image_path=image_path)
+            print("extracted_names: ",extracted_names)
+            for name in extracted_names:
+                if not PlayerIcon.objects.filter(name=name).exists():
+                    player = PlayerIcon(name=name)
+                    player.save()
+            return redirect("team_split")
