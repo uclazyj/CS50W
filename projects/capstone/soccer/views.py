@@ -17,9 +17,14 @@ class NameForm(forms.Form):
         'style': 'width: 150px; margin: 10px;'
         }))
 
+class ImageUploadForm(forms.ModelForm):
+    class Meta:
+        model = Image
+        fields = ['image']
+
 # Create your views here.
 def index(request):
-    image = Image.objects.filter(name="gateway").first()
+    image = Image.objects.all().first()
     return render(request, "soccer/index.html", {"image": image})
 
 def login_view(request):
@@ -86,6 +91,7 @@ def team_split(request):
     players = PlayerIcon.objects.all().order_by('name')
     return render(request, "soccer/team_split.html", {
         "form": NameForm(),
+        "image_upload_form": ImageUploadForm(),
         "players": players
     })
 
@@ -137,3 +143,11 @@ def get_players(request):
     } for player in players]
 
     return JsonResponse({'players': players_data})
+
+def upload_image(request):
+    if request.method == "POST":
+        form = ImageUploadForm(request.POST, request.FILES) 
+        if form.is_valid():
+            Image.objects.all().delete()
+            form.save()
+            return redirect('index')

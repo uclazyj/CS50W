@@ -10,5 +10,6 @@ urlpatterns = [
     path("team_split", views.team_split, name="team_split"),
     path("player/delete", views.delete_player, name="delete_player"),
     path("player/update", views.update_player, name="update_player"),
-    path("players", views.get_players, name="get_players")
+    path("players", views.get_players, name="get_players"),
+    path("upload", views.upload_image, name="upload_image")
 ]

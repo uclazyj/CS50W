@@ -45,10 +45,16 @@ h1, h4{
     cursor: pointer;
 }
 
-.form-container {
+.forms-container {
     display: flex;
+    justify-content: space-between;
     align-items: center;
     margin-top: 20px;
+}
+
+.form-container form {
+    display: flex;
+    align-items: center;
 }
 
 .name {

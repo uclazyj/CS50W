@@ -3,13 +3,23 @@
 {% block body %}
     <h1>Split players into teams</h1>
 
-    <form method="post">
-        {% csrf_token %}
+    <div class="forms-container">
         <div class="form-container">
-            {{ form }}
-            <button id="add_button" type="submit" class="btn btn-success btn-sm">Add player</button>
+            <form method="post">
+                {% csrf_token %}
+                {{ form }}
+                <button id="add_button" type="submit" class="btn btn-success btn-sm">Add player</button>
+            </form>
         </div>
-    </form>
+        <div class="form-container">
+            <form action="{% url 'upload_image' %}" method="post" enctype="multipart/form-data">
+                {% csrf_token %}
+                {{ image_upload_form }}
+                <button id="upload_button" type="submit" class="btn btn-warning btn-sm">Upload</button>
+            </form>
+        </div>
+    </div>
+    
 
     <hr id="upper_boundary">
 
