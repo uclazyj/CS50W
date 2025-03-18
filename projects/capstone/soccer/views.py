@@ -22,7 +22,7 @@ class NameForm(forms.Form):
 
 class ImageUploadForm(forms.ModelForm):
 
-    image = forms.ImageField(label="Choose screenshot")
+    image = forms.ImageField(label='')
 
     class Meta:
         model = Image

@@ -12,10 +12,13 @@
             </form>
         </div>
         <div class="form-container">
+            <div class="upload-button-label">
+                <b>Add players from screenshot</b>
+            </div>
             <form action="{% url 'upload_image' %}" method="post" enctype="multipart/form-data">
                 {% csrf_token %}
                 {{ image_upload_form }}
-                <button id="upload_button" type="submit" class="btn btn-warning btn-sm">Upload</button>
+                <button id="upload-button" type="submit" class="btn btn-warning btn-sm">Upload</button>
             </form>
         </div>
     </div>
