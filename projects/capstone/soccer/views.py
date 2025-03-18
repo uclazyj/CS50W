@@ -1,4 +1,5 @@
 import json
+import os
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 from django.db import IntegrityError
@@ -148,6 +149,10 @@ def upload_image(request):
     if request.method == "POST":
         form = ImageUploadForm(request.POST, request.FILES) 
         if form.is_valid():
-            Image.objects.all().delete()
+            images = Image.objects.all()
+            for image in images:
+                if os.path.isfile(image.image.path):
+                    os.remove(image.image.path)
+                image.delete()
             form.save()
             return redirect('index')
