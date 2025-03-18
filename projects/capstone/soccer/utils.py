@@ -40,6 +40,14 @@ def extract_names_from_image(image_path):
             words2.append("瓜瓜")
         elif len(word) > 0 and word[-1] == "总":
             words2.append("朱总")
+        elif len(word) == 3 and word[0] == "赵" and word[2] == "健":
+            words2.append("赵宇健")
+        elif len(word) > 0 and word[0] == "月":
+            words2.append("月下柠檬树")
+        elif len(word) > 0 and word[0] == "黄":
+            words2.append("黄泽宇")
+        elif "励" in word:
+            words2.append("励天一")
         elif word[:2] in first_two_chars_to_name:
             words2.append(first_two_chars_to_name[word[:2]])
 

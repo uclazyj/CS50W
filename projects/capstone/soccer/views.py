@@ -164,7 +164,6 @@ def upload_image(request):
             # Extract names from the image
             image_path = Image.objects.all()[0].image.path
             extracted_names = extract_names_from_image(image_path=image_path)
-            print("extracted_names: ",extracted_names)
             for name in extracted_names:
                 if not PlayerIcon.objects.filter(name=name).exists():
                     player = PlayerIcon(name=name)
