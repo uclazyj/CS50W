@@ -56,6 +56,10 @@ function initializeDraggable(draggable) {
         // Prevent the 'mouseup' event from being triggered
         event.stopPropagation();
         draggable.remove();
+        // Update count immediately when deleting
+        const currentCount = document.querySelectorAll('.draggable').length;
+        updatePlayerCount(currentCount);
+
         fetch('/player/delete', {
             method: 'DELETE',
             body: JSON.stringify({
@@ -152,6 +156,17 @@ function initializeDraggable(draggable) {
     });
 }
 
+function updatePlayerCount(count) {
+    const countElement = document.querySelector('#player-count strong');
+    if (countElement) {
+        countElement.textContent = count;
+        if (count === 1){
+            document.querySelector('#player-count span').innerHTML = 'player';
+        }
+    }
+}
+
+// In your pollForUpdates function, add:
 function pollForUpdates() {
     fetch('/players')
         .then(response => response.json())
@@ -210,5 +225,8 @@ function pollForUpdates() {
                     }
                 }
             });
+            
+            // Update player count
+            updatePlayerCount(data.players.length);
         });
 }

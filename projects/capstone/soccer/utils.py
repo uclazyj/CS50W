@@ -48,6 +48,8 @@ def extract_names_from_image(image_path):
             words2.append("黄泽宇")
         elif "励" in word:
             words2.append("励天一")
+        elif "lk" in word or "kl" in word:
+            words2.append("lkl")
         elif word[:2] in first_two_chars_to_name:
             words2.append(first_two_chars_to_name[word[:2]])
 

@@ -95,10 +95,12 @@ def team_split(request):
         return redirect("team_split")
 
     players = PlayerIcon.objects.all()
+    num_players = len(players)
     return render(request, "soccer/team_split.html", {
         "form": NameForm(),
         "image_upload_form": ImageUploadForm(),
-        "players": players
+        "players": players,
+        "num_players": num_players
     })
 
 @csrf_exempt

@@ -67,6 +67,10 @@ h1, h4{
     width: 230px;
 }
 
+#player-count {
+    font-size: large;
+}
+
 .upload-button-label {
     margin-bottom: 10px;
     font-size: large;
