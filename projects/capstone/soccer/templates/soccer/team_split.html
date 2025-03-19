@@ -10,13 +10,20 @@
             <form method="post">
                 {% csrf_token %}
                 {{ form }}
-                <button id="add_button" type="submit" class="btn btn-success btn-sm">Add player</button>
+                <button type="submit" class="btn btn-success btn-sm">Add player</button>
             </form>
         </div>
 
-        <div id="player-count">
-            <strong>{{ num_players }}</strong> 
-            <span>players</span>
+        <div id="player-count-container">
+            <div id="player-count">
+                <strong>{{ num_players }}</strong> 
+                <span>players</span>   
+            </div>
+            <form action="{% url 'reset_players' %}" method="post">
+                {% csrf_token %}
+                <button id="reset" class="btn btn-danger btn-sm">Reset</button>
+            </form>
+            
         </div>
 
         <div class="form-container">
@@ -26,7 +33,7 @@
             <form action="{% url 'upload_image' %}" method="post" enctype="multipart/form-data">
                 {% csrf_token %}
                 {{ image_upload_form }}
-                <button id="upload-button" type="submit" class="btn btn-warning btn-sm">Upload</button>
+                <button id="upload-button" type="submit" class="btn btn-primary btn-sm">Upload</button>
             </form>
         </div>
     </div>

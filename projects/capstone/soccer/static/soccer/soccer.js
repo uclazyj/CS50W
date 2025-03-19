@@ -1,5 +1,4 @@
 let player_id = 1;
-const add_player_button = document.getElementById('add_button');
 const list = document.getElementById('list');
 
 // Initialize existing draggable elements

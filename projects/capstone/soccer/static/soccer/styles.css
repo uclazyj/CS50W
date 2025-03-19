@@ -67,6 +67,13 @@ h1, h4{
     width: 230px;
 }
 
+#player-count-container {
+    display: flex;
+    flex-direction: column; /* Stack elements vertically */
+    align-items: center; /* Center items horizontally */
+    gap: 10px;
+}
+
 #player-count {
     font-size: large;
 }

@@ -171,3 +171,8 @@ def upload_image(request):
                     player = PlayerIcon(name=name)
                     player.save()
             return redirect("team_split")
+
+def reset_players(request):
+    if request.method == "POST":
+        PlayerIcon.objects.all().delete()
+        return redirect("team_split")
