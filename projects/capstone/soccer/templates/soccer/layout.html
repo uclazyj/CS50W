@@ -42,6 +42,8 @@
         <hr>
         {% block body %}
         {% endblock %}
-        <script src="{% static 'soccer/soccer.js' %}"></script>
+        
+        {% block scripts %}
+        {% endblock %}
     </body>
 </html>
