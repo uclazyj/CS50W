@@ -14,7 +14,7 @@ from .utils import extract_names_from_image
 
 
 class NameForm(forms.Form):
-    name = forms.CharField(label="", required=True, max_length=20, widget=forms.TextInput(attrs={
+    name = forms.CharField(label="", required=True, widget=forms.TextInput(attrs={
         'autofocus': True,
         'placeholder': 'name',
         'style': 'width: 150px; margin: 10px;'
@@ -86,12 +86,12 @@ def register(request):
 @csrf_exempt
 def team_split(request):
     if request.method == "POST":
-        name = request.POST["name"]
-        if name == "":
-            return JsonResponse({"error": "Name cannot be blank."}, status=400)
-        if not PlayerIcon.objects.filter(name=name).exists():
-            player = PlayerIcon(name=name)
-            player.save()
+        all_names = request.POST["name"]
+        names = [name.strip() for name in all_names.split(",")]
+        for name in names:
+            if name != "" and not PlayerIcon.objects.filter(name=name).exists():
+                player = PlayerIcon(name=name)
+                player.save()
         return redirect("team_split")
 
     players = PlayerIcon.objects.all()
