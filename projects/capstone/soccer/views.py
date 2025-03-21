@@ -176,4 +176,9 @@ def upload_image(request):
 def reset_players(request):
     if request.method == "POST":
         PlayerIcon.objects.all().delete()
+        images = Image.objects.all()
+        for image in images:
+            if os.path.isfile(image.image.path):
+                os.remove(image.image.path)
+            image.delete()
         return redirect("team_split")
