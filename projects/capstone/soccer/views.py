@@ -1,5 +1,6 @@
 import json
 import os
+import re
 
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
@@ -87,7 +88,7 @@ def register(request):
 def team_split(request):
     if request.method == "POST":
         all_names = request.POST["name"]
-        names = [name.strip() for name in all_names.split(",")]
+        names = [name.strip() for name in re.split(r'[,，]', all_names)]
         for name in names:
             if name != "" and not PlayerIcon.objects.filter(name=name).exists():
                 player = PlayerIcon(name=name)
