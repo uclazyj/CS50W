@@ -31,10 +31,11 @@ hr {
     max-width: 300px;
 }
 
-h1, h4{
-    margin-top: 16px;
-    margin-left: 10px;
-    margin-bottom: 16px;
+.header-container {
+    display: flex;
+    justify-content: center;
+    margin-top: 10px;
+    margin-bottom: 10px;
 }
 
 #upper_boundary {
@@ -140,6 +141,22 @@ h1, h4{
     margin-bottom: 1rem;
 }
 
-.signup-screenshot {
+.roster-container {
+    display: flex;
+    justify-content: space-between;
+}
+
+.roster {
+    display: inline-block;
+    flex: 1;
+}
+
+.signup-screenshot-div {
+    vertical-align: top;
+    display: inline-block;
     width: 300px;
+}
+
+.signup-screenshot {
+    width: 100%;
 }

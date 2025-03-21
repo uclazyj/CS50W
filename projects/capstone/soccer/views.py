@@ -29,10 +29,17 @@ class ImageUploadForm(forms.ModelForm):
         model = Image
         fields = ['image']
 
+def get_names_from_team(team_id):
+    players = PlayerIcon.objects.filter(team_id=team_id)
+    names = [player.name for player in players]
+    return "，".join(names)
+
 # Create your views here.
 def index(request):
+    roster1 = get_names_from_team(team_id=1)
+    roster2 = get_names_from_team(team_id=2)
     image = Image.objects.all().first()
-    return render(request, "soccer/index.html", {"image": image})
+    return render(request, "soccer/index.html", {"roster1": roster1, "roster2": roster2, "image": image})
 
 def login_view(request):
     if request.method == "POST":

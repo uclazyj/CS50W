@@ -2,10 +2,26 @@
 
 {% block body %}
     <div class="container">
-        <h1>Welcome to our soccer team</h1>
-        <h4>Next event</h4>
-        {% if image %}
-            <img class="signup-screenshot" src="{{ image.image.url }}" alt="sign up sheet">
-        {% endif %}
+        <div class="header-container">
+            <h1>Welcome to our soccer team</h1>
+        </div>
+        
+        <h3>Next event</h3>
+        <br>
+        <div class="roster-container">
+            <div class="roster">
+                <div><b>Team 1:</b> {{ roster1 }}</div>
+                <br>
+                <div><b>Team 2:</b> {{ roster2 }}</div>
+            </div>
+            {% if image %}
+                <div class="signup-screenshot-div">
+                    <img class="signup-screenshot" src="{{ image.image.url }}" alt="sign up sheet">
+                </div>
+            {% endif %}
+        </div>
+        
+            
+        
     </div>
 {% endblock %}
