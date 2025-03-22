@@ -46,16 +46,6 @@ hr {
     margin: 0;
 }
 
-.draggable {
-    display: inline-block;
-    margin-right: 10px;
-    margin-bottom: 10px;
-    padding: 10px;
-    border-radius: 20px;
-    background-color: lightgreen;
-    cursor: pointer;
-}
-
 .forms-container {
     display: flex;
     justify-content: space-between;
@@ -117,6 +107,23 @@ hr {
     padding-right: 10px;
 }
 
+.draggable {
+    display: inline-block;
+    margin-right: 10px;
+    margin-bottom: 10px;
+    padding: 10px;
+    border-radius: 20px;
+    background-color: lightgreen;
+    cursor: pointer;
+}
+
+.teams-container, .draggable{
+    user-select: none;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+}
+
 .teams-container {
     display: flex;
     grid-template-columns: 1fr 1fr; /* Two equal columns */
@@ -126,6 +133,15 @@ hr {
 
 .team {
     flex: 1; /* Each div takes equal width */
+}
+
+.team img {
+    opacity: 0.3;
+    width: 100%;
+    height: 100%; 
+    z-index: -1;
+    position: relative;
+    pointer-events: none;
 }
 
 #team1 {
@@ -151,12 +167,12 @@ hr {
     flex: 1;
 }
 
-.signup-screenshot-div {
+.signup-screenshot {
     vertical-align: top;
     display: inline-block;
     width: 300px;
 }
 
-.signup-screenshot {
+.signup-screenshot img {
     width: 100%;
 }

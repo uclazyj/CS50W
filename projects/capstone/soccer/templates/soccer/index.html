@@ -10,13 +10,15 @@
         <br>
         <div class="roster-container">
             <div class="roster">
-                <div><b>Team 1:</b> {{ roster1 }}</div>
+                <div><b>Team 1:</b></div>
+                <div>{{ roster1 }}</div>
                 <br>
-                <div><b>Team 2:</b> {{ roster2 }}</div>
+                <div><b>Team 2:</b></div>
+                <div>{{ roster2 }}</div>
             </div>
             {% if image %}
-                <div class="signup-screenshot-div">
-                    <img class="signup-screenshot" src="{{ image.image.url }}" alt="sign up sheet">
+                <div class="signup-screenshot">
+                    <img src="{{ image.image.url }}" alt="sign up sheet">
                 </div>
             {% endif %}
         </div>
