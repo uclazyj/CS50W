@@ -10,9 +10,14 @@
                 margin: 0;
             }
 
-            #image-container {
+            #images-container {
                 flex: 1;
                 overflow: hidden;
+                display: flex;
+            }
+
+            .image {
+                flex: 1;
             }
 
             img {
@@ -27,8 +32,13 @@
             <h1>A demo of an image fills out the rest of height of the browser window. The aspect ratio of the image changes according to the browser window.</h1>
         </div>
 
-        <div id="image-container">
-            <img src="beautiful.jpg">
+        <div id="images-container">
+            <div class="image">
+                <img src="beautiful.jpg">
+            </div>
+            <div class="image">
+                <img src="beautiful.jpg">
+            </div>  
         </div>
     </body>
 
