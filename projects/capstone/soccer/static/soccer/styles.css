@@ -1,4 +1,7 @@
 body {
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
     margin: 0;
 }
 
@@ -115,6 +118,7 @@ hr {
     border-radius: 20px;
     background-color: lightgreen;
     cursor: pointer;
+    z-index: 1;
 }
 
 .teams-container, .draggable{
@@ -125,10 +129,10 @@ hr {
 }
 
 .teams-container {
+    flex: 1;
+    overflow: hidden;
     display: flex;
-    grid-template-columns: 1fr 1fr; /* Two equal columns */
-    width: 100%;
-    height: 80vh;
+    position: relative;
 }
 
 .team {
@@ -139,8 +143,6 @@ hr {
     opacity: 0.3;
     width: 100%;
     height: 100%; 
-    z-index: -1;
-    position: relative;
     pointer-events: none;
 }
 
