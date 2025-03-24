@@ -3,26 +3,40 @@
     <head>
         <title>Test</title>
         <style>
-            div {
-                height: 50px;
+            #parent {
+                position: relative;
+                width: 700px;
+                height: 700px;
+                left: 200px;
+                top: 200px;
+                border-color: red;
+                border-width: 10px;
+                border-style: solid;
+            }
+            #child {
+                height: 100px;
                 width: 100px;
                 background-color: lightblue;
-                border-width: 2px;
+                border-width: 100px;
+                padding: 100px;
                 border-style: solid;
                 border-color: black;
                 position: absolute;
-                top: 60px;
-                left:30px;
+                top: 100px;
+                left:100px;
             }
         </style>
     </head>
     
     <body>
-        <div>foo</div>
+        <div id="parent">
+            <div id="child">foo</div>
+        </div>
+        
     </body>
 
     <script>
-        const div = document.querySelector('div');
+        const div = document.getElementById('child');
         console.log('div offsetHeight: ' + div.offsetHeight);
         console.log('div offsetWidth: ' + div.offsetWidth);
         console.log('div clientHeight: ' + div.clientHeight);
@@ -37,5 +51,15 @@
         console.log('window.outerWidth: ' + window.outerWidth);
         console.log('window.innerHeight: ' + window.innerHeight);
         console.log('window.innerWidth: ' + window.innerWidth);
+
+
+        x_center = div.offsetLeft + div.offsetWidth/2;
+        console.log('x_center:'+ x_center);
+        y_center = div.offsetTop + div.offsetHeight/2;
+        console.log('y_center:'+ y_center);
+
+        const rect = div.getBoundingClientRect();
+        console.log('rect.left:'+ rect.left);
+        console.log('rect.top:'+ rect.top);
     </script>
 </html>
