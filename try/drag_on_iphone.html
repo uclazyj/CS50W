@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Test</title>
+        <style>
+            #draggable-element {
+                position: absolute;
+                width: 100px;
+                height: 100px;
+                background-color: red;
+            }
+        </style>
+    </head>
+    
+    <body>
+        <div id="draggable-element">foo</div>
+    </body>
+
+    <script>
+        const element = document.getElementById('draggable-element');
+        let initialX, initialY;
+        let isDragging = false;
+
+        element.addEventListener('touchstart', (event) => {
+        isDragging = true;
+        initialX = event.touches[0].clientX - element.offsetLeft;
+        initialY = event.touches[0].clientY - element.offsetTop;
+        }, false);
+
+        element.addEventListener('touchmove', (event) => {
+            if (isDragging) {
+                event.preventDefault();
+                const x = event.touches[0].clientX - initialX;
+                const y = event.touches[0].clientY - initialY;
+                element.style.left = x + 'px';
+                element.style.top = y + 'px';
+            }
+        }, false);
+
+        element.addEventListener('touchend', (event) => {
+        isDragging = false;
+        }, false);
+    </script>
+</html>
