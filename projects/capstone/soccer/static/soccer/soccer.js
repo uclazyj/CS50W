@@ -76,8 +76,11 @@ function initializeDraggable(draggable) {
     // Retrieve the saved position and team info from backend
     const team_id = parseInt(draggable.dataset.teamId);
     if (team_id > 0) {
-        draggable.style.left = draggable.dataset.x + 'px';
-        draggable.style.top = draggable.dataset.y + 'px';
+        const teams_container = document.querySelector('.teams-container');
+        draggable.style.left = parseInt(draggable.dataset.x) / 100 * teams_container.offsetWidth - draggable.offsetWidth / 2 + 'px';
+        const lower_boundary_position = document.getElementById('lower_boundary').getBoundingClientRect().bottom;
+        draggable.style.top = lower_boundary_position + parseInt(draggable.dataset.y) / 100 * teams_container.offsetHeight - draggable.offsetHeight / 2 + 'px';
+
         draggable.style.position = 'absolute';
         if (team_id == 1) {
             draggable.style.backgroundColor = 'lightpink';
@@ -123,8 +126,13 @@ function initializeDraggable(draggable) {
             document.removeEventListener('mousemove', onMouseMove);
             document.removeEventListener('mouseup', onMouseUp);
 
-            const x = draggable.getBoundingClientRect().left + window.scrollX;
-            const y = draggable.getBoundingClientRect().top + window.scrollY;
+            const x_center = draggable.offsetLeft + draggable.offsetWidth / 2;
+            const y_center = draggable.offsetTop + draggable.offsetHeight / 2;
+            const teams_container = document.querySelector('.teams-container');
+            const x = x_center / teams_container.offsetWidth * 100;
+
+            const lower_boundary_position = document.getElementById('lower_boundary').getBoundingClientRect().bottom;
+            const y = (y_center - lower_boundary_position) / teams_container.offsetHeight * 100;
 
             const team_id = updateTeam(draggable);
 
@@ -213,8 +221,10 @@ function pollForUpdates() {
                         draggable.style.position = 'static';
                         draggable.style.backgroundColor = 'lightgreen';
                     } else {
-                        draggable.style.left = playerData.x + 'px';
-                        draggable.style.top = playerData.y + 'px';
+                        const teams_container = document.querySelector('.teams-container');
+                        draggable.style.left = playerData.x / 100 * teams_container.offsetWidth - draggable.offsetWidth / 2 + 'px';
+                        lower_boundary_position = document.getElementById('lower_boundary').getBoundingClientRect().bottom;
+                        draggable.style.top = lower_boundary_position + playerData.y / 100 * teams_container.offsetHeight - draggable.offsetHeight / 2 + 'px';
                         draggable.style.position = 'absolute';
                         if (team_id === 1) {
                             draggable.style.backgroundColor = 'lightpink';
