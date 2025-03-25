@@ -120,8 +120,8 @@ def update_player(request):
     player_id = int(data["player_id"])
     try:
         player = PlayerIcon.objects.get(id=player_id)
-        player.x = int(data["x"])
-        player.y = int(data["y"])
+        player.x_proportion = float(data["x_proportion"])
+        player.y_proportion = float(data["y_proportion"])
         team_id = int(data["team_id"])
         
         # 0 means the player does not belong to any team
@@ -153,8 +153,8 @@ def get_players(request):
     players_data = [{
         'id': player.id,
         'name': player.name,
-        'x': player.x,
-        'y': player.y,
+        'x_proportion': player.x_proportion,
+        'y_proportion': player.y_proportion,
         'team_id': player.team_id
     } for player in players]
 

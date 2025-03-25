@@ -77,9 +77,9 @@ function initializeDraggable(draggable) {
     const team_id = parseInt(draggable.dataset.teamId);
     if (team_id > 0) {
         const teams_container = document.querySelector('.teams-container');
-        draggable.style.left = parseInt(draggable.dataset.x) / 100 * teams_container.offsetWidth - draggable.offsetWidth / 2 + 'px';
+        draggable.style.left = draggable.dataset.xProportion * teams_container.offsetWidth - draggable.offsetWidth / 2 + 'px';
         const lower_boundary_position = document.getElementById('lower_boundary').getBoundingClientRect().bottom;
-        draggable.style.top = lower_boundary_position + parseInt(draggable.dataset.y) / 100 * teams_container.offsetHeight - draggable.offsetHeight / 2 + 'px';
+        draggable.style.top = lower_boundary_position + draggable.dataset.yProportion * teams_container.offsetHeight - draggable.offsetHeight / 2 + 'px';
 
         draggable.style.position = 'absolute';
         if (team_id == 1) {
@@ -129,10 +129,10 @@ function initializeDraggable(draggable) {
             const x_center = draggable.offsetLeft + draggable.offsetWidth / 2;
             const y_center = draggable.offsetTop + draggable.offsetHeight / 2;
             const teams_container = document.querySelector('.teams-container');
-            const x = x_center / teams_container.offsetWidth * 100;
+            const x_proportion = x_center / teams_container.offsetWidth;
 
             const lower_boundary_position = document.getElementById('lower_boundary').getBoundingClientRect().bottom;
-            const y = (y_center - lower_boundary_position) / teams_container.offsetHeight * 100;
+            const y_proportion = (y_center - lower_boundary_position) / teams_container.offsetHeight;
 
             const team_id = updateTeam(draggable);
 
@@ -141,8 +141,8 @@ function initializeDraggable(draggable) {
                 method: 'PUT',
                 body: JSON.stringify({
                     player_id: id,
-                    x: x,
-                    y: y,
+                    x_proportion: x_proportion,
+                    y_proportion: y_proportion,
                     team_id: team_id
                 })
             })
@@ -222,9 +222,9 @@ function pollForUpdates() {
                         draggable.style.backgroundColor = 'lightgreen';
                     } else {
                         const teams_container = document.querySelector('.teams-container');
-                        draggable.style.left = playerData.x / 100 * teams_container.offsetWidth - draggable.offsetWidth / 2 + 'px';
+                        draggable.style.left = playerData['x_proportion'] * teams_container.offsetWidth - draggable.offsetWidth / 2 + 'px';
                         lower_boundary_position = document.getElementById('lower_boundary').getBoundingClientRect().bottom;
-                        draggable.style.top = lower_boundary_position + playerData.y / 100 * teams_container.offsetHeight - draggable.offsetHeight / 2 + 'px';
+                        draggable.style.top = lower_boundary_position + playerData['y_proportion'] * teams_container.offsetHeight - draggable.offsetHeight / 2 + 'px';
                         draggable.style.position = 'absolute';
                         if (team_id === 1) {
                             draggable.style.backgroundColor = 'lightpink';

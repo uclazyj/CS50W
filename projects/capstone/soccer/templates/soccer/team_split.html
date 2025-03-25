@@ -45,7 +45,7 @@
 
     <div id="list">
         {% for player in players %}  
-            <div class="draggable" data-id="{{ player.id }}" data-x = "{{ player.x }}" data-y = "{{ player.y }}" data-team-id = "{{ player.team_id }}">
+            <div class="draggable" data-id="{{ player.id }}" data-x-proportion = "{{ player.x_proportion }}" data-y-proportion = "{{ player.y_proportion }}" data-team-id = "{{ player.team_id }}">
                 <div class="name">
                     {{ player.name }}
                 </div>
