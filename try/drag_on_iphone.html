@@ -41,7 +41,7 @@
             initialY = clientY - element.offsetTop;
         });
 
-        element.addEventListener(move_event, (event) => {
+        document.addEventListener(move_event, (event) => {
             if (isDragging) {
                 event.preventDefault();
                 // Use different properties for touch vs mouse events
@@ -54,7 +54,7 @@
             }
         });
 
-        element.addEventListener(end_event, (event) => {
+        document.addEventListener(end_event, (event) => {
             isDragging = false;
         });
     </script>
