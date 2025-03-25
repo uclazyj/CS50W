@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <title>Test</title>
+        <title>Drag on iphone</title>
         <style>
             #draggable-element {
                 position: absolute;
@@ -13,32 +13,49 @@
     </head>
     
     <body>
-        <div id="draggable-element">foo</div>
+        <div id="draggable-element"></div>
     </body>
 
     <script>
+        const iphone = false;  // Changed to false for mouse events
+        if (iphone) {
+            start_event = 'touchstart'
+            move_event = 'touchmove'
+            end_event = 'touchend'
+        } else {
+            start_event = 'pointerdown'
+            move_event = 'pointermove'
+            end_event = 'pointerup'
+        }
+
         const element = document.getElementById('draggable-element');
         let initialX, initialY;
         let isDragging = false;
 
-        element.addEventListener('touchstart', (event) => {
-        isDragging = true;
-        initialX = event.touches[0].clientX - element.offsetLeft;
-        initialY = event.touches[0].clientY - element.offsetTop;
-        }, false);
+        element.addEventListener(start_event, (event) => {
+            isDragging = true;
+            // Use different properties for touch vs mouse events
+            const clientX = iphone ? event.touches[0].clientX : event.clientX;
+            const clientY = iphone ? event.touches[0].clientY : event.clientY;
+            initialX = clientX - element.offsetLeft;
+            initialY = clientY - element.offsetTop;
+        });
 
-        element.addEventListener('touchmove', (event) => {
+        element.addEventListener(move_event, (event) => {
             if (isDragging) {
                 event.preventDefault();
-                const x = event.touches[0].clientX - initialX;
-                const y = event.touches[0].clientY - initialY;
+                // Use different properties for touch vs mouse events
+                const clientX = iphone ? event.touches[0].clientX : event.clientX;
+                const clientY = iphone ? event.touches[0].clientY : event.clientY;
+                const x = clientX - initialX;
+                const y = clientY - initialY;
                 element.style.left = x + 'px';
                 element.style.top = y + 'px';
             }
-        }, false);
+        });
 
-        element.addEventListener('touchend', (event) => {
-        isDragging = false;
-        }, false);
+        element.addEventListener(end_event, (event) => {
+            isDragging = false;
+        });
     </script>
 </html>
