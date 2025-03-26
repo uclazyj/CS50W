@@ -3,6 +3,10 @@
     <head>
         <title>Test</title>
         <style>
+            body {
+                margin: 0;
+            }
+
             #parent {
                 position: relative;
                 width: 700px;
@@ -13,6 +17,7 @@
                 border-width: 10px;
                 border-style: solid;
             }
+            
             #child {
                 height: 100px;
                 width: 100px;
@@ -54,12 +59,12 @@
 
 
         x_center = div.offsetLeft + div.offsetWidth/2;
-        console.log('x_center:'+ x_center);
+        console.log('x_center: '+ x_center);
         y_center = div.offsetTop + div.offsetHeight/2;
-        console.log('y_center:'+ y_center);
+        console.log('y_center: '+ y_center);
 
         const rect = div.getBoundingClientRect();
-        console.log('rect.left:'+ rect.left);
-        console.log('rect.top:'+ rect.top);
+        console.log('rect.left: '+ rect.left);
+        console.log('rect.top: '+ rect.top);
     </script>
 </html>
