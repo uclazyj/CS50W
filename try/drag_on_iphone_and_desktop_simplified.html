@@ -3,74 +3,86 @@
     <head>
         <title>Drag on iphone</title>
         <style>
-            #draggable-element {
+            .draggable {
                 position: absolute;
                 width: 100px;
                 height: 100px;
-                background-color: red;
+                background-color: lightblue;
+            }
+
+            #foo {
+                left: 10px;
+            }
+
+            #bar {
+                left: 200px;
             }
         </style>
     </head>
     
     <body>
-        <div id="draggable-element"></div>
+        <div class="draggable" id="foo">foo</div>
+        <div class="draggable" id="bar">bar</div>
     </body>
 
     <script>
 
-        const element = document.getElementById('draggable-element');
-        element.isDragging = false;
+        document.querySelectorAll('.draggable').forEach(element => {
+            element.isDragging = false;
 
-        element.addEventListener('touchstart', touchStartHandler);
-        element.addEventListener('pointerdown',  pointerDownHandler);
+            element.addEventListener('touchstart', touchStartHandler);
+            element.addEventListener('pointerdown',  pointerDownHandler);
 
-        document.addEventListener('touchmove', touchMoveHandler, true);
-        document.addEventListener('pointermove', pointerMoveHandler, false);
+            document.addEventListener('touchmove', touchMoveHandler, true);
+            document.addEventListener('pointermove', pointerMoveHandler, false);
 
-        document.addEventListener('touchend', dragEndHandler);
-        document.addEventListener('pointerup', dragEndHandler);
+            document.addEventListener('touchend', dragEndHandler);
+            document.addEventListener('pointerup', dragEndHandler);
 
-        function dragStartHandler(event, phone) {
-            event.preventDefault();
-            element.isDragging = true;
-            // Use different properties for touch vs mouse events
-            const clientX = phone ? event.touches[0].clientX : event.clientX;
-            const clientY = phone ? event.touches[0].clientY : event.clientY;
-            element.initialX = clientX - element.offsetLeft;
-            element.initialY = clientY - element.offsetTop;
-        }
-
-        function touchStartHandler(event){
-            return dragStartHandler(event, true);
-        }
-
-        function pointerDownHandler(event){
-            return dragStartHandler(event, false);
-        }
-
-        function draggingHandler(event, phone) {
-            if (element.isDragging) {
+            function dragStartHandler(event, phone) {
                 event.preventDefault();
+                element.isDragging = true;
                 // Use different properties for touch vs mouse events
                 const clientX = phone ? event.touches[0].clientX : event.clientX;
                 const clientY = phone ? event.touches[0].clientY : event.clientY;
-                const x = clientX - element.initialX;
-                const y = clientY - element.initialY;
-                element.style.left = x + 'px';
-                element.style.top = y + 'px';
+                element.initialX = clientX - element.offsetLeft;
+                element.initialY = clientY - element.offsetTop;
             }
-        }
 
-        function touchMoveHandler(event) {
-            return draggingHandler(event, true);
-        }
+            function touchStartHandler(event){
+                return dragStartHandler(event, true);
+            }
 
-        function pointerMoveHandler(event) {
-            return draggingHandler(event, false);
-        }
+            function pointerDownHandler(event){
+                return dragStartHandler(event, false);
+            }
 
-        function dragEndHandler(event) {
-            element.isDragging = false;
-        }
+            function draggingHandler(event, phone) {
+                if (element.isDragging) {
+                    event.preventDefault();
+                    // Use different properties for touch vs mouse events
+                    const clientX = phone ? event.touches[0].clientX : event.clientX;
+                    const clientY = phone ? event.touches[0].clientY : event.clientY;
+                    const x = clientX - element.initialX;
+                    const y = clientY - element.initialY;
+                    element.style.left = x + 'px';
+                    element.style.top = y + 'px';
+                }
+            }
+
+            function touchMoveHandler(event) {
+                return draggingHandler(event, true);
+            }
+
+            function pointerMoveHandler(event) {
+                return draggingHandler(event, false);
+            }
+
+            function dragEndHandler(event) {
+                element.isDragging = false;
+            }
+            
+        });
+        
     </script>
 </html>
