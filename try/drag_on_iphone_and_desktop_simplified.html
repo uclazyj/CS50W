@@ -19,8 +19,8 @@
     <script>
 
         const element = document.getElementById('draggable-element');
+        element.isDragging = false;
         let initialX, initialY;
-        let isDragging = false;
 
         element.addEventListener('touchstart', touchStartHandler);
         element.addEventListener('pointerdown',  pointerDownHandler);
@@ -33,7 +33,7 @@
 
         function dragStartHandler(event, phone) {
             event.preventDefault();
-            isDragging = true;
+            element.isDragging = true;
             // Use different properties for touch vs mouse events
             const clientX = phone ? event.touches[0].clientX : event.clientX;
             const clientY = phone ? event.touches[0].clientY : event.clientY;
@@ -50,7 +50,7 @@
         }
 
         function draggingHandler(event, phone) {
-            if (isDragging) {
+            if (element.isDragging) {
                 event.preventDefault();
                 // Use different properties for touch vs mouse events
                 const clientX = phone ? event.touches[0].clientX : event.clientX;
@@ -71,7 +71,7 @@
         }
 
         function dragEndHandler(event) {
-            isDragging = false;
+            element.isDragging = false;
         }
     </script>
 </html>
