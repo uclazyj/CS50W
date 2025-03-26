@@ -20,7 +20,6 @@
 
         const element = document.getElementById('draggable-element');
         element.isDragging = false;
-        let initialX, initialY;
 
         element.addEventListener('touchstart', touchStartHandler);
         element.addEventListener('pointerdown',  pointerDownHandler);
@@ -37,8 +36,8 @@
             // Use different properties for touch vs mouse events
             const clientX = phone ? event.touches[0].clientX : event.clientX;
             const clientY = phone ? event.touches[0].clientY : event.clientY;
-            initialX = clientX - element.offsetLeft;
-            initialY = clientY - element.offsetTop;
+            element.initialX = clientX - element.offsetLeft;
+            element.initialY = clientY - element.offsetTop;
         }
 
         function touchStartHandler(event){
@@ -55,8 +54,8 @@
                 // Use different properties for touch vs mouse events
                 const clientX = phone ? event.touches[0].clientX : event.clientX;
                 const clientY = phone ? event.touches[0].clientY : event.clientY;
-                const x = clientX - initialX;
-                const y = clientY - initialY;
+                const x = clientX - element.initialX;
+                const y = clientY - element.initialY;
                 element.style.left = x + 'px';
                 element.style.top = y + 'px';
             }
