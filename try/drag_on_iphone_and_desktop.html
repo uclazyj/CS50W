@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Drag on iphone</title>
+        <style>
+            #draggable-element {
+                position: absolute;
+                width: 100px;
+                height: 100px;
+                background-color: red;
+            }
+        </style>
+    </head>
+    
+    <body>
+        <div id="draggable-element"></div>
+    </body>
+
+    <script>
+        // const iphone = true;  // Changed to false for mouse events
+        // if (iphone) {
+        //     start_event = 'touchstart'
+        //     move_event = 'touchmove'
+        //     end_event = 'touchend'
+        // } else {
+        //     start_event = 'pointerdown'
+        //     move_event = 'pointermove'
+        //     end_event = 'pointerup'
+        // }
+
+        const element = document.getElementById('draggable-element');
+        let initialX, initialY;
+        let isDragging = false;
+
+        element.addEventListener('touchstart', touchStartHandler);
+        element.addEventListener('pointerdown', pointerDownHandler);
+
+        document.addEventListener('touchmove', touchMoveHandler);
+        document.addEventListener('pointermove', pointerMoveHandler);
+
+        document.addEventListener('touchend', touchEndHandler);
+        document.addEventListener('pointerup', pointerUpHandler);
+
+        // Question: How to combine the handler function for mobile phones and the handler function for desktop into one function, with an argument that toggles between them?
+        function touchStartHandler(event) {
+            event.preventDefault();
+            isDragging = true;
+            const clientX = event.touches[0].clientX
+            const clientY = event.touches[0].clientY
+            initialX = clientX - element.offsetLeft;
+            initialY = clientY - element.offsetTop;
+        }
+
+        function pointerDownHandler(event) {
+            event.preventDefault();
+            isDragging = true;
+            const clientX = event.clientX;
+            const clientY = event.clientY;
+            initialX = clientX - element.offsetLeft;
+            initialY = clientY - element.offsetTop;
+        }
+
+        function touchMoveHandler(event) {
+            if (isDragging) {
+                event.preventDefault();
+                // Use different properties for touch vs mouse events
+                const clientX = event.touches[0].clientX;
+                const clientY = event.touches[0].clientY;
+                const x = clientX - initialX;
+                const y = clientY - initialY;
+                element.style.left = x + 'px';
+                element.style.top = y + 'px';
+            }
+        }
+
+        function pointerMoveHandler(event) {
+            if (isDragging) {
+                event.preventDefault();
+                // Use different properties for touch vs mouse events
+                const clientX = event.clientX;
+                const clientY = event.clientY;
+                const x = clientX - initialX;
+                const y = clientY - initialY;
+                element.style.left = x + 'px';
+                element.style.top = y + 'px';
+            }
+        }
+
+        function touchEndHandler(event) {
+            isDragging = false;
+        }
+
+        function pointerUpHandler(event) {
+            isDragging = false;
+        }
+    </script>
+</html>
