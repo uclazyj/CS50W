@@ -17,17 +17,6 @@
     </body>
 
     <script>
-        // const iphone = true;  // Changed to false for mouse events
-        // if (iphone) {
-        //     start_event = 'touchstart'
-        //     move_event = 'touchmove'
-        //     end_event = 'touchend'
-        // } else {
-        //     start_event = 'pointerdown'
-        //     move_event = 'pointermove'
-        //     end_event = 'pointerup'
-        // }
-
         const element = document.getElementById('draggable-element');
         let initialX, initialY;
         let isDragging = false;
@@ -63,7 +52,6 @@
         function touchMoveHandler(event) {
             if (isDragging) {
                 event.preventDefault();
-                // Use different properties for touch vs mouse events
                 const clientX = event.touches[0].clientX;
                 const clientY = event.touches[0].clientY;
                 const x = clientX - initialX;
@@ -76,7 +64,6 @@
         function pointerMoveHandler(event) {
             if (isDragging) {
                 event.preventDefault();
-                // Use different properties for touch vs mouse events
                 const clientX = event.clientX;
                 const clientY = event.clientY;
                 const x = clientX - initialX;
