@@ -93,16 +93,16 @@ function initializeDraggable(draggable) {
     draggable.addEventListener('mousedown', onMouseDown);
 
     function onMouseDown(e) {
-        const mouse_initial_x = e.clientX;
-        const mouse_initial_y = e.clientY;
         const draggable_initial = draggable.getBoundingClientRect();
+        draggable.pointer_offset_x = e.clientX - draggable_initial.left;
+        draggable.pointer_offset_y = e.clientY - draggable_initial.top;
         
         function onMouseMove(event) {
             draggable.isDragging = true;
             draggable.style.position = 'absolute';
 
-            let draggable_final_left = event.pageX - (mouse_initial_x - draggable_initial.left);
-            let draggable_final_top = event.pageY - (mouse_initial_y - draggable_initial.top);
+            let draggable_final_left = event.pageX - draggable.pointer_offset_x;
+            let draggable_final_top = event.pageY - draggable.pointer_offset_y;
 
             // Boundary checks
             draggable_final_left = Math.max(draggable_final_left, 0);
