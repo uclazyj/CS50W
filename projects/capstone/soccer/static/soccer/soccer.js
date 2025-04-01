@@ -100,10 +100,9 @@ function initializeDraggable(draggable) {
         function onMouseMove(event) {
             draggable.isDragging = true;
             draggable.style.position = 'absolute';
-            const mouse_current_x = event.pageX;
-            const mouse_current_y = event.pageY;
-            let draggable_final_left = draggable_initial.left + mouse_current_x - mouse_initial_x;
-            let draggable_final_top = draggable_initial.top + mouse_current_y - mouse_initial_y;
+
+            let draggable_final_left = event.pageX - (mouse_initial_x - draggable_initial.left);
+            let draggable_final_top = event.pageY - (mouse_initial_y - draggable_initial.top);
 
             // Boundary checks
             draggable_final_left = Math.max(draggable_final_left, 0);
