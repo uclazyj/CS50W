@@ -90,7 +90,9 @@ function initializeDraggable(draggable) {
         }
     }
 
-    draggable.addEventListener('mousedown', function(e) {
+    draggable.addEventListener('mousedown', onMouseDown);
+
+    function onMouseDown(e) {
         const mouse_initial_x = e.clientX;
         const mouse_initial_y = e.clientY;
         const draggable_initial = draggable.getBoundingClientRect();
@@ -160,7 +162,7 @@ function initializeDraggable(draggable) {
         // draggable.ondragstart = function() {
         //     return false;
         // };
-    });
+    }
 }
 
 function updatePlayerCount(count) {
