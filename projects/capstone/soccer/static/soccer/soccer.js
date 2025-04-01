@@ -97,70 +97,71 @@ function initializeDraggable(draggable) {
         draggable.pointer_offset_x = e.clientX - draggable_initial.left;
         draggable.pointer_offset_y = e.clientY - draggable_initial.top;
         
-        function onMouseMove(event) {
-            draggable.isDragging = true;
-            draggable.style.position = 'absolute';
-
-            let draggable_final_left = event.pageX - draggable.pointer_offset_x;
-            let draggable_final_top = event.pageY - draggable.pointer_offset_y;
-
-            // Boundary checks
-            draggable_final_left = Math.max(draggable_final_left, 0);
-            draggable_final_left = Math.min(draggable_final_left, window.innerWidth - draggable.offsetWidth);
-
-            const upper_boundary_position = document.getElementById('upper_boundary').getBoundingClientRect().top + window.scrollY;
-            draggable_final_top = Math.max(draggable_final_top, upper_boundary_position);
-
-            const lower_boundary_position = window.innerHeight + window.scrollY - draggable.offsetHeight
-            draggable_final_top = Math.min(draggable_final_top, lower_boundary_position);
-
-            draggable.style.left = draggable_final_left + 'px';
-            draggable.style.top = draggable_final_top + 'px';
-
-            updateTeam(draggable);
-        }
-
         document.addEventListener('mousemove', onMouseMove);
-
-        function onMouseUp() {
-            draggable.isDragging = false;
-            document.removeEventListener('mousemove', onMouseMove);
-            document.removeEventListener('mouseup', onMouseUp);
-
-            const x_center = draggable.offsetLeft + draggable.offsetWidth / 2;
-            const y_center = draggable.offsetTop + draggable.offsetHeight / 2;
-            const teams_container = document.querySelector('.teams-container');
-            const x_proportion = x_center / teams_container.offsetWidth;
-
-            const lower_boundary_position = document.getElementById('lower_boundary').getBoundingClientRect().bottom;
-            const y_proportion = (y_center - lower_boundary_position) / teams_container.offsetHeight;
-
-            const team_id = updateTeam(draggable);
-
-            // Save the new position to backend
-            fetch('/player/update', {
-                method: 'PUT',
-                body: JSON.stringify({
-                    player_id: id,
-                    x_proportion: x_proportion,
-                    y_proportion: y_proportion,
-                    team_id: team_id
-                })
-            })
-            .then(result => {
-                console.log(result);
-            })
-            .catch(error => {
-                console.log('Error:', error);
-            });
-
-        }
-
         document.addEventListener('mouseup', onMouseUp);
 
         // draggable.ondragstart = function() {
         //     return false;
         // };
+    }
+
+
+
+    function onMouseMove(event) {
+        draggable.isDragging = true;
+        draggable.style.position = 'absolute';
+
+        let draggable_final_left = event.pageX - draggable.pointer_offset_x;
+        let draggable_final_top = event.pageY - draggable.pointer_offset_y;
+
+        // Boundary checks
+        draggable_final_left = Math.max(draggable_final_left, 0);
+        draggable_final_left = Math.min(draggable_final_left, window.innerWidth - draggable.offsetWidth);
+
+        const upper_boundary_position = document.getElementById('upper_boundary').getBoundingClientRect().top + window.scrollY;
+        draggable_final_top = Math.max(draggable_final_top, upper_boundary_position);
+
+        const lower_boundary_position = window.innerHeight + window.scrollY - draggable.offsetHeight
+        draggable_final_top = Math.min(draggable_final_top, lower_boundary_position);
+
+        draggable.style.left = draggable_final_left + 'px';
+        draggable.style.top = draggable_final_top + 'px';
+
+        updateTeam(draggable);
+    }
+
+    function onMouseUp() {
+        draggable.isDragging = false;
+        document.removeEventListener('mousemove', onMouseMove);
+        document.removeEventListener('mouseup', onMouseUp);
+
+        const x_center = draggable.offsetLeft + draggable.offsetWidth / 2;
+        const y_center = draggable.offsetTop + draggable.offsetHeight / 2;
+        const teams_container = document.querySelector('.teams-container');
+        const x_proportion = x_center / teams_container.offsetWidth;
+
+        const lower_boundary_position = document.getElementById('lower_boundary').getBoundingClientRect().bottom;
+        const y_proportion = (y_center - lower_boundary_position) / teams_container.offsetHeight;
+
+        const team_id = updateTeam(draggable);
+
+        // Save the new position to backend
+        fetch('/player/update', {
+            method: 'PUT',
+            body: JSON.stringify({
+                player_id: id,
+                x_proportion: x_proportion,
+                y_proportion: y_proportion,
+                team_id: team_id
+            })
+        })
+        .then(result => {
+            console.log(result);
+        })
+        .catch(error => {
+            console.log('Error:', error);
+        });
+
     }
 }
 
