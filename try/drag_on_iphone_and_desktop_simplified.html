@@ -33,8 +33,8 @@
             element.addEventListener('touchstart', touchStartHandler);
             element.addEventListener('pointerdown',  pointerDownHandler);
 
-            document.addEventListener('touchmove', touchMoveHandler, true);
-            document.addEventListener('pointermove', pointerMoveHandler, false);
+            document.addEventListener('touchmove', touchMoveHandler);
+            document.addEventListener('pointermove', pointerMoveHandler);
 
             document.addEventListener('touchend', dragEndHandler);
             document.addEventListener('pointerup', dragEndHandler);
