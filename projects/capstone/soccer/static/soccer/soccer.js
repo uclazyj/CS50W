@@ -90,29 +90,50 @@ function initializeDraggable(draggable) {
         }
     }
 
-    draggable.addEventListener('mousedown', onMouseDown);
+    draggable.addEventListener('mousedown', mouseDownHandler);
+    draggable.addEventListener('touchstart', touchStartHandler);
 
-    function onMouseDown(e) {
+    function mouseDownHandler(event) {
+        return dragStartHandler(event, false);
+    }
+
+    function touchStartHandler(event) {
+        return dragStartHandler(event, true);
+    }
+
+    function dragStartHandler(event, phone) {
         const draggable_initial = draggable.getBoundingClientRect();
-        draggable.pointer_offset_x = e.clientX - draggable_initial.left;
-        draggable.pointer_offset_y = e.clientY - draggable_initial.top;
+        const clientX = phone? event.touches[0].clientX : event.clientX;
+        const clientY = phone? event.touches[0].clientY : event.clientY;
+        draggable.pointer_offset_x = clientX - draggable_initial.left;
+        draggable.pointer_offset_y = clientY - draggable_initial.top;
         
-        document.addEventListener('mousemove', onMouseMove);
-        document.addEventListener('mouseup', onMouseUp);
+        document.addEventListener('mousemove', mouseMoveHandler);
+        document.addEventListener('touchmove', touchMoveHandler);
+        document.addEventListener('mouseup', dragEndHandler);
+        document.addEventListener('touchend', dragEndHandler);
 
         // draggable.ondragstart = function() {
         //     return false;
         // };
     }
 
+    function mouseMoveHandler(event) {
+        return draggingHandler(event, false);
+    }
 
+    function touchMoveHandler(event) {
+        return draggingHandler(event, true);
+    }
 
-    function onMouseMove(event) {
+    function draggingHandler(event, phone) {
         draggable.isDragging = true;
         draggable.style.position = 'absolute';
 
-        let draggable_final_left = event.pageX - draggable.pointer_offset_x;
-        let draggable_final_top = event.pageY - draggable.pointer_offset_y;
+        const pageX = phone ? event.touches[0].pageX : event.pageX;
+        const pageY = phone ? event.touches[0].pageY : event.pageY;
+        let draggable_final_left = pageX - draggable.pointer_offset_x;
+        let draggable_final_top = pageY - draggable.pointer_offset_y;
 
         // Boundary checks
         draggable_final_left = Math.max(draggable_final_left, 0);
@@ -130,10 +151,12 @@ function initializeDraggable(draggable) {
         updateTeam(draggable);
     }
 
-    function onMouseUp() {
+    function dragEndHandler() {
         draggable.isDragging = false;
-        document.removeEventListener('mousemove', onMouseMove);
-        document.removeEventListener('mouseup', onMouseUp);
+        document.removeEventListener('mousemove', mouseMoveHandler);
+        document.removeEventListener('touchmove', touchMoveHandler);
+        document.removeEventListener('mouseup', dragEndHandler);
+        document.removeEventListener('touchend', dragEndHandler);
 
         const x_center = draggable.offsetLeft + draggable.offsetWidth / 2;
         const y_center = draggable.offsetTop + draggable.offsetHeight / 2;
