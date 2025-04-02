@@ -12,7 +12,7 @@
             <form method="post">
                 {% csrf_token %}
                 {{ form }}
-                <button type="submit" class="btn btn-success btn-sm">Add player</button>
+                <button type="submit" class="btn btn-success btn-sm">Add</button>
             </form>
         </div>
 
@@ -30,7 +30,7 @@
 
         <div class="form-container">
             <div class="upload-button-label">
-                <b>Add players from screenshot</b>
+                <b>Add from screenshot</b>
             </div>
             <form action="{% url 'upload_image' %}" method="post" enctype="multipart/form-data">
                 {% csrf_token %}

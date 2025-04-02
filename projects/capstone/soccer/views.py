@@ -18,7 +18,7 @@ class NameForm(forms.Form):
     name = forms.CharField(label="", required=True, widget=forms.TextInput(attrs={
         'autofocus': True,
         'placeholder': 'name',
-        'style': 'width: 150px; margin: 10px;'
+        'style': 'width: 80px; margin: 10px;'
         }))
 
 class ImageUploadForm(forms.ModelForm):
