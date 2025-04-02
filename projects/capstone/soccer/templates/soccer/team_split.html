@@ -23,7 +23,7 @@
             </div>
             <form action="{% url 'reset_players' %}" method="post">
                 {% csrf_token %}
-                <button id="reset" class="btn btn-danger btn-sm">Reset</button>
+                <button id="reset" class="btn btn-danger btn-sm" onclick="return confirm('Are you sure you want to remove all players?')">Reset</button>
             </form>
             
         </div>
