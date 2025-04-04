@@ -59,7 +59,11 @@ def extract_names_from_image(image_path):
 def get_attendance_list(raw_text):
     season_pass_names = ["曹彬","xiaosong","伍琨","风","昊天","赵宇健","王宇煊","郭希","怀博群","魔术猪","小苏","Du","子恒","Di","李翼展","泽辉","梁育诚","残风","猛哥","Shawn","邹明昊","GRH","瓜瓜","qgx"]
 
+    if "甩坑" not in raw_text:
+        return []
     withdraw_and_signup_names_text = raw_text.split("甩坑")[1].strip()
+    if "抢坑" not in withdraw_and_signup_names_text:
+        return []
     withdraw_names_text, signup_names_text = withdraw_and_signup_names_text.split("抢坑")
     withdraw_names = [name.strip() for name in re.split(r'[:：.123456789]', withdraw_names_text)]
     withdraw_names = set([name for name in withdraw_names if name != ""])
