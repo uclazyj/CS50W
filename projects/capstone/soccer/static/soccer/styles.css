@@ -95,11 +95,10 @@ hr {
 
 .close {
     font-size: 8px;
-    margin-left: 10px;
     display: inline-block;
     cursor: pointer;
     position: relative;
-    bottom: 12px;
+    bottom: 15px;
     border: none;
     background-color: transparent;
 }
@@ -117,7 +116,7 @@ hr {
     display: inline-block;
     margin-right: 10px;
     margin-bottom: 10px;
-    padding: 10px;
+    padding: 10px 0px 10px 10px; /* right padding is 0 */
     border-radius: 20px;
     background-color: lightgreen;
     cursor: pointer;
