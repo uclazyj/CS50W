@@ -73,7 +73,7 @@ def get_attendance_list(raw_text):
     attendance_names = [name for name in season_pass_names if name not in withdraw_names]
     
     signup_names = signup_names_text.split("paid")
-    excluded_chars = set([' ', '(', ')', '（', '）', ':', '：','.','1','2','3','4','5','6','7','8','9','0'])
+    excluded_chars = set([' ', '(', ')', '（', '）', ':', '：','.',',','，','1','2','3','4','5','6','7','8','9','0'])
     for raw_name in signup_names:
         chars = [c for c in raw_name if c not in excluded_chars]
         name = "".join(chars)
