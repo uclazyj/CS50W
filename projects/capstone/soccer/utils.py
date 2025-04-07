@@ -2,7 +2,7 @@ from PIL import Image
 import pytesseract
 import re
 
-all_names = set(['柴堰尤', '赵家伟', 'zwb', 'lyx', '赵泽宇', 'szk', 'Congee', 'Ruilin', '谢鑫喆', 'Ziyan', 'Alex', '青木堂', '严智勇', 'Ye xie', 'David', '师宇豪', '费昊然', '嘉兴', '余永豪', 'Argentina', 'Steven', 'dyk', '陶', 'Louis', 'Fabien', '陈诗玮', '周裕人', '王宇煊', 'Alan', '郭希', 'lkl', '飓风先生', '钟潏晨', '管住嘴迈开腿', '励天一', 'yucheng', '黄泽宇', '杨冠群', '赵宇健', '朱总', '李翼展', 'Tiger', '谢天石', '月下柠檬树', '伍琨', 'Frank'])
+all_names = set(['柴堰尤', '赵家伟', 'zwb', 'lyx', '赵泽宇', 'szk', 'Congee', 'Ruilin', '谢鑫喆', 'Ziyan', 'Alex', '青木堂', '严智勇', 'Ye xie', 'David', '师宇豪', '费昊然', '嘉兴', '余永豪', 'Argentina', 'Steven', 'dyk', '陶', 'Louis', 'Fabien', '陈诗玮', '周裕人', '王宇煊', 'Alan', '郭希', 'lkl', '飓风先生', '钟潏晨', '管住嘴迈开腿', '励天一', 'yucheng', '黄泽宇', '杨冠群', '赵宇健', '朱总', '李翼展', 'Tiger', '谢天石', '月下柠檬树', '伍琨', 'Frank', 'Charlie', 'Dennis庄'])
 
 def extract_names_from_image(image_path):
 
