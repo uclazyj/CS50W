@@ -59,7 +59,7 @@ def extract_names_from_image(image_path):
     return words2
 
 def get_attendance_list(raw_text):
-    season_pass_names = ["曹彬","xiaosong","伍琨","风","昊天","赵宇健","王宇煊","郭希","怀博群","魔术猪","小苏","Du","子恒","Di","李翼展","泽辉","梁育诚","残风","猛哥","Shawn","邹明昊","GRH","瓜瓜","qgx"]
+    season_pass_names = ["曹彬","xiaosong","伍琨","风","昊天","赵宇健","王宇煊","郭希","怀博群","魔术猪","苏","杜","子恒","Di","李翼展","泽辉","梁育诚","残风","猛","Shawn","邹明昊","GRH","瓜瓜","qgx"]
 
     if "甩坑" not in raw_text:
         return []
