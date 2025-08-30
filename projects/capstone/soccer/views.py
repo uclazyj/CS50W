@@ -11,7 +11,7 @@ from django import forms
 from django.views.decorators.csrf import csrf_exempt
 
 from .models import User, PlayerIcon, Image
-from .utils import extract_names_from_image, get_attendance_list
+from .utils import extract_names_from_image
 
 
 class NameForm(forms.Form):
@@ -95,11 +95,7 @@ def register(request):
 def team_split(request):
     if request.method == "POST":
         all_names = request.POST["name"]
-        if "甩坑" in all_names and "抢坑" in all_names:
-            names = get_attendance_list(all_names)
-        else:
-            # Default feature, split names by comma
-            names = [name.strip() for name in re.split(r'[,，]', all_names)]
+        names = [name.strip() for name in re.split(r'[,，]', all_names)]
         for name in names:
             if name != "" and not PlayerIcon.objects.filter(name=name).exists():
                 player = PlayerIcon(name=name)
