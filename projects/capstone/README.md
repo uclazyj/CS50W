@@ -13,7 +13,7 @@ In this project, I created a web application to facilitate this player-picking p
 This project solves a real-life problem that I encounter a lot when being a captain for our soccer team. It contains several features that the other projects in CS50w don’t have, and are rather complex to implement. These features are:
 * The “drag and drop” animation using javascript (when a user drags and drops a player icon to assign a player to a team).
 * The synchronization among all browser windows, which is important for two captions to view the same current state. This is achieved by “polling”: The javascript code fetches the data from the backend database every second to update the frontend.
-* Add players by uploading a screenshot of the sign-up sheet: This is achieved by the pytesseract OCR library in Python.
+* Add players by uploading a screenshot of the sign-up sheet: This is achieved by calling Google GEMINI API. If the API call fails, the pytesseract OCR library in Python will be used instead.
 * The positions of the player icons remain fixed relative to the background image when users change the size of the browser window. This is achieved by saving the x, y coordinates of an icon as the percentage of the width and height of the viewport, and the real position of the icon is updated every time the “polling” happens (every second).
 
 ## What’s contained in each file I created
