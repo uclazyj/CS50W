@@ -32,7 +32,23 @@ Standard files (e.g. manage.py, models.py, etc) in a Django application are not 
 
 ## How to run the application.
 ### From local:
-First, install all the dependencies in the `requirements.txt` file. Then navigate to the path that contains the `manage.py` file and run `python manage.py runserver` from the terminal. Click the “Split into teams” button on the upper left to get started. After adding some players and splitting them into two teams, clicking the “Home” button will show you the roster for each team.
+1. Create a Python virtual environment (venv)
+    * In the project folder (where `manage.py` exists), create a virtual environment and enter it
+
+        `python -m venv venv`
+
+        then 
+
+        `source venv/bin/activate`
+2. Install all the dependencies in the `requirements.txt` file
+    * `pip install -r requirements.txt`
+
+3. Run the migration
+    * `python manage.py migrate`
+
+4. Run `python manage.py runserver` from the terminal. 
+
+Click the “Split into teams” button on the upper left to get started. After adding some players and splitting them into two teams, clicking the “Home” button will show you the roster for each team.
 
 ### From the internet:
 Simply visit https://zhaoyujian.pythonanywhere.com/ in your browser using a laptop or a mobile phone. I deployed my project there!
