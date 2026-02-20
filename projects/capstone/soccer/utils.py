@@ -1,10 +1,13 @@
 from PIL import Image
 import pytesseract
 import re
+from google import genai
+import json
 
 all_names = set(['柴堰尤', '赵家伟', 'zwb', 'lyx', '赵泽宇', 'szk', 'Congee', 'Ruilin', '谢鑫喆', 'Ziyan', 'Alex', '青木堂', '严智勇', 'Ye xie', 'David', '师宇豪', '费昊然', '嘉兴', '余永豪', 'Argentina', 'Steven', 'dyk', '陶', 'Louis', 'Fabien', '陈诗玮', '周裕人', '王宇煊', 'Alan', '郭希', 'lkl', '飓风先生', '钟潏晨', '管住嘴迈开腿', '励天一', 'yucheng', '黄泽宇', '杨冠群', '赵宇健', '朱总', '李翼展', 'Tiger', '谢天石', '月下柠檬树', '伍琨', 'Frank', 'Charlie', 'Dennis庄'])
 
-def extract_names_from_image(image_path):
+
+def extract_names_from_image_deprecated(image_path):
 
     first_two_chars_to_name = {name[:2]: name for name in all_names}
 
@@ -57,3 +60,33 @@ def extract_names_from_image(image_path):
             words2.append(first_two_chars_to_name[word[:2]])
 
     return words2
+
+
+def extract_names_from_image(image_path):
+    client = genai.Client()
+    img = Image.open(image_path)
+    prompt = """
+    Extract all human names from this image. 
+    Return the names as a JSON object with a single key 'names' containing a list of strings.
+    Example: {"names": ["John Doe", "Jane Smith"]}
+    """
+
+    try:
+        # Use Gemini 3 Flash (fast & cost-effective) or Gemini 3 Pro (for complex layouts)
+        response = client.models.generate_content(
+            model="gemini-3-flash-preview",
+            contents=[prompt,img],
+            config={
+                "response_mime_type": "application/json"
+            }
+        )
+
+        print("API call returns successfully")
+
+        data = json.loads(response.text)
+        names_list = data.get("names", [])
+        return names_list
+    
+    except Exception as e:
+        print(f"Error extracting names from image using GEMINI API: {e}")
+        return extract_names_from_image_deprecated(image_path)
