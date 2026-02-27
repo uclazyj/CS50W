@@ -1,6 +1,4 @@
 from PIL import Image
-import pytesseract
-import re
 from google import genai
 import json
 import time
